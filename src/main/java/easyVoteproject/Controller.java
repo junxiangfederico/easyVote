@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.math.BigInteger;
 public class Controller {
-	String url = "jdbc:mysql://localhost/easyvote?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=utente&password=";
+	String url = "jdbc:mysql://localhost/easyvote";
     @FXML
     private Button btnOK;
 
@@ -38,7 +38,7 @@ public class Controller {
     	String pwd = password.getText();
     	try {
     		   String messaggio;
-		      Connection conn = DriverManager.getConnection(url);
+		       Connection conn = DriverManager.getConnection(url, "prova", "");
 			   Statement statement	=  conn.createStatement(); 
 			   String Query = "SELECT * FROM users WHERE username = '"+ nome+"';";
 			   ResultSet rs =statement.executeQuery(Query);
