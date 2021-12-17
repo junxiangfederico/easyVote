@@ -3,13 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="easyVoteproject.RegistrationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="easyVoteproject.Controller">
    <top>
       <Label text="Log in" textFill="#121294" BorderPane.alignment="CENTER">
          <font>
@@ -27,7 +28,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="username" onAction="#handleName" prefHeight="26.0" prefWidth="293.0" promptText="inserire nome">
+                  <TextField fx:id="username" onAction="#handleName" prefHeight="26.0" prefWidth="293.0" promptText="inserire username">
                      <HBox.margin>
                         <Insets top="3.0" />
                      </HBox.margin>
@@ -47,11 +48,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="password" onAction="#handlepwd" prefHeight="60.0" prefWidth="291.0" promptText="inserire cognome">
-                     <HBox.margin>
-                        <Insets top="3.0" />
-                     </HBox.margin>
-                  </TextField>
+                  <PasswordField fx:id="password" onAction="#handlepwd" prefHeight="26.0" prefWidth="298.0" promptText="inserire password" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

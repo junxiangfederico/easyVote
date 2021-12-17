@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.math.BigInteger;
 public class Controller {
-	String url = "jdbc:mysql://localhost/easyvote";
+	String url = "jdbc:mysql://localhost/easyvote?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=utente&password=";
     @FXML
     private Button btnOK;
 
@@ -38,10 +38,11 @@ public class Controller {
     	String pwd = password.getText();
     	try {
     		   String messaggio;
-		       Connection conn = DriverManager.getConnection(url, "prova", "");
-			   Statement statement	=  conn.createStatement(); 
-			   String Query = "SELECT * FROM users WHERE username = '"+ nome+"';";
-			   ResultSet rs =statement.executeQuery(Query);
+		      Connection conn = DriverManager.getConnection(url);
+			   String Query = "SELECT * FROM users WHERE username=?";
+			   PreparedStatement preparedStatement =conn.prepareStatement(Query);
+			   preparedStatement.setString(1,nome);
+			   ResultSet rs = preparedStatement.executeQuery();
 			   if (rs.next()) {
 				   String password = rs.getString("password");
 				   
@@ -53,7 +54,7 @@ public class Controller {
 				    System.out.println(password);
 				    System.out.println(hex);				    
 				    if(password.equals(hex)) {
-				    	messaggio="Login riuscito! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧";
+				    	messaggio="Login riuscito!";
 						   lblMessage.setText(messaggio);	  
 				    }else {
 				    	messaggio="Login fallito :'(";
@@ -82,4 +83,5 @@ public class Controller {
         lblMessage.setVisible(false);
     }
 }
+
 
