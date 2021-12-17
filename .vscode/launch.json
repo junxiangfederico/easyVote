@@ -4,7 +4,20 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+        {
+            "type": "java",
+            "name": "Launch registrationform",
+            "request": "launch",
+            "mainClass": "easyVoteproject.registrationform",
+            "projectName": "hellofx"
+        },
+        {
+            "type": "java",
+            "name": "Launch RegistrationForm",
+            "request": "launch",
+            "mainClass": "easyVoteproject.RegistrationForm",
+            "projectName": "hellofx"
+        },
         {
             "type": "java",
             "name": "Launch login",
