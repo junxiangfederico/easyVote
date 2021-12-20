@@ -25,13 +25,9 @@ public class LoginController {
 
     @FXML
     void handleOK(ActionEvent event)throws NoSuchAlgorithmException {
-    	//System.out.println("Button pressed");
-    	//String messaggio = "Button pressed";
     	lblMessage.setVisible(true);
     	try {
-    		   String messaggio;
     		   Connection conn = DriverManager.getConnection(url, "prova", "");
-    		   
 
 			   PreparedStatement preparedStatement = prepareStatement(conn);
 			   ResultSet rs = preparedStatement.executeQuery();

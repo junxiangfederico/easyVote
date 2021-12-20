@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="easyVoteproject.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="easyVoteproject.LoginController">
    <top>
       <Label text="Log in" textFill="#121294" BorderPane.alignment="CENTER">
          <font>
@@ -28,7 +28,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="username" onAction="#handleName" prefHeight="26.0" prefWidth="293.0" promptText="inserire username">
+                  <TextField fx:id="username" prefHeight="26.0" prefWidth="293.0" promptText="inserire username">
                      <HBox.margin>
                         <Insets top="3.0" />
                      </HBox.margin>
@@ -48,7 +48,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <PasswordField fx:id="password" onAction="#handlepwd" prefHeight="26.0" prefWidth="298.0" promptText="inserire password" />
+                  <PasswordField fx:id="password" prefHeight="26.0" prefWidth="298.0" promptText="inserire password" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
