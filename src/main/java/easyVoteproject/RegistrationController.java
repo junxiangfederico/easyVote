@@ -56,37 +56,29 @@ public class RegistrationController {
 
     @FXML
     private Label lblOutput;
-
-    @FXML
-    private ChoiceBox<String> sex;
     
     
     @FXML
     void handleOk(ActionEvent event) throws NoSuchAlgorithmException {
-    	lblOutput.setVisible(true);
-    	lblOutput.setText(fieldNome.getText());
-    	
     	try {
-    		   String messaggio;
 		       Connection conn = DriverManager.getConnection(url, "prova", "");
 			   String Query = "INSERT INTO `easyVote`.`users` (`name`, `lastname`, "
 			   		+ "`birthdate`, `birthplace`, `codicefiscale`, `username`, `password`) "
-			   		+ "VALUES ( =?, ?, ?, ?, ?, ?, ?)";
+			   		+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			   
 			   
-			   Date data = processDate(fieldData);
+			   String data = processDate(fieldData);
 			   String password = processPassword(fieldPassword);
 
 			   PreparedStatement preparedStatement = conn.prepareStatement(Query);
 
 			   preparedStatement.setString(1, fieldNome.getText());
 			   preparedStatement.setString(2, fieldCognome.getText());
-			   preparedStatement.setDate(3, data);
+			   preparedStatement.setString(3, data);
 			   preparedStatement.setString(4, fieldNazione.getText());
 			   preparedStatement.setString(5, fieldCF.getText());
 			   preparedStatement.setString(6, fieldUsername.getText());
 			   preparedStatement.setString(7, password);
-			   
 			   
 			   preparedStatement.executeUpdate();
 			   
@@ -98,15 +90,10 @@ public class RegistrationController {
     	
     	
     }
-    @FXML
-    void handlesex(ActionEvent event) {
-
-    }
     
     private String processPassword(TextField fieldPassword) throws NoSuchAlgorithmException {
 
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-
         md.update(fieldPassword.getText().getBytes(StandardCharsets.UTF_8));
         byte[] digest = md.digest();
         String hex = String.format("%064x", new BigInteger(1, digest));
@@ -114,22 +101,23 @@ public class RegistrationController {
 		return hex;
 	}
 
-	private Date processDate(DatePicker fieldData) {
-		java.util.Date date =  java.util.Date.from(fieldData.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		return (Date) date;
+	private String processDate(DatePicker fieldData) {
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd",Locale.US);
+		String formattedValue = (fieldData.getValue()).format(formatter);
+		
+		return formattedValue;
 	}
 
 	
     void initialize() {	
+    	
     	assert fieldNome != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
     	assert fieldCognome != null : "fx:id=\"password\" was not injected: check your FXML file 'login.fxml'.";
     	assert fieldNazione != null : "fx:id=\"password\" was not injected: check your FXML file 'login.fxml'.";
     	assert fieldCF != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
     	assert fieldData != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
-    	lblOutput.setVisible(false);
-       	
- 
-
+    	assert fieldUsername != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
 
     }
 
