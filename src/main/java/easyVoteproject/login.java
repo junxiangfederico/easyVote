@@ -11,8 +11,6 @@ public class login extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            BorderPane root = new BorderPane();
-            Scene scene = new Scene(root,424,242);
             Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/login.fxml"));
             Scene myScene = new Scene(addPane);
             primaryStage.setScene(myScene);
