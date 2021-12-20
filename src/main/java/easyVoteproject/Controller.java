@@ -44,12 +44,10 @@ public class Controller {
 			   preparedStatement.setString(1,nome);
 			   ResultSet rs = preparedStatement.executeQuery();
 			   if (rs.next()) {
-				   String password = rs.getString("password");
-				   
-				   MessageDigest md = MessageDigest.getInstance("SHA-256");
+				    String password = rs.getString("password");
+				    MessageDigest md = MessageDigest.getInstance("SHA-256");
 				    md.update(pwd.getBytes(StandardCharsets.UTF_8));
 				    byte[] digest = md.digest();
-
 				    String hex = String.format("%064x", new BigInteger(1, digest));
 				    System.out.println(password);
 				    System.out.println(hex);				    
