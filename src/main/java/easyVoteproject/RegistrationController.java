@@ -13,14 +13,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class RegistrationController {
-
+	private Stage stage;
+	private Scene scene;
+	private Parent root;
 	private final String url = "jdbc:mysql://localhost/easyvote";
+	@FXML
+    private Button back;
     @FXML
     private Button enterButton;
 
@@ -48,7 +57,14 @@ public class RegistrationController {
     @FXML
     private Label lblOutput;
     
-    
+    @FXML
+    void goback(ActionEvent event) throws IOException{
+    	root = FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/pageform.fxml"));
+   	 	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+   	 	scene = new Scene(root);
+   	 	stage.setScene(scene);
+   	 	stage.show();
+    }
     @FXML
     void handleOk(ActionEvent event) throws NoSuchAlgorithmException {
     	
