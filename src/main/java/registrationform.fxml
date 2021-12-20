@@ -86,7 +86,7 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <Button fx:id="enterButton" layoutX="305.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleOk" onKeyPressed="#handleOk" onMouseClicked="#handleOk" text="Button" />
+            <Button fx:id="enterButton" layoutX="305.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleOk" onKeyPressed="#handleOk" text="Button" />
             <Label layoutX="244.0" layoutY="14.0" text="Registrazione nuovo utente " />
             <TextField fx:id="fieldNome" layoutX="126.0" layoutY="46.0" />
             <TextField fx:id="fieldCognome" layoutX="126.0" layoutY="79.0" />
