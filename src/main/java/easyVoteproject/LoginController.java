@@ -1,19 +1,32 @@
 package easyVoteproject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+
 import java.sql.*;
+
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
+import java.io.IOException;
 import java.math.BigInteger;
 public class LoginController {
 	String url = "jdbc:mysql://localhost/easyvote";
+	private Stage stage;
+	private Scene scene;
+	private Parent root;
     @FXML
     private Button btnOK;
-
+    @FXML
+    private Button back;
     @FXML
     private Label lblMessage;
 
@@ -80,7 +93,14 @@ public class LoginController {
     }
 
 
-
+    @FXML
+    void handlegoback(ActionEvent event) throws IOException {
+    	root = FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/pageform.fxml"));
+   	 	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+   	 	scene = new Scene(root);
+   	 	stage.setScene(scene);
+   	 	stage.show();
+    }
 	void initialize() {
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
         assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'login.fxml'.";
