@@ -13,7 +13,7 @@ public class login extends Application {
         try {
             BorderPane root = new BorderPane();
             Scene scene = new Scene(root,424,242);
-            Pane addPane = (Pane)FXMLLoader.load(getClass().getResource("login.fxml"));
+            Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/login.fxml"));
             Scene myScene = new Scene(addPane);
             primaryStage.setScene(myScene);
             primaryStage.show();

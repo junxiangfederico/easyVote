@@ -11,7 +11,7 @@ public class registrationform extends Application {
 	 @Override
 	    public void start(Stage primaryStage) {
 	        try {
-	            Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("registrationform.fxml"));
+	            Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/registrationform.fxml"));
 	            Scene myScene = new Scene(addPane);
 	            primaryStage.setScene(myScene);
 	            primaryStage.show();
