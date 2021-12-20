@@ -86,7 +86,7 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <Button fx:id="enterButton" layoutX="305.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleOk" onKeyPressed="#handleOk" text="Button" />
+            <Button fx:id="enterButton" layoutX="271.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleOk" text="Conferma" />
             <Label layoutX="244.0" layoutY="14.0" text="Registrazione nuovo utente " />
             <TextField fx:id="fieldNome" layoutX="126.0" layoutY="46.0" />
             <TextField fx:id="fieldCognome" layoutX="126.0" layoutY="79.0" />
@@ -99,7 +99,7 @@
             <Label layoutX="26.0" layoutY="120.0" text="Data di Nascita" />
             <Label layoutX="307.0" layoutY="51.0" text="Nazione di nascita" />
             <Label layoutX="307.0" layoutY="83.0" text="Codice Fiscale" />
-            <Label fx:id="lblOutput" layoutX="297.0" layoutY="217.0" text="output Label" visible="false" />
+            <Label fx:id="lblOutput" layoutX="19.0" layoutY="342.0" text="output Label" visible="false" />
             <TextField fx:id="fieldUsername" layoutX="126.0" layoutY="191.0" />
             <TextField fx:id="fieldPassword" layoutX="434.0" layoutY="191.0" />
             <Label layoutX="40.0" layoutY="196.0" text="Username" />
