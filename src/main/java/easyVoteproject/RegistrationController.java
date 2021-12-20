@@ -15,18 +15,21 @@ import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.security.MessageDigest;
+import java.util.Set;
+
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ChoiceBox;
 
 public class RegistrationController {
 
 	private final String url = "jdbc:mysql://localhost/easyvote";
-	
     @FXML
     private Button enterButton;
 
@@ -54,7 +57,10 @@ public class RegistrationController {
     @FXML
     private Label lblOutput;
 
-
+    @FXML
+    private ChoiceBox<String> sex;
+    
+    
     @FXML
     void handleOk(ActionEvent event) throws NoSuchAlgorithmException {
     	lblOutput.setVisible(true);
@@ -92,6 +98,10 @@ public class RegistrationController {
     	
     	
     }
+    @FXML
+    void handlesex(ActionEvent event) {
+
+    }
     
     private String processPassword(TextField fieldPassword) throws NoSuchAlgorithmException {
 
@@ -110,13 +120,17 @@ public class RegistrationController {
 	}
 
 	
-	void initialize() {	
+    void initialize() {	
     	assert fieldNome != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
     	assert fieldCognome != null : "fx:id=\"password\" was not injected: check your FXML file 'login.fxml'.";
     	assert fieldNazione != null : "fx:id=\"password\" was not injected: check your FXML file 'login.fxml'.";
     	assert fieldCF != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
     	assert fieldData != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
     	lblOutput.setVisible(false);
+       	
+ 
+
+
     }
 
 }

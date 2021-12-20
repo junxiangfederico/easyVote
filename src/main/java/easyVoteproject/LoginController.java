@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.math.BigInteger;
-public class Controller {
+public class LoginController {
 	String url = "jdbc:mysql://localhost/easyvote";
     @FXML
     private Button btnOK;
@@ -52,15 +52,15 @@ public class Controller {
 				    System.out.println(password);
 				    System.out.println(hex);				    
 				    if(password.equals(hex)) {
-				    	messaggio="Login riuscito!";
+				    	messaggio="Login riuscito! 	(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧";
 						   lblMessage.setText(messaggio);	  
 				    }else {
-				    	messaggio="Login fallito :'(";
+				    	messaggio="Login fallito (ノ_<。)";
 						   lblMessage.setText(messaggio);	
 				    }
 				      
 				 }else {
-				  messaggio="Login fallito :'(";
+				  messaggio="Username non esistente 	(￣_￣)・・・ ";
 					lblMessage.setText(messaggio);	
 				 }
 		    } catch (SQLException ex) {
