@@ -33,6 +33,10 @@
 -->
 
 <?import javafx.scene.control.Button?>
+<<<<<<< HEAD
+=======
+<?import javafx.scene.control.ChoiceBox?>
+>>>>>>> 5e0bc0e514d680d726a29fa56062b7b54162507a
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -91,6 +95,7 @@
             <TextField fx:id="fieldNome" layoutX="126.0" layoutY="46.0" />
             <TextField fx:id="fieldCognome" layoutX="126.0" layoutY="79.0" />
             <Label layoutX="126.0" layoutY="104.0" />
+<<<<<<< HEAD
             <DatePicker fx:id="fieldData" layoutX="126.0" layoutY="114.0" prefHeight="28.0" prefWidth="160.0" />
             <TextField fx:id="fieldCF" layoutX="434.0" layoutY="79.0" />
             <TextField fx:id="fieldNazione" layoutX="434.0" layoutY="47.0" />
@@ -104,6 +109,21 @@
             <TextField fx:id="fieldPassword" layoutX="434.0" layoutY="191.0" />
             <Label layoutX="40.0" layoutY="196.0" text="Username" />
             <Label layoutX="347.0" layoutY="196.0" text="Password" />
+=======
+            <DatePicker fx:id="fieldData" layoutX="126.0" layoutY="148.0" prefHeight="28.0" prefWidth="160.0" />
+            <TextField fx:id="fieldCF" layoutX="434.0" layoutY="114.0" />
+            <TextField fx:id="fieldNazione" layoutX="434.0" layoutY="47.0" />
+            <TextField fx:id="fieldComune" layoutX="434.0" layoutY="78.0" />
+            <Label layoutX="26.0" layoutY="52.0" text="Nome" />
+            <Label layoutX="26.0" layoutY="83.0" text="Cognome" />
+            <Label layoutX="26.0" layoutY="119.0" text="Sesso" />
+            <Label layoutX="28.0" layoutY="154.0" text="Data di Nascita" />
+            <Label layoutX="306.0" layoutY="83.0" text="Comune di nascita" />
+            <Label layoutX="307.0" layoutY="51.0" text="Nazione di nascita" />
+            <Label layoutX="307.0" layoutY="119.0" text="Codice Fiscale" />
+            <Label fx:id="lblOutput" layoutX="297.0" layoutY="217.0" text="output Label" visible="false" />
+            <ChoiceBox fx:id="sex" layoutX="126.0" layoutY="114.0" onDragDetected="#handlesex" prefWidth="150.0" />
+>>>>>>> 5e0bc0e514d680d726a29fa56062b7b54162507a
       </children>
     </AnchorPane>
   </children>
