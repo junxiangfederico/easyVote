@@ -24,45 +24,20 @@ public class LoginController {
     private TextField username;
 
     @FXML
-    void handleName(ActionEvent event) {
-
-    }
-
-    @FXML
     void handleOK(ActionEvent event)throws NoSuchAlgorithmException {
     	//System.out.println("Button pressed");
     	//String messaggio = "Button pressed";
     	lblMessage.setVisible(true);
-    	
-    	String nome = username.getText();
-    	String pwd = password.getText();
     	try {
     		   String messaggio;
-		      Connection conn = DriverManager.getConnection(url, "prova", "");
-			   String Query = "SELECT * FROM users WHERE username=?";
-			   PreparedStatement preparedStatement =conn.prepareStatement(Query);
-			   preparedStatement.setString(1,nome);
+    		   Connection conn = DriverManager.getConnection(url, "prova", "");
+    		   
+
+			   PreparedStatement preparedStatement = prepareStatement(conn);
 			   ResultSet rs = preparedStatement.executeQuery();
-			   if (rs.next()) {
-				    String password = rs.getString("password");
-				    MessageDigest md = MessageDigest.getInstance("SHA-256");
-				    md.update(pwd.getBytes(StandardCharsets.UTF_8));
-				    byte[] digest = md.digest();
-				    String hex = String.format("%064x", new BigInteger(1, digest));
-				    System.out.println(password);
-				    System.out.println(hex);				    
-				    if(password.equals(hex)) {
-				    	messaggio="Login riuscito! 	(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧";
-						   lblMessage.setText(messaggio);	  
-				    }else {
-				    	messaggio="Login fallito (ノ_<。)";
-						   lblMessage.setText(messaggio);	
-				    }
-				      
-				 }else {
-				  messaggio="Username non esistente 	(￣_￣)・・・ ";
-					lblMessage.setText(messaggio);	
-				 }
+			   
+			   checkOutcome(rs);
+			   	
 		    } catch (SQLException ex) {
 		    	System.out.println("SQLExeption: "+ex.getMessage());
 				System.out.println("SQLState: "+ex.getSQLState());
@@ -70,11 +45,47 @@ public class LoginController {
 		    }
     }
 
-    @FXML
-    void handlepwd(ActionEvent event) {
+    
+    
+    private PreparedStatement prepareStatement(Connection conn) throws SQLException {
+		
+    	String Query = "SELECT * FROM users WHERE username=?";
+		PreparedStatement preparedStatement =conn.prepareStatement(Query);
+		preparedStatement.setString(1, username.getText());
+		   
+		return preparedStatement;
+	}
+    
+    private String processPassword(TextField fieldPassword) throws NoSuchAlgorithmException {
 
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(fieldPassword.getText().getBytes(StandardCharsets.UTF_8));
+        byte[] digest = md.digest();
+        String hex = String.format("%064x", new BigInteger(1, digest));
+        
+		return hex;
+	}
+
+    
+    public void checkOutcome(ResultSet rs) throws SQLException, NoSuchAlgorithmException{
+    	String pwd = processPassword(password);
+    	
+    	if (rs.next()) {
+		    String password = rs.getString("password");
+		    
+		    if (password.equals(pwd)) {
+				   lblMessage.setText("Login riuscito! 	(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧");	  
+		    } else {
+				   lblMessage.setText("Login fallito (ノ_<。)");	
+		    }
+		 } else {
+			lblMessage.setText("Username non esistente 	(￣_￣)・・・ ");	
+		 }
     }
-    void initialize() {
+
+
+
+	void initialize() {
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
         assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'login.fxml'.";
         
