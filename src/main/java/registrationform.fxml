@@ -104,7 +104,7 @@
             <Label layoutX="307.0" layoutY="51.0" text="Nazione di nascita" />
             <Label layoutX="307.0" layoutY="119.0" text="Codice Fiscale" />
             <Label fx:id="lblOutput" layoutX="297.0" layoutY="217.0" text="output Label" visible="false" />
-            <ChoiceBox fx:id="sex" layoutX="126.0" layoutY="114.0" onDragDetected="#handlesex" onMouseClicked="#handlesex" prefWidth="150.0" />
+            <ChoiceBox fx:id="sex" layoutX="126.0" layoutY="114.0" onDragDetected="#handlesex" prefWidth="150.0" />
       </children>
     </AnchorPane>
   </children>
