@@ -1,12 +1,14 @@
 package models.sessione;
 
+import java.util.List;
+
 public class SessioneDiVoto {
 
 	private final int numeroSessione;
 	private final TipoSessione tipoSessione;
 	private Boolean isOpen;
 	private final String contenuto;
-	
+	private final List<Candidato> candati;
 	/**
 	 * Classe che va a rappresentare una sessione di voto.
 	 * Una sessione di voto è caratterizzata dal numero univoco della sessione,
@@ -16,11 +18,12 @@ public class SessioneDiVoto {
 	 * @param tipoSessione		il tipo della sessione di voto
 	 * @param contenuto			il testo della sessione di voto
 	 */
-	public SessioneDiVoto(int numeroSessione, TipoSessione tipoSessione, String contenuto ) {
+	public SessioneDiVoto(int numeroSessione, TipoSessione tipoSessione, String contenuto, List<Candidato> candidati, List<Candidato> candati ) {
 		this.numeroSessione = numeroSessione;
 		this.tipoSessione = tipoSessione;
 		this.contenuto = contenuto;
-		this.isOpen = true;	
+		this.isOpen = true;
+		this.candati = candati;	
 	}
 
 	

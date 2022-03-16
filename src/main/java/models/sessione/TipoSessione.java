@@ -2,7 +2,9 @@ package models.sessione;
 
 public enum TipoSessione {
 	
-	Referendum{},
+	Referendum{
+		int numeroCandidati = 0;
+	},
 	OrdinaleCandidati{},
 	OrdinalePartiti{},
 	CategoricoCandidati{},
