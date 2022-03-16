@@ -40,7 +40,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="262.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="easyVoteproject.pagecontroller">
+<VBox prefHeight="262.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.pagecontroller">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="606.0" prefWidth="1084.0" VBox.vgrow="ALWAYS">
       <children>

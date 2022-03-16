@@ -1,4 +1,4 @@
-package easyVoteproject;
+package controllers;
 
 import java.io.IOException;
 import java.math.BigInteger;
