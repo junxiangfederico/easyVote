@@ -8,7 +8,7 @@ public class SessioneDiVoto {
 	private final TipoSessione tipoSessione;
 	private Boolean isOpen;
 	private final String contenuto;
-	private final List<Candidato> candati;
+	private final List<Candidato> candidati;
 	/**
 	 * Classe che va a rappresentare una sessione di voto.
 	 * Una sessione di voto è caratterizzata dal numero univoco della sessione,
@@ -18,12 +18,12 @@ public class SessioneDiVoto {
 	 * @param tipoSessione		il tipo della sessione di voto
 	 * @param contenuto			il testo della sessione di voto
 	 */
-	public SessioneDiVoto(int numeroSessione, TipoSessione tipoSessione, String contenuto, List<Candidato> candidati, List<Candidato> candati ) {
+	public SessioneDiVoto(int numeroSessione, TipoSessione tipoSessione, String contenuto, List<Candidato> candidati) {
 		this.numeroSessione = numeroSessione;
 		this.tipoSessione = tipoSessione;
 		this.contenuto = contenuto;
 		this.isOpen = true;
-		this.candati = candati;	
+		this.candidati = candidati;	
 	}
 
 	
