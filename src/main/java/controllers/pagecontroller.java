@@ -1,5 +1,4 @@
 package controllers;
-
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -11,10 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class pagecontroller {
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
+public class pagecontroller extends Controller{
     @FXML
     private Button login;
 
@@ -23,20 +19,12 @@ public class pagecontroller {
 
     @FXML
     void handlelogin(ActionEvent event)throws IOException {
-    	 root = FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/login.fxml"));
-    	 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-    	 scene = new Scene(root);
-    	 stage.setScene(scene);
-    	 stage.show();
+    	changeView("views/login.fxml",event);
     }
 
     @FXML
     void handleregistration(ActionEvent event)throws IOException  {
-    	root = FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/registrationform.fxml"));
-   	 	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-   	 	scene = new Scene(root);
-   	 	stage.setScene(scene);
-   	 	stage.show();
+    	changeView("views/registrationform.fxml",event);
     }
 
 }

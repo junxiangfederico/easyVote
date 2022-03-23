@@ -24,7 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RegistrationController {
+public class RegistrationController extends Controller {
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
@@ -60,11 +60,7 @@ public class RegistrationController {
     
     @FXML
     void goback(ActionEvent event) throws IOException{
-    	root = FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/pageform.fxml"));
-   	 	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-   	 	scene = new Scene(root);
-   	 	stage.setScene(scene);
-   	 	stage.show();
+    	changeView("views/pageform.fxml",event);
     }
     @FXML
     void handleOk(ActionEvent event) throws NoSuchAlgorithmException {
@@ -73,7 +69,7 @@ public class RegistrationController {
 		       Connection conn = DriverManager.getConnection(url, "prova", "");
 		       
 		       if (verifyPresence(fieldUsername.getText(), conn)) {
-				   lblOutput.setText("Utente con username " + fieldUsername.getText() + " già presente, provare con un altro username");	
+				   lblOutput.setText("Utente con username " + fieldUsername.getText() + " gia presente, provare con un altro username");	
 				   lblOutput.setVisible(true);
 		    	   return;
 		       }

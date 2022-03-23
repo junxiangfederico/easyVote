@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.io.IOException;
 import java.math.BigInteger;
-public class LoginController {
+public class LoginController extends Controller	{
 	String url = "jdbc:mysql://localhost/easyvote";
 	private Stage stage;
 	private Scene scene;
@@ -83,23 +83,19 @@ public class LoginController {
 		    String password = rs.getString("password");
 		    
 		    if (password.equals(pwd)) {
-				   lblMessage.setText("Login riuscito! 	(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧");	  
+				   lblMessage.setText("Login riuscito! 	(锞夆棔銉棔)锞?:锝ワ緹鉁?")	 ;
 		    } else {
-				   lblMessage.setText("Login fallito (ノ_<。)");	
+				   lblMessage.setText("Login fallito (銉巁<銆?");	
 		    }
 		 } else {
-			lblMessage.setText("Username non esistente 	(￣_￣)・・・ ");	
+			lblMessage.setText("Username non esistente 	(锟锟?銉汇兓銉?");	
 		 }
     }
 
-
+    
     @FXML
     void handlegoback(ActionEvent event) throws IOException {
-    	root = FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/pageform.fxml"));
-   	 	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-   	 	scene = new Scene(root);
-   	 	stage.setScene(scene);
-   	 	stage.show();
+    	changeView("views/pageform.fxml",event);
     }
 	void initialize() {
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
