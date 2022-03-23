@@ -61,13 +61,5 @@ public class Elettore extends Utente{
     	else 
     		return false;
     }
-    //@requires age(this.getDatanascita())>=18;
-    //@requires this.Vote==false;
-
-    public boolean castVote() {
-    		this.Vote=true;
-    		return true;
-    		
-    }     
         
 }

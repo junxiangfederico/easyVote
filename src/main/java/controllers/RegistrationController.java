@@ -102,8 +102,8 @@ public class RegistrationController extends Controller {
 
 	public PreparedStatement prepareStatement(Connection conn) throws NoSuchAlgorithmException, SQLException{
     	 String Query = "INSERT INTO `easyVote`.`users` (`name`, `lastname`, "
-			   		+ "`birthdate`, `birthplace`, `codicefiscale`, `username`, `password`) "
-			   		+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			   		+ "`birthdate`, `birthplace`, `codicefiscale`, `username`, `password`, `isadmin`) "
+			   		+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     	 
     	 String data = processDate(fieldData);
     	 String password = processPassword(fieldPassword);
@@ -130,6 +130,7 @@ public class RegistrationController extends Controller {
 		preparedStatement.setString(5, fieldCF.getText().toUpperCase());
 		preparedStatement.setString(6, fieldUsername.getText());
 		preparedStatement.setString(7, password);
+		preparedStatement.setString(8, "0");
 		return preparedStatement;
     }
     
