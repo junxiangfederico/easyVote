@@ -1,8 +1,5 @@
-/.DS_Store
-/App.class
-/controllers/
 /easyVoteproject/
 /models/
-/java/
 /views/
-/database/
+/dao/
+/controllers/

@@ -53,31 +53,8 @@ public class LoginController extends Controller	{
 				System.out.println("VendorError: "+ ex.getErrorCode());
 		    }
     }
-
-    
-    
-    private PreparedStatement prepareStatement(Connection conn) throws SQLException {
-		
-    	String Query = "SELECT * FROM users WHERE username=?";
-		PreparedStatement preparedStatement =conn.prepareStatement(Query);
-		preparedStatement.setString(1, username.getText());
-		   
-		return preparedStatement;
-	}
-    
-    private String processPassword(TextField fieldPassword) throws NoSuchAlgorithmException {
-
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(fieldPassword.getText().getBytes(StandardCharsets.UTF_8));
-        byte[] digest = md.digest();
-        String hex = String.format("%064x", new BigInteger(1, digest));
-        
-		return hex;
-	}
-
     
     public void checkOutcome(ResultSet rs) throws SQLException, NoSuchAlgorithmException{
-    	String pwd = processPassword(password);
     	
     	if (rs.next()) {
 		    String password = rs.getString("password");

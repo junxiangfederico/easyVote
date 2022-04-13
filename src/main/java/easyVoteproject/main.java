@@ -1,5 +1,7 @@
 package easyVoteproject;
 
+import models.utenti.Elettore;
+
 public class main {
 
 	public static void main(String[] args) {

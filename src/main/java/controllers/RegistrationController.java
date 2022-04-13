@@ -23,6 +23,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import dao.utenti.*;
 
 public class RegistrationController extends Controller {
 	private Stage stage;
@@ -68,11 +69,11 @@ public class RegistrationController extends Controller {
     	try {
 		       Connection conn = DriverManager.getConnection(url, "prova", "");
 		       
-		       if (verifyPresence(fieldUsername.getText(), conn)) {
+		       /*if (IDAOUtentijdbc.verifyPresence(fieldUsername.getText())) {
 				   lblOutput.setText("Utente con username " + fieldUsername.getText() + " gia presente, provare con un altro username");	
 				   lblOutput.setVisible(true);
 		    	   return;
-		       }
+		       }*/
 		       
 			   PreparedStatement preparedStatement = prepareStatement(conn);
 			   preparedStatement.executeUpdate();
@@ -89,16 +90,6 @@ public class RegistrationController extends Controller {
     	
     }
     
-    private boolean verifyPresence(String username, Connection conn) throws SQLException {
-    	 String Query = "SELECT * FROM users WHERE username=?";
-    	 PreparedStatement preparedStatement =conn.prepareStatement(Query);
-    	 preparedStatement.setString(1, username);
-		 ResultSet rs = preparedStatement.executeQuery();
-		 if (rs.next()) {
-			 return true;
-		 }
-		return false;
-	}
 
 	public PreparedStatement prepareStatement(Connection conn) throws NoSuchAlgorithmException, SQLException{
     	 String Query = "INSERT INTO `easyVote`.`users` (`name`, `lastname`, "
