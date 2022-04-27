@@ -1,9 +1,11 @@
 package models.utenti;
 
+import easyVoteproject.Data;
+
 public class Scrutatore extends Utente{
 
-	public Scrutatore (int id,   String firstname, String lastname, String codiceFiscale /*Gender sesso */) {
-    	super(id,firstname,lastname,codiceFiscale);
+	public Scrutatore (String firstname, String lastname, Data datanascita,String nazioneNascita,String codiceFiscale) {
+    	super(firstname,lastname,datanascita,nazioneNascita,codiceFiscale );
     }
     public boolean isScrutatore() {
     	return true;

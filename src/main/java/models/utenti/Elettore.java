@@ -1,11 +1,12 @@
 package models.utenti;
 
-
+import easyVoteproject.Data;
+import easyVoteproject.Gender;
 
 public class Elettore extends Utente{
 
-    public Elettore (int id,   String firstname, String lastname, String codiceFiscale /*Gender sesso */) {
-    	super(id,firstname,lastname,codiceFiscale);
+	 public Elettore(String firstname, String lastname, Data datanascita,String nazioneNascita,String codiceFiscale) {
+    	super(firstname,lastname,datanascita,nazioneNascita,codiceFiscale );
     }
     public boolean isScrutatore() {
     	return false;

@@ -1,5 +1,6 @@
+/controllers/
+/dao/
 /easyVoteproject/
 /models/
 /views/
-/dao/
-/controllers/
+/database/

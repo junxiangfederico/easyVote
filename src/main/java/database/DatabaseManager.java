@@ -43,10 +43,10 @@ public class DatabaseManager {
 			}
 		}
 
-		// metodo utile
 		public PreparedStatement preparaStatement(String q) {
 			PreparedStatement result = null;
 			try {
+				open();
 				result = con.prepareStatement(q);
 			} catch (SQLException e) {
 				e.printStackTrace();

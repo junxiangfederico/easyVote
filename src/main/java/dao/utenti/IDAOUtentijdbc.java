@@ -14,14 +14,14 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import models.utenti.*;
 
-// un prodotto della famiglia UtenteDAO
+
 public class IDAOUtentijdbc implements IDAOUtenti {
 
 	public IDAOUtentijdbc() {}
-	public boolean login(String username, String password) throws NoSuchAlgorithmException {		
+	public boolean login(String username, String password) throws NoSuchAlgorithmException, SQLException {		
 		String hashedPassword = processPassword(password);
 		String q = "SELECT * FROM users WHERE username=? and password=? ;";
-		Utente result = null;
+		//Utente result = null;
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 			p.setString(1, username);
 			p.setString(2, hashedPassword);
@@ -40,28 +40,26 @@ public class IDAOUtentijdbc implements IDAOUtenti {
 	    } 
     }
 
-	/*@ requires t != null && pass != null && getId(t) == 0;
-	  @ ensures \result == true;
-	  @*/
-	public boolean registraElettore(Utente t, String pass) {
-		boolean result;
+	public boolean registraElettore(Utente t,String username, String pass) throws NoSuchAlgorithmException {
+		boolean result=false;
 		String q = "INSERT INTO `easyVote`.`users` (`name`, `lastname`, "
 		   		+ "`birthdate`, `birthplace`, `codicefiscale`, `username`, `password`) "
 		   		+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		try {
-			p.setString(1, t.getNome());
-			p.setString(2, t.getCognome());
-			p.setString(3, t.getCF());
-			p.setString(4, t.isGestore() ? "g" : "e");
-			p.setString(5, sha1Hashing(pass));
-			
-			result = p.execute();
+			p.setString(1, t.getfirstname());
+			p.setString(2, t.getlastname());
+			p.setString(3, t.getData());
+			p.setString(4, t.getnazioneNascita());
+			p.setString(5, t.getcf());
+			p.setString(6, username);
+			p.setString(7, processPassword(pass));
+			result=p.execute();
 		} catch (SQLException e) {
-			throw new DatabaseException("Problemi con la base dati, riprovare! Context: registraElettore");
+			e.printStackTrace();
 		}
-		
 		return result;
+		
 	}
 	private String processDate(DatePicker fieldData) {
 		
@@ -91,11 +89,11 @@ public class IDAOUtentijdbc implements IDAOUtenti {
 	
 	
 
-	private String processPassword(String fieldPassword) throws NoSuchAlgorithmException {
+	private String processPassword(String Password) throws NoSuchAlgorithmException {
 		String hex="";
 		try {
 	        MessageDigest md = MessageDigest.getInstance("SHA-256");
-	        md.update(fieldPassword.getBytes(StandardCharsets.UTF_8));
+	        md.update(Password.getBytes(StandardCharsets.UTF_8));
 	        byte[] digest = md.digest();
 	        hex = String.format("%064x", new BigInteger(1, digest));
 	        
@@ -106,5 +104,32 @@ public class IDAOUtentijdbc implements IDAOUtenti {
         
 		return hex;
 		
+	}
+	@Override
+	public Utente get(String id) {
+		// non usato
+		return null;
+	}
+
+	@Override
+	public List<Utente> getAll() {
+		// non usato
+		return null;
+	}
+
+	@Override
+	public void save(Utente t) {
+		// non usato
+		
+	}
+
+	@Override
+	public void update(Utente  t, Utente u) {
+		// non usato
+	}
+
+	@Override
+	public void delete(Utente t) {
+		// non usato
 	}
 }

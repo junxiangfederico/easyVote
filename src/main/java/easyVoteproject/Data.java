@@ -1,5 +1,10 @@
 package easyVoteproject;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
+import javafx.scene.control.DatePicker;
+
 public class Data {
     private final int giorno;
     private final int mese;
@@ -14,9 +19,9 @@ public class Data {
      */
     public Data(String input){
         String[] split = input.split("-");
-        giorno = Integer.parseInt(split[0]);
+        anno = Integer.parseInt(split[0]);
         mese = Integer.parseInt(split[1]);
-        anno = Integer.parseInt(split[2]);
+        giorno = Integer.parseInt(split[2]);
     }
 
 
@@ -31,9 +36,16 @@ public class Data {
     public int getAnno() {
         return anno;
     }
-    
+	public static String processDate(DatePicker fieldData) {
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd",Locale.US);
+		String formattedValue = (fieldData.getValue()).format(formatter);
+		
+		return formattedValue;
+	}
+
     @Override
     public String toString() {
-        return giorno + "-" + mese + "-" + anno;
+        return anno + "-" + mese + "-" + giorno;
     }
 }
