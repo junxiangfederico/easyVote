@@ -19,12 +19,12 @@ public class pagecontroller extends Controller{
 
     @FXML
     void handlelogin(ActionEvent event)throws IOException {
-    	changeView("views/login.fxml",event);
+    	changeView("easyVoteproject/resources/login.fxml",event);
     }
 
     @FXML
     void handleregistration(ActionEvent event)throws IOException  {
-    	changeView("views/registrationform.fxml",event);
+    	changeView("easyVoteproject/resources/registrationform.fxml",event);
     }
 
 }

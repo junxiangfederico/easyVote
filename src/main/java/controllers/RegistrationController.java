@@ -60,7 +60,7 @@ public class RegistrationController extends Controller {
     
     @FXML
     void goback(ActionEvent event) throws IOException{
-    	changeView("views/pageform.fxml",event);
+    	changeView("easyVoteproject/resources/pageform.fxml",event);
     }
     @FXML
     void handleOk(ActionEvent event) throws NoSuchAlgorithmException {

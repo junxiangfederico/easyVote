@@ -17,5 +17,7 @@ public class Candidato extends Partecipante{
 	}
 	
 	
-	
+	public String getIdentificativo(){
+		return this.identificativo;
+	}
 }

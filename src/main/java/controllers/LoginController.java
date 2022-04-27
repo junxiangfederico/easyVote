@@ -95,7 +95,7 @@ public class LoginController extends Controller	{
     
     @FXML
     void handlegoback(ActionEvent event) throws IOException {
-    	changeView("views/pageform.fxml",event);
+    	changeView("easyVoteproject/resources/pageform.fxml",event);
     }
 	void initialize() {
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
