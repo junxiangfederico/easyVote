@@ -9,15 +9,19 @@ package models.sessione;
  *
  */
 public class Candidato extends Partecipante{
-	private final String identificativo;
+	public final String identificativo;
 	
 	public Candidato(TipoPartecipante tipo, String identificativo) {
 		super(tipo);
 		this.identificativo = identificativo;
 	}
 	
-	
-	public String getIdentificativo(){
+	public String getidentificativo(){
+		return this.identificativo;
+	}
+
+
+	public String getIdentificativo() {
 		return this.identificativo;
 	}
 }

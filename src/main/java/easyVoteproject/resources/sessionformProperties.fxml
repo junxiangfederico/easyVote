@@ -92,9 +92,9 @@
             <Button fx:id="btnAdd" layoutX="462.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleAdd" text="Aggiungi" />
             <Text layoutX="44.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il nome di un candidato:" />
             <Text layoutX="44.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I candidati attualmente presenti in questa sessione sono:" />
-            <TableView fx:id="tableCandidates" layoutX="240.0" layoutY="128.0" prefHeight="200.0" prefWidth="160.0">
+            <TableView fx:id="tableCandidates" editable="true" layoutX="240.0" layoutY="128.0" prefHeight="200.0" prefWidth="160.0">
               <columns>
-                <TableColumn prefWidth="204.0" text="Nome" />
+                <TableColumn fx:id="tableColumn" prefWidth="204.0" text="Nome" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -103,7 +103,7 @@
             <Button fx:id="btnRemove" layoutX="464.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleRemove" text="Remove" />
             <Button fx:id="btnConfirm" layoutX="464.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleConfirm" text="Apri sessione" />
             <Text layoutX="482.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conferma" />
-            <Label fx:id="lblTop" layoutX="305.0" layoutY="27.0" text="Label" />
+            <Label fx:id="lblTop" layoutX="240.0" layoutY="28.0" text="Label" />
             <Label fx:id="outputLabel" layoutX="305.0" layoutY="342.0" text="label" visible="false" />
       </children>
     </AnchorPane>

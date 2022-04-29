@@ -1,5 +1,6 @@
 package models.sessione;
 
+import java.util.Collections;
 import java.util.List;
 
 public class SessioneDiVoto {
@@ -54,6 +55,41 @@ public class SessioneDiVoto {
 
 	public static void addCandidato(Candidato candidato) {
 			candidati.add(candidato);
+	}
+
+
+
+
+
+
+	public String querygetIsOpen() {
+		return isOpen ? "0" : "1";
+	}
+
+
+
+
+
+
+	/**
+	 * '{"candidato1": "fede", "candidato2": "angelo", "candidato3": "marco"}'
+	 * @return
+	 */
+	public String querygetCandidati() {
+		StringBuilder s = new StringBuilder("{");
+		for (int i = 1; i < candidati.size() + 1; i++) {
+			s.append("\"candidato" + i + "\": \"");
+			s.append(candidati.get(i-1).getIdentificativo());
+			s.append("\", ");
+		}
+		s.deleteCharAt(s.lastIndexOf(","));
+		s.append("}");
+		return s.toString();
+		
+	}
+
+	public List<Candidato> getCandidati() {
+		return Collections.unmodifiableList(this.candidati);
 	}
 	
 	

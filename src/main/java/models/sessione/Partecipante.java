@@ -7,9 +7,30 @@ public abstract class Partecipante {
 		this.tipo = tipo;
 	}
 
+	
+	public String getTipo(){
+		return this.tipo.toString();
+	}
+	
 	public enum TipoPartecipante{
-		Partito{},
-		Indipendente{},
-		Persona{}
+		Partito{
+			@Override
+			public String toString(){
+				return "Partito";
+			}
+			
+		},
+		Indipendente{
+			@Override
+			public String toString(){
+				return "Indipendente";
+			}
+		},
+		Persona{
+			@Override
+			public String toString(){
+				return "Persona";
+			}
+		}
 	}
 }
