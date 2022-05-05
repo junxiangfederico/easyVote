@@ -76,6 +76,11 @@ public class SessioneDiVoto {
 	 * @return
 	 */
 	public String querygetCandidati() {
+		if (candidati.size() == 0) {
+			return "{}";
+		}
+		
+		
 		StringBuilder s = new StringBuilder("{");
 		for (int i = 1; i < candidati.size() + 1; i++) {
 			s.append("\"candidato" + i + "\": \"");
@@ -88,6 +93,18 @@ public class SessioneDiVoto {
 		
 	}
 
+	public Boolean removeCandidato(String s){
+		for (Candidato c : candidati) {
+			if (c.getidentificativo().equals(s)) {
+				candidati.remove(c);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	public List<Candidato> getCandidati() {
 		return Collections.unmodifiableList(this.candidati);
 	}

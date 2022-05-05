@@ -68,8 +68,17 @@ public class sessionformController extends Controller implements Initializable {
 				   		+ "VALUES (?, ?)";
 
 		       PreparedStatement preparedStatement = conn.prepareStatement(Query);
-		       preparedStatement.setString(1, choiceBox.getSelectionModel().getSelectedItem());
-		       preparedStatement.setString(2, textArea.getText());
+		       
+		       if (textArea.getText().isBlank() || textArea.getText().isEmpty()) {
+
+			       preparedStatement.setString(1, "");
+		       }else {
+
+			       preparedStatement.setString(1, textArea.getText());
+		       }
+
+		       
+		       preparedStatement.setString(2, choiceBox.getSelectionModel().getSelectedItem());
 			   preparedStatement.executeUpdate();
 			   
 			   int value = getValue(conn);

@@ -36,6 +36,7 @@ public class LoginController extends Controller	{
     @FXML
     private TextField username;
 
+    ResultSet rs;
     @FXML
     void handleOK(ActionEvent event)throws NoSuchAlgorithmException {
     	lblMessage.setVisible(true);
@@ -46,7 +47,10 @@ public class LoginController extends Controller	{
 			   ResultSet rs = preparedStatement.executeQuery();
 			   
 			   checkOutcome(rs);
-			   	
+			   System.out.println(rs.getString("isadmin"));
+			   if (rs.getString("isadmin").equals("1")) {
+				   changeView("easyVoteproject/resources/sessionform.fxml",event);
+			   }
 		    } catch (SQLException ex) {
 		    	System.out.println("SQLExeption: "+ex.getMessage());
 				System.out.println("SQLState: "+ex.getSQLState());
@@ -78,17 +82,18 @@ public class LoginController extends Controller	{
     
     public void checkOutcome(ResultSet rs) throws SQLException, NoSuchAlgorithmException{
     	String pwd = processPassword(password);
-    	
+    	this.rs = rs;
     	if (rs.next()) {
 		    String password = rs.getString("password");
 		    
 		    if (password.equals(pwd)) {
-				   lblMessage.setText("Login riuscito! 	(锞夆棔銉棔)锞?:锝ワ緹鉁?")	 ;
+				   lblMessage.setText("Login riuscito!");
+				   
 		    } else {
-				   lblMessage.setText("Login fallito (銉巁<銆?");	
+				   lblMessage.setText("Login fallito");	
 		    }
 		 } else {
-			lblMessage.setText("Username non esistente 	(锟锟?銉汇兓銉?");	
+			lblMessage.setText("Username non esistente");	
 		 }
     }
 

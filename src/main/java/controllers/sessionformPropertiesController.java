@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +15,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -27,7 +30,7 @@ import models.sessione.Partecipante.TipoPartecipante;
 import models.sessione.SessioneDiVoto;
 import models.sessione.TipoSessione;
 
-public class sessionformPropertiesController implements Initializable{
+public class sessionformPropertiesController extends Controller implements Initializable{
 	
 	private int sessionId = 0;
 
@@ -61,87 +64,21 @@ public class sessionformPropertiesController implements Initializable{
 
     
     @FXML
-    private TableView<Candidato2> tableCandidates = new TableView<>();;
+    private TableView<CandidatoSemplice> tableCandidates = new TableView<>();
 
 
     @FXML
-    private TableColumn<Candidato2, String> tableColumn = new TableColumn<>("Nomi");
+    private TableColumn<CandidatoSemplice, String> tableColumn = new TableColumn<>("Nomi");
     
     @FXML
     void handleAdd(ActionEvent event) {
-    	
-    	if (sessionId != 0) {
-    		Connection conn;
-    	    try {
-    	    	conn = DriverManager.getConnection(url, "prova", "");
-
-    	   	 	String Query = "SELECT * FROM session where session.id = "+ sessionId + ";";
-    	   	 	PreparedStatement preparedStatement;
-    			preparedStatement = conn.prepareStatement(Query);
-    			ResultSet rs = preparedStatement.executeQuery();
-    			rs.next();
-    			
-    			List<Candidato> l = new ArrayList<>();
-    			TipoSessione t = null;
-    			switch (rs.getString(5)) {
-    				case "Referendum":
-    					t = TipoSessione.Referendum;
-    					break;
-    				case "OrdinaleCandidati": 
-    					t = TipoSessione.OrdinaleCandidati;
-    					break;
-    				case "OrdinalePartiti":
-    					t = TipoSessione.OrdinalePartiti;
-    					break;
-    				case "CategoricoCandidati":
-    					t = TipoSessione.CategoricoPartiti;
-    					break;
-    				case "CategoricoPreferenze":
-    					t = TipoSessione.CategoricoPartiti;
-    					break;
-    			}
-    			boolean b;
-    			if (rs.getString(4).equals("1")) {
-        			b = true;
-    			}else {
-    				b = false;
-    			}
-    			//System.out.println(rs.getString(3));
-    			String[] entries = rs.getString(3).split(",");   
-    			List<Candidato> candidati = new ArrayList<>();
-    			for (String s : entries) {
-    				s = s.replace("{", "").stripLeading();
-    				s = s.replace("}", "").stripTrailing();
-    				String[] a = s.split(":");
-    				for (int i = 0; i < a.length-1; i++) {
-    					if (a[i].startsWith("\"candidato"));
-    					Candidato d = new Candidato(null, a[i+1].replaceAll("\"", "").stripLeading().stripTrailing());
-    					candidati.add(d);
-    				}
-    			}
-    			
-    			for (Candidato aa : candidati) {
-    				System.out.println(aa.getIdentificativo());
-    			}
-    			SessioneDiVoto s = new SessioneDiVoto(Integer.parseInt(rs.getString(1)), t, b, rs.getString(2), candidati);
-    			if (!inputName.getText().equals("")) {
-    				Candidato d = new Candidato(null, inputName.getText());
-        			SessioneDiVoto.addCandidato(d);
-        			updateSessione(s);
-    			}else {
-    				outputLabel.setText("Candidato da inserire non può avere nome nullo");
-    				outputLabel.setVisible(true);
-    			}
-    			
-    			
-    	    }catch (SQLException e) {
-    	    	e.printStackTrace();
-    	    }
-    	}
-    	
-    	
-    	
-    		
+    		if (inputName.getText().isBlank() || inputName.getText().isEmpty()) {
+    			System.out.println("returning");
+    			return;
+    		}else {
+        		s.addCandidato(new Candidato(null, inputName.getText()));
+        		updateColumns(s);
+    		}
     }
 
     /**
@@ -168,23 +105,42 @@ public class sessionformPropertiesController implements Initializable{
 	}
 
 	@FXML
-    void handleConfirm(ActionEvent event) {
+    void handleConfirm(ActionEvent event) throws IOException {
+
+    	this.s.setIsOpen(true);
+    	updateSessione(this.s);
     	
+    	
+        FXMLLoader loader= new FXMLLoader(getClass().getClassLoader().getResource("easyVoteproject/resources/voteOrdinaryform.fxml")); 
+        Parent root = loader.load(); 
+        voteOrdinaryformController votoOrdinario =loader.getController();
+        votoOrdinario.loadSession(s.getNumeroSessione());
+        changeView("easyVoteproject/resources/voteOrdinaryform.fxml",event);
     }
 
+	
+	
     @FXML
     void handleRemove(ActionEvent event) {
-
+    	CandidatoSemplice c2 = tableCandidates.getSelectionModel().getSelectedItem();
+    	if (c2 == null) return;
+    	if (s.removeCandidato(c2.getidentificativo())) {
+    		updateSessione(this.s);
+    	}else {
+    		updateColumns(s);
+    		throw new IllegalArgumentException("Utente non rimosso, desync tra UI e backend presente");
+    	}
+    	
     }
     
     
     public void updateColumns(SessioneDiVoto s){
     	tableColumn.setCellValueFactory(
-				new PropertyValueFactory<Candidato2, String>("identificativo")); 
+				new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
 
-		ObservableList<Candidato2> lista = FXCollections.observableArrayList();
+		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
     	for (Candidato c: s.getCandidati()) {
-    		lista.add(new Candidato2(c.getidentificativo()));
+    		lista.add(new CandidatoSemplice(c.getidentificativo()));
     	}
 
         tableCandidates.setItems(lista);
@@ -223,7 +179,6 @@ public class sessionformPropertiesController implements Initializable{
     		Connection conn;
     	    try {
     	    	conn = DriverManager.getConnection(url, "prova", "");
-
     	   	 	String Query = "SELECT * FROM session where session.id = "+ sessionId + ";";
     	   	 	PreparedStatement preparedStatement;
     			preparedStatement = conn.prepareStatement(Query);
@@ -255,27 +210,32 @@ public class sessionformPropertiesController implements Initializable{
     			}else {
     				b = false;
     			}
-    			//System.out.println(rs.getString(3));
-    			String[] entries = rs.getString(3).split(",");   
     			List<Candidato> candidati = new ArrayList<>();
-    			for (String s : entries) {
-    				s = s.replace("{", "").stripLeading();
-    				s = s.replace("}", "").stripTrailing();
-    				String[] a = s.split(":");
-    				for (int i = 0; i < a.length-1; i++) {
-    					if (a[i].startsWith("\"candidato"));
-    					Candidato d = new Candidato(null, a[i+1].replaceAll("\"", "").stripLeading().stripTrailing());
-    					candidati.add(d);
-    				}
+    			String candidates = rs.getString(3);
+    			
+    			if (candidates == null){
+    				sessione = new SessioneDiVoto(Integer.parseInt(rs.getString(1)), t, b, rs.getString(2), candidati);
+    				return sessione;
+    			}else if (candidates != null){
+    				String[] entries = candidates.split(",");   
+        			for (String s : entries) {
+        				s = s.replace("{", "").stripLeading();
+        				s = s.replace("}", "").stripTrailing();
+        				String[] a = s.split(":");
+        				for (int i = 0; i < a.length-1; i++) {
+        					if (a[i].startsWith("\"candidato"));
+        					Candidato d = new Candidato(null, a[i+1].replaceAll("\"", "").stripLeading().stripTrailing());
+        					candidati.add(d);
+        				}
+        			}
     			}
     			
-    			for (Candidato aa : candidati) {
-    				System.out.println(aa.getIdentificativo());
-    			}
     			sessione = new SessioneDiVoto(Integer.parseInt(rs.getString(1)), t, b, rs.getString(2), candidati);
     	    }catch (SQLException e) {
     	    	e.printStackTrace();
     	    }
+		}else {
+			throw new IllegalArgumentException("Session ID non fornito");
 		}
 		return sessione;
 	}
@@ -290,31 +250,6 @@ public class sessionformPropertiesController implements Initializable{
 		return Integer.parseInt(rs.getString(1));
 	}
 
-
-public class Candidato2 {
-	public final String identificativo;
-	
-	public Candidato2(String identificativo) {
-		this.identificativo = identificativo;
-	}
-	
-	public String getidentificativo(){
-		return this.identificativo;
-	}
-
-	public String identificativo() {
-		return this.identificativo;
-	}
-	
-	public String getIdentificativo() {
-		return this.identificativo;
-	}
-	
-	@Override
-	public String toString() {
-		return this.identificativo;
-	}
-}
 }
 
 

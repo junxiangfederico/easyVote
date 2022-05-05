@@ -40,12 +40,10 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sessionformPropertiesController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.voteOrdinaryformController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -86,25 +84,15 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="507.0" prefWidth="639.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <TextField fx:id="inputName" layoutX="240.0" layoutY="64.0" prefHeight="26.0" prefWidth="196.0" />
-            <Button fx:id="btnAdd" layoutX="490.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleAdd" text="Aggiungi" />
-            <Text layoutX="44.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il nome di un candidato:" />
-            <Text layoutX="44.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I candidati attualmente presenti in questa sessione sono:" />
-            <TableView fx:id="tableCandidates" editable="true" layoutX="240.0" layoutY="128.0" prefHeight="200.0" prefWidth="196.0">
+            <Label fx:id="lblTop" layoutX="305.0" layoutY="28.0" text="Label" />
+            <TableView fx:id="tableCandidates" editable="true" layoutX="135.0" layoutY="69.0" prefHeight="269.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="tableColumn" prefWidth="204.0" text="Identificativo" />
+                <TableColumn fx:id="tableColumn" prefWidth="199.0" text="Identificativo" />
               </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
             </TableView>
-            <Button fx:id="btnRemove" layoutX="466.0" layoutY="153.0" mnemonicParsing="false" onAction="#handleRemove" text="Rimuovi selezionato" />
-            <Button fx:id="btnConfirm" layoutX="446.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleConfirm" text="Conferma e torna alla home" />
-            <Text layoutX="502.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conferma" />
-            <Label fx:id="lblTop" layoutX="240.0" layoutY="28.0" text="Label" />
-            <Label fx:id="outputLabel" layoutX="305.0" layoutY="342.0" text="label" visible="false" />
+            <Button fx:id="btnConfirm" layoutX="431.0" layoutY="174.0" mnemonicParsing="false" onAction="#handleVote" prefHeight="26.0" prefWidth="82.0" text="Vota" />
       </children>
     </AnchorPane>
   </children>
