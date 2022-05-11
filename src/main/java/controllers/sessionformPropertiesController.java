@@ -93,7 +93,7 @@ public class sessionformPropertiesController extends Controller implements Initi
 	   	 	PreparedStatement preparedStatement;
 			preparedStatement = conn.prepareStatement(Query);
 		    preparedStatement.setString(1, s.querygetCandidati());
-		    preparedStatement.setString(2, s.querygetIsOpen());
+		    preparedStatement.setInt(2, s.querygetIsOpen());
 		    preparedStatement.setString(3, "" + sessionId);
 			preparedStatement.execute();
 			updateColumns(s);

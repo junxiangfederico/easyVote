@@ -65,7 +65,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 			contenuto=res.getString(2);
 			
 			
-			result = new SessioneDiVoto(id,tipovoto,contenuto);
+			result = new SessioneDiVoto(id,tipovoto,false, contenuto, null);
 		} catch (SQLException e) {
 			System.out.println("Problemi con la base dati, riprovare! Context: getFromResult");
 		}
@@ -98,7 +98,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		try {	
-			p.setInt(1, s.getNumerosessione());
+			p.setInt(1, s.getNumeroSessione());
 			p.execute();
 		} catch (SQLException e) {
 			System.out.println("Problemi con la base dati, riprovare! Context: start");
@@ -112,7 +112,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 		
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		try {	
-			p.setInt(0, s.getNumerosessione());
+			p.setInt(0, s.getNumeroSessione());
 			p.execute();
 		} catch (SQLException e) {
 			System.out.println("Problemi con la base dati, riprovare! Context: stop");
@@ -126,11 +126,11 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 		
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		try {	
-			p.setInt(1, t.getNumerosessione());
+			p.setInt(1, t.getNumeroSessione());
 			p.setString(2, t.getContenuto()); 
-			p.setInt(3,t.); 
-			p.setString(4, t.getIsOpen());
-			p.setString(5, t.getTiposessione().toString());
+			p.setString(3, t.querygetCandidati()); 
+			p.setInt(4, t.querygetIsOpen());
+			p.setString(5, t.getTipoSessione().toString());
 			p.execute();
 		} catch (SQLException e) {
 			System.out.println("Problemi con la base dati, riprovare! Context: start");
@@ -153,35 +153,29 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 		}
 	}
 	
-	@Override
-	public int getId(SessioneDiVoto s) {
-		String q = "select id from Sessione where nome = ?;";
-		
-
-		int result = 0;
-		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
-		try {
-			p.setString(1, s.getNome());
-			ResultSet res = p.executeQuery();
-			
-			if (!res.isBeforeFirst())
-				throw new SessioneNotFoundException("Sessione non esiste!");
-			
-			while (res.next())
-				result = res.getInt(1);
-		} catch (SQLException e) {
-			throw new DatabaseException("Problemi con la base dati, riprovare! Context: getId");
-		}
-			
-		return result;
-	}
-	
-	
 
 	
 	
 	@Override
 	public void update(SessioneDiVoto t, SessioneDiVoto u) {
 		// non serve
+	}
+
+	@Override
+	public SessioneDiVoto get(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getId(SessioneDiVoto s) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<SessioneDiVoto> getAll(Elettore e) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
