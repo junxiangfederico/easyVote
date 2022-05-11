@@ -11,7 +11,6 @@ public abstract class DAOFactory {
 		return factory;
 	}
 	
-	// factory methods per tutti i dao
 	public abstract IDAOUtenti getUtenteDAOInstance();
 	
 }

@@ -2,7 +2,7 @@ package dao;
 
 import java.util.List;
 
-//aggregazione di famiglie di prodotti
+
 public interface IDAO<T> {
 	public T get(String id);
 	public List<T> getAll();
