@@ -43,8 +43,8 @@ public class IDAOUtentijdbc implements IDAOUtenti {
 	public boolean registraElettore(Utente t,String username, String pass) throws NoSuchAlgorithmException {
 		boolean result=false;
 		String q = "INSERT INTO `easyVote`.`users` (`name`, `lastname`, "
-		   		+ "`birthdate`, `birthplace`, `codicefiscale`, `username`, `password`) "
-		   		+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+		   		+ "`birthdate`, `birthplace`, `codicefiscale`, `username`, `password`,`isadmin`) "
+		   		+ "VALUES (?, ?, ?, ?, ?, ?, ?,0)";
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		try {
 			p.setString(1, t.getfirstname());

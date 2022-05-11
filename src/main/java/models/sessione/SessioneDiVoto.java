@@ -4,11 +4,10 @@ import java.util.List;
 
 public class SessioneDiVoto {
 
-	private final int numeroSessione;
-	private final TipoSessione tipoSessione;
-	private Boolean isOpen;
+	private final int numerosessione;
+	private final TipoSessione tiposessione;
 	private final String contenuto;
-	private final List<Candidato> candidati;
+	//private Boolean isOpen;
 	/**
 	 * Classe che va a rappresentare una sessione di voto.
 	 * Una sessione di voto è caratterizzata dal numero univoco della sessione,
@@ -18,33 +17,36 @@ public class SessioneDiVoto {
 	 * @param tipoSessione		il tipo della sessione di voto
 	 * @param contenuto			il testo della sessione di voto
 	 */
-	public SessioneDiVoto(int numeroSessione, TipoSessione tipoSessione, String contenuto, List<Candidato> candidati) {
-		this.numeroSessione = numeroSessione;
-		this.tipoSessione = tipoSessione;
+	public SessioneDiVoto(int numeroSessione, TipoSessione tipoSessione, String contenuto) {
+		this.numerosessione = numeroSessione;
+		this.tiposessione = tipoSessione;
 		this.contenuto = contenuto;
-		this.isOpen = true;
-		this.candidati = candidati;	
+		//this.isOpen = true;
 	}
 
 	
-	public Boolean getIsOpen() {
+	/*public Boolean getIsOpen() {
 		return isOpen;
-	}
+	}*/
 
-	public void setIsOpen(Boolean isOpen) {
+	/*public void setIsOpen(Boolean isOpen) {
 		this.isOpen = isOpen;
-	}
+	}*/
 
-	public int getNumeroSessione() {
-		return numeroSessione;
-	}
-
-	public TipoSessione getTipoSessione() {
-		return tipoSessione;
-	}
+	
 
 	public String getContenuto() {
 		return contenuto;
+	}
+
+
+	public int getNumerosessione() {
+		return numerosessione;
+	}
+
+
+	public TipoSessione getTiposessione() {
+		return tiposessione;
 	}
 	
 	

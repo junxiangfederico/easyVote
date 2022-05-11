@@ -12,18 +12,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public abstract class Controller  {
-	// inizializza la schermata
-	//public abstract void init(Object parameter);
 	
-	// metodo per cambiare la schermata
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
-	/***
-	 * Cambia la schermata corrente.
-	 * @param view La vista a cui si vuole passare.
-	 * @param parameter Parametri da passare alla schermata {@code view}. 
-	 */
+	
 	public void changeView(String view,ActionEvent event) {
 		try {
 			root = FXMLLoader.load(getClass().getClassLoader().getResource(view));

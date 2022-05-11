@@ -1,6 +1,4 @@
-/controllers/
 /dao/
-/easyVoteproject/
-/models/
 /views/
-/database/
+/models/
+/controllers/

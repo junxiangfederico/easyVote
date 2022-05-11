@@ -41,7 +41,9 @@ public class LoginController extends Controller	{
     	
     }
     
-
+    public void getinfo(String id) {
+    	System.out.print(id);
+    }
     
     @FXML
     void handlegoback(ActionEvent event) throws IOException {
