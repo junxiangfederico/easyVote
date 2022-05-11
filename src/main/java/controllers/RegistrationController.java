@@ -23,12 +23,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import dao.factory.DAOFactory;
+import dao.utenti.*;
+import easyVoteproject.Data;
+import models.utenti.*;
 public class RegistrationController extends Controller {
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
-	private final String url = "jdbc:mysql://localhost/easyvote";
 	@FXML
     private Button back;
     @FXML
@@ -57,103 +56,45 @@ public class RegistrationController extends Controller {
 
     @FXML
     private Label lblOutput;
-    
+    private IDAOUtenti utenteDAO = DAOFactory.getFactory().getUtenteDAOInstance();
     @FXML
     void goback(ActionEvent event) throws IOException{
-    	changeView("easyVoteproject/resources/pageform.fxml",event);
+    	changeView("views/pageform.fxml",event);
     }
     @FXML
-    void handleOk(ActionEvent event) throws NoSuchAlgorithmException {
-    	
-    	try {
-		       Connection conn = DriverManager.getConnection(url, "prova", "");
+    void handleOk(ActionEvent event) throws NoSuchAlgorithmException, SQLException {
 		       
-		       if (verifyPresence(fieldUsername.getText(), conn)) {
+		       if (utenteDAO.verifyPresence(fieldUsername.getText())) {
 				   lblOutput.setText("Utente con username " + fieldUsername.getText() + " gia presente, provare con un altro username");	
 				   lblOutput.setVisible(true);
 		    	   return;
 		       }
-		       
-			   PreparedStatement preparedStatement = prepareStatement(conn);
-			   preparedStatement.executeUpdate();
-			   
-			   lblOutput.setText("Utente " + fieldUsername.getText() + " registrato con successo");	
+		       if (fieldCF.getText().length() != 16) {
+		    		 lblOutput.setText("Codice fiscale inserito non valido, lunghezza diversa da 16");	
+		    		 lblOutput.setVisible(true);
+		    		 throw new IllegalArgumentException("Codice fiscale inserito non valido, lunghezza diversa da 16");
+		    	 }
+		       if (fieldNome.getText().length() < 1 || fieldCognome.getText().length() < 1 ||fieldNazione.getText().length() < 1 || fieldUsername.getText().length() < 1 ||
+		      		 fieldPassword.getText().length() < 1) {
+		      		 lblOutput.setText("I dati inseriti non sono validi, riprovare");	
+		      		 lblOutput.setVisible(true);
+		      		 throw new IllegalArgumentException("I dati inseriti non sono validi, riprovare");
+		      	 }
+		       Utente utente=new Elettore(fieldNome.getText(),fieldCognome.getText(),new Data(Data.processDate(fieldData)),fieldNazione.getText(),fieldCF.getText().toUpperCase());
+		       boolean esito= utenteDAO.registraElettore(utente, fieldUsername.getText(), fieldPassword.getText());
+		       if (esito==true) {
+		    	   lblOutput.setText("Utente " + fieldUsername.getText() + " registrato con successo");	
+		       }else {
+		    	   lblOutput.setText("Errore di registrazione utente,riprovare...");	
+		       }
+			  
 			   lblOutput.setVisible(true);
 			   
-		    } catch (SQLException ex) {
-		    	System.out.println("SQLExeption: "+ex.getMessage());
-				System.out.println("SQLState: "+ex.getSQLState());
-				System.out.println("VendorError: "+ ex.getErrorCode());
-		    }
+		    
     	
     	
     }
-    
-    private boolean verifyPresence(String username, Connection conn) throws SQLException {
-    	 String Query = "SELECT * FROM users WHERE username=?";
-    	 PreparedStatement preparedStatement =conn.prepareStatement(Query);
-    	 preparedStatement.setString(1, username);
-		 ResultSet rs = preparedStatement.executeQuery();
-		 if (rs.next()) {
-			 return true;
-		 }
-		return false;
-	}
-
-	public PreparedStatement prepareStatement(Connection conn) throws NoSuchAlgorithmException, SQLException{
-    	 String Query = "INSERT INTO `easyVote`.`users` (`name`, `lastname`, "
-			   		+ "`birthdate`, `birthplace`, `codicefiscale`, `username`, `password`, `isadmin`) "
-			   		+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    	 
-    	 String data = processDate(fieldData);
-    	 String password = processPassword(fieldPassword);
-    	 
-    	 if (fieldCF.getText().length() != 16) {
-    		 lblOutput.setText("Codice fiscale inserito non valido, lunghezza diversa da 16");	
-    		 lblOutput.setVisible(true);
-    		 throw new IllegalArgumentException("Codice fiscale inserito non valido, lunghezza diversa da 16");
-    	 }
-    	 
-    	 if (fieldNome.getText().length() < 1 || fieldCognome.getText().length() < 1 ||fieldNazione.getText().length() < 1 || fieldUsername.getText().length() < 1 ||
-    		 fieldPassword.getText().length() < 1) {
-    		 lblOutput.setText("I dati inseriti non sono validi, riprovare");	
-    		 lblOutput.setVisible(true);
-    		 throw new IllegalArgumentException("I dati inseriti non sono validi, riprovare");
-    	 }
-    	 
-    	 
-    	PreparedStatement preparedStatement = conn.prepareStatement(Query);
-    	preparedStatement.setString(1, fieldNome.getText());
-		preparedStatement.setString(2, fieldCognome.getText());
-		preparedStatement.setString(3, data);
-		preparedStatement.setString(4, fieldNazione.getText());
-		preparedStatement.setString(5, fieldCF.getText().toUpperCase());
-		preparedStatement.setString(6, fieldUsername.getText());
-		preparedStatement.setString(7, password);
-		preparedStatement.setString(8, "0");
-		return preparedStatement;
-    }
-    
-    
-    private String processPassword(TextField fieldPassword) throws NoSuchAlgorithmException {
-
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(fieldPassword.getText().getBytes(StandardCharsets.UTF_8));
-        byte[] digest = md.digest();
-        String hex = String.format("%064x", new BigInteger(1, digest));
-        
-		return hex;
-	}
-
-	private String processDate(DatePicker fieldData) {
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd",Locale.US);
-		String formattedValue = (fieldData.getValue()).format(formatter);
-		
-		return formattedValue;
-	}
-
-	
+    	
     void initialize() {	
     	
     	assert fieldNome != null : "fx:id=\"fieldNome\" was not injected: check your FXML file 'registrationform.fxml'.";

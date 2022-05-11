@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sessionselectionController">
+   <children>
+      <TableView fx:id="tabellasessioni" layoutX="14.0" layoutY="23.0" prefHeight="258.0" prefWidth="540.0">
+        <columns>
+          <TableColumn fx:id="sessioni" prefWidth="79.20001220703125" text="id" />
+            <TableColumn fx:id="tipo" prefWidth="116.0" text="Tipo Sessione" />
+            <TableColumn fx:id="contenuto" prefWidth="347.20001220703125" text="text" />
+        </columns>
+      </TableView>
+      <Button fx:id="button" layoutX="249.0" layoutY="322.0" mnemonicParsing="false" onAction="#handlebutton" prefHeight="41.0" prefWidth="76.0" text="Seleziona" />
+   </children>
+</Pane>

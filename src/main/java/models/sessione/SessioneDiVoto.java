@@ -30,8 +30,6 @@ public class SessioneDiVoto {
 
 	
 	
-	
-	
 	public Boolean getIsOpen() {
 		return isOpen;
 	}
@@ -62,8 +60,8 @@ public class SessioneDiVoto {
 
 
 
-	public String querygetIsOpen() {
-		return isOpen ? "0" : "1";
+	public int querygetIsOpen() {
+		return isOpen ? 0 : 1;
 	}
 
 

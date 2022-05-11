@@ -1,28 +1,20 @@
 package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 
 import java.sql.*;
 
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.security.MessageDigest;
-import java.nio.charset.StandardCharsets;
+import dao.utenti.*;
+import dao.factory.*;
 import java.security.NoSuchAlgorithmException;
 import java.io.IOException;
-import java.math.BigInteger;
 public class LoginController extends Controller	{
-	String url = "jdbc:mysql://localhost/easyvote";
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
     @FXML
     private Button btnOK;
     @FXML
@@ -35,72 +27,27 @@ public class LoginController extends Controller	{
 
     @FXML
     private TextField username;
+    private IDAOUtenti utenteDAO = DAOFactory.getFactory().getUtenteDAOInstance();
 
-    ResultSet rs;
     @FXML
-    void handleOK(ActionEvent event)throws NoSuchAlgorithmException {
+    void handleOK(ActionEvent event)throws NoSuchAlgorithmException, SQLException {
     	lblMessage.setVisible(true);
-    	try {
-    		   Connection conn = DriverManager.getConnection(url, "prova", "");
-
-			   PreparedStatement preparedStatement = prepareStatement(conn);
-			   ResultSet rs = preparedStatement.executeQuery();
-			   
-			   checkOutcome(rs);
-			   System.out.println(rs.getString("isadmin"));
-			   if (rs.getString("isadmin").equals("1")) {
-				   changeView("easyVoteproject/resources/sessionform.fxml",event);
-			   }
-		    } catch (SQLException ex) {
-		    	System.out.println("SQLExeption: "+ex.getMessage());
-				System.out.println("SQLState: "+ex.getSQLState());
-				System.out.println("VendorError: "+ ex.getErrorCode());
-		    }
+    	boolean result=utenteDAO.login(username.getText(), password.getText());
+    	if (result==true) {
+    		   lblMessage.setText("Login riuscito!");
+    	}else {
+    		 lblMessage.setText("Login fallito...");
+    	}
+    	
     }
-
     
-    
-    private PreparedStatement prepareStatement(Connection conn) throws SQLException {
-		
-    	String Query = "SELECT * FROM users WHERE username=?";
-		PreparedStatement preparedStatement =conn.prepareStatement(Query);
-		preparedStatement.setString(1, username.getText());
-		   
-		return preparedStatement;
-	}
-    
-    private String processPassword(TextField fieldPassword) throws NoSuchAlgorithmException {
-
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(fieldPassword.getText().getBytes(StandardCharsets.UTF_8));
-        byte[] digest = md.digest();
-        String hex = String.format("%064x", new BigInteger(1, digest));
-        
-		return hex;
-	}
-
-    
-    public void checkOutcome(ResultSet rs) throws SQLException, NoSuchAlgorithmException{
-    	String pwd = processPassword(password);
-    	this.rs = rs;
-    	if (rs.next()) {
-		    String password = rs.getString("password");
-		    
-		    if (password.equals(pwd)) {
-				   lblMessage.setText("Login riuscito!");
-				   
-		    } else {
-				   lblMessage.setText("Login fallito");	
-		    }
-		 } else {
-			lblMessage.setText("Username non esistente");	
-		 }
+    public void getinfo(String id) {
+    	System.out.print(id);
     }
-
     
     @FXML
     void handlegoback(ActionEvent event) throws IOException {
-    	changeView("easyVoteproject/resources/pageform.fxml",event);
+    	changeView("views/pageform.fxml",event);
     }
 	void initialize() {
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
