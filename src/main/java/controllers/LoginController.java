@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import models.sessione.IdHolder;
 import dao.utenti.*;
 import dao.factory.*;
 import java.security.NoSuchAlgorithmException;
@@ -49,10 +50,16 @@ public class LoginController extends Controller	{
     void handlegoback(ActionEvent event) throws IOException {
     	changeView("views/pageform.fxml",event);
     }
+    @FXML
+    private int receiveData() {
+    	IdHolder holder = IdHolder.getInstance();
+		return holder.getid();
+    }
 	void initialize() {
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
         assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'login.fxml'.";
-        
+        receiveData();
+		System.out.println("hello:  "+receiveData());
         lblMessage.setVisible(false);
     }
 }

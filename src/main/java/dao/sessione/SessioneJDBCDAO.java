@@ -1,16 +1,21 @@
 package dao.sessione;
 
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import dao.factory.DAOFactory;
 import database.DatabaseManager;
 import models.sessione.*;
+import models.sessione.Partecipante.TipoPartecipante;
 import models.utenti.Elettore;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SessioneJDBCDAO implements SessioneIDAO {
 	
@@ -42,7 +47,6 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		try {
 			p.setInt(1, id);
-					
 			ResultSet res = p.executeQuery();
 			while (res.next())
 				result = getSessioneFromResult(res);
@@ -55,17 +59,19 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 	
 	private SessioneDiVoto getSessioneFromResult(ResultSet res) {
 		SessioneDiVoto result = null;
-		int id;
+		int id,isopen;
 		String contenuto;
 		TipoSessione tipovoto;
 		
 		try {
 			id=Integer.parseInt(res.getString(1));
-			tipovoto=TipoSessione.fromString(res.getString(5));
 			contenuto=res.getString(2);
+			isopen=Integer.parseInt(res.getString(4));
+			tipovoto=TipoSessione.fromString(res.getString(5));	
+			boolean io= (isopen==0);
+			List<Candidato> candidati=SessioneDiVoto.jsontolist(res.getString(3),null);
+			result = new SessioneDiVoto(id,tipovoto,io, contenuto, candidati);
 			
-			
-			result = new SessioneDiVoto(id,tipovoto,false, contenuto, null);
 		} catch (SQLException e) {
 			System.out.println("Problemi con la base dati, riprovare! Context: getFromResult");
 		}
@@ -108,7 +114,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 
 	@Override
 	public void stop(SessioneDiVoto s) {
-		String q = "update Sessione set isOpen =0 where id = ?;";
+		String q = "update session set isOpen =0 where id = ?;";
 		
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		try {	
@@ -119,26 +125,53 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 		}
 
 	}
-	
 	@Override
-	public void save(SessioneDiVoto t) {
-		String q = "insert into Sessione(id, text,candidati,isOpen,type) values (?, ?, ?, ?, ?)";
-		
+	public int aggiungi(String text,String type) {
+		String q = "INSERT INTO session (text, type) VALUES (?, ?)";
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
-		try {	
-			p.setInt(1, t.getNumeroSessione());
-			p.setString(2, t.getContenuto()); 
-			p.setString(3, t.querygetCandidati()); 
-			p.setInt(4, t.querygetIsOpen());
-			p.setString(5, t.getTipoSessione().toString());
-			p.execute();
-		} catch (SQLException e) {
-			System.out.println("Problemi con la base dati, riprovare! Context: start");
-		}
+
+		try {
+			if (text.isBlank() || text.isEmpty()) {
+			      p.setString(1,"");
+		       }else {
+		    	  p.setString(1,text);
+		       }
+			  p.setString(2,type);
 			
-	
+			p.execute();
+			System.out.println("hello world");
+			int value=getValue();
+			return value;
+		} catch (SQLException e) {
+			System.out.println("Problemi con la base dati, riprovare! Context: aggiungi");
+			/*System.out.println("SQLExeption: "+ex.getMessage());
+			System.out.println("SQLState: "+ex.getSQLState());
+			System.out.println("VendorError: "+ ex.getErrorCode());*/
+		}
+		return 0;
 	}
-	
+	@Override
+	public void update(SessioneDiVoto t) {
+		String q= "UPDATE `easyVote`.`session` SET `candidati` = ?, `isOpen` = ? WHERE `id` = ?";
+		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
+		try{
+			p.setString(1, t.querygetCandidati());
+		    p.setInt(2, t.querygetIsOpen());
+		    p.setString(3, "" + t.getNumeroSessione());
+		    p.execute();
+		} catch (SQLException e) {
+			System.out.println("Problemi con la base dati, riprovare! Context:update");
+		}
+
+	}
+	private int getValue() throws SQLException {
+		String q2 = "SELECT * FROM session ORDER BY id DESC LIMIT 1;";
+		PreparedStatement p2 = DatabaseManager.getInstance().preparaStatement(q2);
+   	 	ResultSet rs = p2.executeQuery();
+		rs.next();
+		
+		return Integer.parseInt(rs.getString(1));
+	}
 	@Override
 	public void delete(SessioneDiVoto t) {
 		int idSessione = getId(t);
@@ -149,17 +182,13 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 			p.setInt(1, idSessione);
 			p.execute();
 		} catch (SQLException e) {
-			System.out.println("Problemi con la base dati, riprovare! Context: start");
+			System.out.println("Problemi con la base dati, riprovare! Context: delete");
 		}
 	}
 	
 
 	
 	
-	@Override
-	public void update(SessioneDiVoto t, SessioneDiVoto u) {
-		// non serve
-	}
 
 	@Override
 	public SessioneDiVoto get(String id) {
@@ -178,4 +207,19 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void save(SessioneDiVoto t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(SessioneDiVoto t, SessioneDiVoto u) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
 }

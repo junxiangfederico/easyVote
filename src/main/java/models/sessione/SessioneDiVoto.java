@@ -1,7 +1,10 @@
 package models.sessione;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import models.sessione.Partecipante.TipoPartecipante;
+import models.sessione.Candidato;
 
 public class SessioneDiVoto {
 
@@ -24,7 +27,7 @@ public class SessioneDiVoto {
 		this.tipoSessione = tipoSessione;
 		this.contenuto = contenuto;
 		this.isOpen = isOpen;
-		this.candidati = candidati;	
+		SessioneDiVoto.candidati = candidati;	
 	}
 
 
@@ -49,7 +52,6 @@ public class SessioneDiVoto {
 	public String getContenuto() {
 		return contenuto;
 	}
-
 
 	public static void addCandidato(Candidato candidato) {
 			candidati.add(candidato);
@@ -82,7 +84,7 @@ public class SessioneDiVoto {
 		StringBuilder s = new StringBuilder("{");
 		for (int i = 1; i < candidati.size() + 1; i++) {
 			s.append("\"candidato" + i + "\": \"");
-			s.append(candidati.get(i-1).getIdentificativo());
+			s.append(candidati.get(i-1).getidentificativo());
 			s.append("\", ");
 		}
 		s.deleteCharAt(s.lastIndexOf(","));
@@ -100,13 +102,35 @@ public class SessioneDiVoto {
 		}
 		return false;
 	}
-	
-	
-	
-	public List<Candidato> getCandidati() {
-		return Collections.unmodifiableList(this.candidati);
+	public static List<Candidato> jsontolist(String string,TipoPartecipante tipo){
+		List<Candidato> lista=new ArrayList<>();
+		if (string==null) {
+			return lista;
+		}
+		
+		string=string.substring(1,string.length()-1);
+		string = string.replaceAll("\\s+", "");
+	    string = string.replaceAll("\"", "");
+		String [] parts = string.split(",");
+		if(!(string.equals(""))) {
+				for(String part:parts) {
+					String [] parts2 = part.split(":");
+					part=parts2[1];
+					Candidato candidato=new Candidato(tipo,part);
+					lista.add(candidato);
+				}
+		}
+		return lista;
 	}
 	
 	
+	public List<Candidato> getCandidati() {
+		return Collections.unmodifiableList(SessioneDiVoto.candidati);
+	}
+	
+	public static void main(String[] args) {
+		
+
+    }
 	
 }

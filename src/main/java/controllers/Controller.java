@@ -1,7 +1,6 @@
 package controllers;
 
 
-//import java.App;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -11,12 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import models.sessione.*;
 
 public abstract class Controller  {
-	// inizializza la schermata
-	//public abstract void init(Object parameter);
-	
-	// metodo per cambiare la schermata
+
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
@@ -36,5 +33,19 @@ public abstract class Controller  {
 			e.printStackTrace();
 		}
 	}
+	public void SendId(String view,ActionEvent event,int i) {
+		try {
+			root = FXMLLoader.load(getClass().getClassLoader().getResource(view));
+	    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+	    	IdHolder holder = IdHolder.getInstance();
+	        holder.setId(i);
+	    	scene = new Scene(root);
+	    	stage.setScene(scene);
+	    	stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 }

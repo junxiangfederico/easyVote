@@ -132,4 +132,9 @@ public class IDAOUtentijdbc implements IDAOUtenti {
 	public void delete(Utente t) {
 		// non usato
 	}
+	@Override
+	public void update(Utente t) {
+		// TODO Auto-generated method stub
+		
+	}
 }

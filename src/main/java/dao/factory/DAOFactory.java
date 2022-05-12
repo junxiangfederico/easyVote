@@ -1,7 +1,7 @@
 package dao.factory;
 
 import dao.utenti.*;
-
+import dao.sessione.*;
 public abstract class DAOFactory {
 	// singleton DAOFactory
 	private static DAOFactory factory = null;
@@ -12,5 +12,5 @@ public abstract class DAOFactory {
 	}
 	
 	public abstract IDAOUtenti getUtenteDAOInstance();
-	
+	public abstract SessioneIDAO getSessioneDAOInstance();
 }

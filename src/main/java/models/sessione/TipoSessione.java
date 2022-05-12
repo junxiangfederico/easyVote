@@ -3,11 +3,11 @@ package models.sessione;
 public enum TipoSessione {
 	
 	Referendum("Referendum"),
-	OrdinaleCandidati("Ordinale Candidati"),
-	OrdinalePartiti("Ordinale Partiti"),
-	CategoricoCandidati("Categorico Candidati"),
-	CategoricoPartiti("Categorico Partiti"),
-	CategoricoPreferenze("Categorico Preferenze");
+	OrdinaleCandidati("Ordinale con candidati"),
+	OrdinalePartiti("Ordinale con partiti"),
+	CategoricoCandidati("Categorico con candidati"),
+	CategoricoPartiti("Categorico con partiti"),
+	CategoricoPreferenze("Categorico con preferenze");
 	private String stringname;
     private TipoSessione(String nome) {
         this.stringname = nome;
@@ -16,15 +16,15 @@ public enum TipoSessione {
     	switch(nome) {
     	case "Referendum":
     		return TipoSessione.Referendum;
-    	case "OrdinaleCandidati":
+    	case "Ordinale con candidati":
     		return TipoSessione.OrdinaleCandidati;
-    	case "OrdinalePartiti":
+    	case "Ordinale con partiti":
     		return TipoSessione.OrdinalePartiti;
-    	case "CategoricoCandidati":
+    	case "Categorico con candidati":
     		return TipoSessione.CategoricoCandidati;
-    	case "CategoricoPartiti":
+    	case "Categorico con partiti":
     		return TipoSessione.CategoricoPartiti;
-    	case "CategoricoPreferenze":
+    	case "Categorico con preferenze":
     		return TipoSessione.CategoricoPreferenze;
     	
     	default:

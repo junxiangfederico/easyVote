@@ -10,7 +10,11 @@ import models.sessione.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import dao.factory.DAOFactory;
+import dao.sessione.SessioneIDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -33,6 +37,7 @@ public class sessionselectionController extends Controller{
 
     @FXML
     private TableColumn<SessioneDiVoto, TipoSessione> tipo;
+    private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
     private Parent root;
     @FXML
     void handlebutton(ActionEvent event) throws IOException {
@@ -46,17 +51,22 @@ public class sessionselectionController extends Controller{
    
     public void initialize() {
 
-    	sessioni.setCellValueFactory(new PropertyValueFactory<SessioneDiVoto,Integer>("numerosessione"));
-    	tipo.setCellValueFactory(new PropertyValueFactory<SessioneDiVoto,TipoSessione>("tiposessione"));
+    	sessioni.setCellValueFactory(new PropertyValueFactory<SessioneDiVoto,Integer>("numeroSessione"));
+    	tipo.setCellValueFactory(new PropertyValueFactory<SessioneDiVoto,TipoSessione>("tipoSessione"));
     	contenuto.setCellValueFactory(new PropertyValueFactory<SessioneDiVoto,String>("contenuto"));   	
     	tabellasessioni.setItems(getSessioneDiVoto());
     	
     	
     }
     ObservableList<SessioneDiVoto> getSessioneDiVoto(){
-    		ObservableList<SessioneDiVoto> lista=FXCollections.observableArrayList();
-			lista.add( new SessioneDiVoto(1,TipoSessione.Referendum,"prova"));
-			lista.add(new SessioneDiVoto(2,TipoSessione.Referendum,"prova1"));
+    		List<SessioneDiVoto> listasessioni=new ArrayList<>();
+    		try {
+				listasessioni=sessioneDAO.getAll();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		ObservableList<SessioneDiVoto> lista=FXCollections.observableArrayList(listasessioni);
 			return lista;
 		
     }

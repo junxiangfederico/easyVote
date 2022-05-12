@@ -20,8 +20,4 @@ public class Candidato extends Partecipante{
 		return this.identificativo;
 	}
 
-
-	public String getIdentificativo() {
-		return this.identificativo;
-	}
 }

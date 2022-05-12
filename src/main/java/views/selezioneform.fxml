@@ -11,7 +11,7 @@
         <columns>
           <TableColumn fx:id="sessioni" prefWidth="79.20001220703125" text="id" />
             <TableColumn fx:id="tipo" prefWidth="116.0" text="Tipo Sessione" />
-            <TableColumn fx:id="contenuto" prefWidth="347.20001220703125" text="text" />
+            <TableColumn fx:id="contenuto" prefWidth="347.20001220703125" text="Descrizione" />
         </columns>
       </TableView>
       <Button fx:id="button" layoutX="249.0" layoutY="322.0" mnemonicParsing="false" onAction="#handlebutton" prefHeight="41.0" prefWidth="76.0" text="Seleziona" />

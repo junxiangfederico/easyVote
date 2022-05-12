@@ -11,12 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import dao.factory.DAOFactory;
+import dao.sessione.SessioneIDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,19 +30,19 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import models.sessione.Candidato;
 import models.sessione.Partecipante;
 import models.sessione.Partecipante.TipoPartecipante;
 import models.sessione.SessioneDiVoto;
 import models.sessione.TipoSessione;
+import models.sessione.*;
 
-public class sessionformPropertiesController extends Controller implements Initializable{
+public class sessionformPropertiesController extends Controller{
 	
 	private int sessionId = 0;
 
 	private String type = "";
-	private final String url = "jdbc:mysql://localhost/easyvote";
-	
 	private SessioneDiVoto s;
 	
 	@FXML 
@@ -69,7 +75,7 @@ public class sessionformPropertiesController extends Controller implements Initi
 
     @FXML
     private TableColumn<CandidatoSemplice, String> tableColumn = new TableColumn<>("Nomi");
-    
+    private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
     @FXML
     void handleAdd(ActionEvent event) {
     		if (inputName.getText().isBlank() || inputName.getText().isEmpty()) {
@@ -86,22 +92,8 @@ public class sessionformPropertiesController extends Controller implements Initi
      * @param s
      */
     private void updateSessione(SessioneDiVoto s) {
-    	Connection conn;
-		try {
-			conn = DriverManager.getConnection(url, "prova", "");
-			String Query = "UPDATE `easyVote`.`session` SET `candidati` = ?, `isOpen` = ? WHERE `id` = ?";
-	   	 	PreparedStatement preparedStatement;
-			preparedStatement = conn.prepareStatement(Query);
-		    preparedStatement.setString(1, s.querygetCandidati());
-		    preparedStatement.setInt(2, s.querygetIsOpen());
-		    preparedStatement.setString(3, "" + sessionId);
-			preparedStatement.execute();
-			updateColumns(s);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		sessioneDAO.update(s);
+		updateColumns(s);
 	}
 
 	@FXML
@@ -109,8 +101,6 @@ public class sessionformPropertiesController extends Controller implements Initi
 
     	this.s.setIsOpen(true);
     	updateSessione(this.s);
-    	
-    	
         FXMLLoader loader= new FXMLLoader(getClass().getClassLoader().getResource("easyVoteproject/resources/voteOrdinaryform.fxml")); 
         Parent root = loader.load(); 
         voteOrdinaryformController votoOrdinario =loader.getController();
@@ -135,9 +125,9 @@ public class sessionformPropertiesController extends Controller implements Initi
     
     
     public void updateColumns(SessioneDiVoto s){
-    	tableColumn.setCellValueFactory(
+    	/*tableColumn.setCellValueFactory(
 				new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
-
+		*/
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
     	for (Candidato c: s.getCandidati()) {
     		lista.add(new CandidatoSemplice(c.getidentificativo()));
@@ -149,98 +139,39 @@ public class sessionformPropertiesController extends Controller implements Initi
     /**
      * 
     
-    @FXML
+    @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonParseException 
+     * @FXML
     private TableView<Candidato> tableCandidates;
 
 
     @FXML
     private TableColumn<Candidato, String> tableColumn;
      */
-	public void initialize(URL location, ResourceBundle resources) {
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection(url, "prova", "");
-	    	int value = getValue(conn);
-	    	sessionId = value;
-	    	lblTop.setText("Sessione numero: " + value + " di tipo: " + type);
-			this.s = loadSession();
-			updateColumns(s);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-    }
-    
+
     
 	private SessioneDiVoto loadSession() {
-		SessioneDiVoto sessione = null;
-		if (sessionId != 0) {
-    		Connection conn;
-    	    try {
-    	    	conn = DriverManager.getConnection(url, "prova", "");
-    	   	 	String Query = "SELECT * FROM session where session.id = "+ sessionId + ";";
-    	   	 	PreparedStatement preparedStatement;
-    			preparedStatement = conn.prepareStatement(Query);
-    			ResultSet rs = preparedStatement.executeQuery();
-    			rs.next();
-    			
-    			List<Candidato> l = new ArrayList<>();
-    			TipoSessione t = null;
-    			switch (rs.getString(5)) {
-    				case "Referendum":
-    					t = TipoSessione.Referendum;
-    					break;
-    				case "OrdinaleCandidati": 
-    					t = TipoSessione.OrdinaleCandidati;
-    					break;
-    				case "OrdinalePartiti":
-    					t = TipoSessione.OrdinalePartiti;
-    					break;
-    				case "CategoricoCandidati":
-    					t = TipoSessione.CategoricoPartiti;
-    					break;
-    				case "CategoricoPreferenze":
-    					t = TipoSessione.CategoricoPartiti;
-    					break;
-    			}
-    			boolean b;
-    			if (rs.getString(4).equals("1")) {
-        			b = true;
-    			}else {
-    				b = false;
-    			}
-    			List<Candidato> candidati = new ArrayList<>();
-    			String candidates = rs.getString(3);
-    			
-    			if (candidates == null){
-    				sessione = new SessioneDiVoto(Integer.parseInt(rs.getString(1)), t, b, rs.getString(2), candidati);
-    				return sessione;
-    			}else if (candidates != null){
-    				String[] entries = candidates.split(",");   
-        			for (String s : entries) {
-        				s = s.replace("{", "").stripLeading();
-        				s = s.replace("}", "").stripTrailing();
-        				String[] a = s.split(":");
-        				for (int i = 0; i < a.length-1; i++) {
-        					if (a[i].startsWith("\"candidato"));
-        					Candidato d = new Candidato(null, a[i+1].replaceAll("\"", "").stripLeading().stripTrailing());
-        					candidati.add(d);
-        				}
-        			}
-    			}
-    			
-    			sessione = new SessioneDiVoto(Integer.parseInt(rs.getString(1)), t, b, rs.getString(2), candidati);
-    	    }catch (SQLException e) {
-    	    	e.printStackTrace();
-    	    }
-		}else {
-			throw new IllegalArgumentException("Session ID non fornito");
-		}
-		return sessione;
+		
+			SessioneDiVoto sessione=null;
+			try {
+				sessione = sessioneDAO.getById(sessionId);
+				return sessione;
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return sessione;
+		
 	}
 
-	private int getValue(Connection conn) throws SQLException {
+	/*private int getValue(Connection conn) throws SQLException {
    	 	String Query = "SELECT * FROM session ORDER BY id DESC LIMIT 1;";
    	 	PreparedStatement preparedStatement;
 		preparedStatement = conn.prepareStatement(Query);
@@ -248,6 +179,37 @@ public class sessionformPropertiesController extends Controller implements Initi
 		rs.next();
 		type = rs.getString(5);
 		return Integer.parseInt(rs.getString(1));
+	}*/
+	@FXML
+	private void receiveData(ActionEvent event) {
+	  
+	  
+	}
+	public void initialize() {
+		tableColumn.setCellValueFactory(new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
+		//this.s = loadSession();
+		IdHolder holder = IdHolder.getInstance();
+		sessionId = holder.getid();
+		try {
+			this.s =sessioneDAO.getById(sessionId);
+		
+			//System.out.println(s.getCandidati().isEmpty());
+			//List<Candidato>listu=s.getCandidati();
+			
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	lblTop.setText("Sessione numero: " + s.getNumeroSessione() + " di tipo: " + s.getTipoSessione());
+    	System.out.println(sessionId);
+		
+		updateColumns(s);
 	}
 
 }

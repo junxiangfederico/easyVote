@@ -3,31 +3,25 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-
+import dao.sessione.*;
+import dao.factory.DAOFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import models.sessione.*;
 
-public class sessionformController extends Controller implements Initializable {
+public class sessionformController extends Controller {
 	
 	
-
-	private final String url = "jdbc:mysql://localhost/easyvote";
-	
-	@FXML 
-	private ResourceBundle resources;
-
-	@FXML 
-	private URL location;
 	
     @FXML
     private ChoiceBox<String> choiceBox;
@@ -37,8 +31,9 @@ public class sessionformController extends Controller implements Initializable {
     
     @FXML
     private TextArea textArea;
+    private Parent root;
     
-    
+    private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
     @FXML
     void confirm(ActionEvent event) throws IOException{
     	
@@ -47,69 +42,22 @@ public class sessionformController extends Controller implements Initializable {
     
     @FXML
     void goBack(ActionEvent event)  throws IOException{
-    	changeView("easyVoteproject/resources/pageform.fxml",event);
+    	changeView("views/pageform.fxml",event);
     }
 
     @FXML
     void submit(ActionEvent event) throws IOException{
-    	Query();
-    	changeView("easyVoteproject/resources/sessionformProperties.fxml",event);
+    	int id=Query();
+    	IdHolder holder = IdHolder.getInstance();
+	    holder.setId(id);
+	    changeView("views/login.fxml",event);
     }
     
     
     private int Query() {
-    	try {
-		       Connection conn = DriverManager.getConnection(url, "prova", "");
-		       
-		       
-		       
-		       
-		       String Query = "INSERT INTO `easyVote`.`session` (`text`, `type`) "
-				   		+ "VALUES (?, ?)";
-
-		       PreparedStatement preparedStatement = conn.prepareStatement(Query);
-		       
-		       if (textArea.getText().isBlank() || textArea.getText().isEmpty()) {
-
-			       preparedStatement.setString(1, "");
-		       }else {
-
-			       preparedStatement.setString(1, textArea.getText());
-		       }
-
-		       
-		       preparedStatement.setString(2, choiceBox.getSelectionModel().getSelectedItem());
-			   preparedStatement.executeUpdate();
-			   
-			   int value = getValue(conn);
-			   
-			   
-			   lblOutput.setText("Sessione con numero " + value + " registrata con successo");	
-			   lblOutput.setVisible(true);
-
-		    	return value;
-		 	
-			   
-		    } catch (SQLException ex) {
-		    	System.out.println("SQLExeption: "+ex.getMessage());
-				System.out.println("SQLState: "+ex.getSQLState());
-				System.out.println("VendorError: "+ ex.getErrorCode());
-		    }
-    	return 0;
+    	int ris=sessioneDAO.aggiungi(textArea.getText(), choiceBox.getSelectionModel().getSelectedItem());
+		return ris;
 	}
-
-
-	private int getValue(Connection conn) throws SQLException {
-
-   	 	String Query = "SELECT * FROM session ORDER BY id DESC LIMIT 1;";
-   	 	PreparedStatement preparedStatement;
-		preparedStatement = conn.prepareStatement(Query);
-		ResultSet rs = preparedStatement.executeQuery();
-		rs.next();
-		return Integer.parseInt(rs.getString(1));
-	}
-
-
 	/**
      * 
      * 	
@@ -123,9 +71,9 @@ public class sessionformController extends Controller implements Initializable {
      * 
      * 
      */
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		choiceBox.setValue("Referendum");
+	public void initialize() {
+		//choiceBox.setValue("Referendum");
+		choiceBox.getItems().add("Referendum");
 		choiceBox.getItems().add("Ordinale con candidati");
 		choiceBox.getItems().add("Ordinali con partiti");
 		choiceBox.getItems().add("Categorico con candidati");
