@@ -25,6 +25,12 @@ public enum Tipo {
 		  public String toString() {
 			  return "Referendum";
 		  }
+	  },
+	  Singolo{
+		  @Override
+		  public String toString() {
+			  return "Singolo";
+		  }
 	  }
 	  
 }

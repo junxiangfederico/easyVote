@@ -2,10 +2,11 @@ package models.voto;
 
 public abstract class Voto {
 	private final int sessioneDiVoto;
+	private final int idVotante;
 	
-	
-	public Voto(int numeroSessione) {
+	public Voto(int numeroSessione, int idVotante) {
 		sessioneDiVoto = numeroSessione;
+		this.idVotante = idVotante;
 	}
 
 	

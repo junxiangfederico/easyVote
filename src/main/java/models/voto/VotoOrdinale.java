@@ -20,8 +20,8 @@ public class VotoOrdinale extends Voto {
 	 * @param numeroSessione	Il numero della sessione di voto
 	 * @param nominativi		La lista ordinata di candidati dell'elettore
 	 */
-	public VotoOrdinale(int numeroSessione, List<String> nominativi) {
-		super(numeroSessione);
+	public VotoOrdinale(int numeroSessione, int idUser, List<String> nominativi) {
+		super(numeroSessione, idUser);
 		this.nominativi = nominativi;
 		
 	}

@@ -39,14 +39,15 @@ public class sessionselectionController extends Controller{
     private TableColumn<SessioneDiVoto, TipoSessione> tipo;
     private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
     private Parent root;
+    
     @FXML
     void handlebutton(ActionEvent event) throws IOException {
+    	
     	SessioneDiVoto s = tabellasessioni.getSelectionModel().getSelectedItem();
-    	FXMLLoader loader= new FXMLLoader(getClass().getClassLoader().getResource("views/login.fxml"));
-    	root=loader.load();
-    	LoginController logincontroller=loader.getController();
-    	logincontroller.getinfo(s.getContenuto());
-    	changeView("views/login.fxml",event);
+    	
+		IdHolder holder = IdHolder.getInstance();
+		holder.setId(s.getNumeroSessione());
+        changeView("views/voteOrdinaryform.fxml",event);
     }
    
     public void initialize() {

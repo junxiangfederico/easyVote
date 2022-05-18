@@ -12,7 +12,8 @@ public class voteOrdinaryform extends Application {
 	 @Override
 	    public void start(Stage primaryStage) {
 	        try {
-	            Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/voteOrdinaryform.fxml"));
+	            //Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/views/voteOrdinaryform.fxml"));
+	        	Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/voteOrdinaryform.fxml"));
 	            Scene myScene = new Scene(addPane);
 	            primaryStage.setScene(myScene);
 	            primaryStage.show();

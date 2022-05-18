@@ -42,20 +42,15 @@
 
 <VBox prefHeight="262.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.pagecontroller">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="262.0" prefWidth="309.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="606.0" prefWidth="1084.0" VBox.vgrow="ALWAYS">
       <children>
-            <Button fx:id="login" layoutX="48.0" layoutY="178.0" mnemonicParsing="false" onAction="#handlelogin" prefHeight="42.0" prefWidth="102.0" text="Login" />
-            <Button fx:id="registration" layoutX="226.0" layoutY="178.0" mnemonicParsing="false" onAction="#handleregistration" prefHeight="42.0" prefWidth="102.0" text="Registration" />
-            <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="-16.0" layoutY="54.0" prefHeight="90.0" prefWidth="351.0" text="WELCOME UWU" textAlignment="CENTER" textFill="#121294" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="login" layoutX="36.0" layoutY="139.0" mnemonicParsing="false" onAction="#handlelogin" prefHeight="42.0" prefWidth="102.0" text="Login" />
+            <Button fx:id="registration" layoutX="200.0" layoutY="139.0" mnemonicParsing="false" onAction="#handleregistration" prefHeight="42.0" prefWidth="102.0" text="Registration" />
+            <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="42.0" layoutY="32.0" prefHeight="70.0" prefWidth="315.0" text="WELCOME" textAlignment="CENTER" textFill="#121294" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <ImageView fitHeight="177.0" fitWidth="129.0" layoutX="271.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../easyVoteproject.resources/rem.png" />
-               </image>
-            </ImageView>
       </children>
     </AnchorPane>
   </children>

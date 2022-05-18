@@ -12,8 +12,8 @@ public class VotoReferendum extends Voto {
 	 * @param numeroSessione 	il numero della sessione di voto
 	 * @param isFavorevole		il valore di adesione o meno ai cambiamenti definiti nel referendum
 	 */
-	public VotoReferendum(int numeroSessione, Boolean isFavorevole) {
-		super(numeroSessione);
+	public VotoReferendum(int numeroSessione, int idUser, Boolean isFavorevole) {
+		super(numeroSessione, idUser);
 		this.isFavorevole = isFavorevole;
 	}
 

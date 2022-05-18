@@ -12,7 +12,8 @@ public class sessionform extends Application {
 	 @Override
 	    public void start(Stage primaryStage) {
 	        try {
-	            Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/resources/sessionform.fxml"));
+	            //Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("easyVoteproject/views/sessionform.fxml"));
+	        	Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/sessionform.fxml"));
 	            Scene myScene = new Scene(addPane);
 	            primaryStage.setScene(myScene);
 	            primaryStage.show();
