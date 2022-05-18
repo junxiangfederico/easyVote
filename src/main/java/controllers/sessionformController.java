@@ -50,7 +50,7 @@ public class sessionformController extends Controller {
     	int id=Query();
     	IdHolder holder = IdHolder.getInstance();
 	    holder.setId(id);
-	    changeView("views/login.fxml",event);
+	    changeView("views/sessionformProperties.fxml",event);
     }
     
     

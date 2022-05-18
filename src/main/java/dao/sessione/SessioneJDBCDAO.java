@@ -68,6 +68,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 			contenuto=res.getString(2);
 			isopen=Integer.parseInt(res.getString(4));
 			tipovoto=TipoSessione.fromString(res.getString(5));	
+			//System.out.println(tipovoto);
 			boolean io= (isopen==0);
 			List<Candidato> candidati=SessioneDiVoto.jsontolist(res.getString(3),null);
 			result = new SessioneDiVoto(id,tipovoto,io, contenuto, candidati);

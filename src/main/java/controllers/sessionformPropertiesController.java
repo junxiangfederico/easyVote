@@ -195,6 +195,8 @@ public class sessionformPropertiesController extends Controller{
 		
 			//System.out.println(s.getCandidati().isEmpty());
 			//List<Candidato>listu=s.getCandidati();
+			//System.out.println(listu);
+			System.out.println(s.getTipoSessione());
 			
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
