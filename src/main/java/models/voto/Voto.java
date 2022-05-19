@@ -9,6 +9,9 @@ public abstract class Voto {
 		this.idVotante = idVotante;
 	}
 
+	public int getIdVotante(){
+		return this.idVotante;
+	}
 	
 	public int getSessioneDiVoto() {
 		return sessioneDiVoto;

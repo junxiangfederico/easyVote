@@ -23,4 +23,13 @@ public class VotoSingolo extends Voto {
 		return nomeCandidato;
 	}
 
+	
+	/**
+	 * Todo:
+	 * @return
+	 */
+	public String queryGetSelection() {
+		
+	}
+
 }

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import dao.factory.DAOFactory;
 import dao.sessione.SessioneIDAO;
+import database.DatabaseManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -88,12 +89,32 @@ public class voteOrdinaryformController extends Controller{
     		outputLabel.setText("Seleziona un candidato");
     		return;
     	}
+    	// to do : replace idVotante with singleton.getIstance();
     	int idVotante = 0;
-		Voto v = new VotoSingolo(sessionId, idVotante, c2.getIdentificativo());
+		VotoSingolo v = new VotoSingolo(sessionId, idVotante, c2.getIdentificativo());
+    	castVote(v);
     	
     }
 
-	
+	/**
+	 * AVANIT DA QUA
+	 * @param v
+	 */
+	//INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (61, 22, '{\"selection\": \"federico\"}');
+	public void castVote(VotoSingolo v) {
+		String q = "INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (?, ?, '?')";
+
+		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
+		try {	
+			p.setInt(1, v.getSessioneDiVoto());
+			p.setInt(2, v.getIdVotante());
+			p.setString(3, q.queryGetSelection());
+			p.execute();
+		} catch (SQLException e) {
+			System.out.println("Problemi con la base dati, riprovare! Context: start");
+		}
+
+	}
     
     
     public void updateColumns(SessioneDiVoto s){

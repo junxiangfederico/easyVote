@@ -18,6 +18,8 @@ public class IDAOVotojdbc implements IDAOVoto{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 	@Override
 	public void save(VotoSingolo t) {
