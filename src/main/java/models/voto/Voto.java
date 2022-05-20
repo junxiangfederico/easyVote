@@ -19,4 +19,6 @@ public abstract class Voto {
 	
 	public abstract String getTipo();
 	
+	public abstract String getSelection();
+	
 }

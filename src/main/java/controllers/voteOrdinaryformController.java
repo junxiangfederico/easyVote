@@ -90,7 +90,7 @@ public class voteOrdinaryformController extends Controller{
     		return;
     	}
     	// to do : replace idVotante with singleton.getIstance();
-    	int idVotante = 0;
+    	int idVotante = 1;
 		VotoSingolo v = new VotoSingolo(sessionId, idVotante, c2.getIdentificativo());
     	castVote(v);
     	
@@ -102,18 +102,22 @@ public class voteOrdinaryformController extends Controller{
 	 */
 	//INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (61, 22, '{\"selection\": \"federico\"}');
 	public void castVote(VotoSingolo v) {
-		String q = "INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (?, ?, '?')";
-
+		String q = "INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (?, ?, ?);";
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
+
+		//System.out.println(v.getSessioneDiVoto() + " " + v.getIdVotante() + v.getSelection());
 		try {	
 			p.setInt(1, v.getSessioneDiVoto());
 			p.setInt(2, v.getIdVotante());
-			p.setString(3, q.queryGetSelection());
+			p.setString(3, v.getSelection());
 			p.execute();
 		} catch (SQLException e) {
-			System.out.println("Problemi con la base dati, riprovare! Context: start");
-		}
 
+            e.printStackTrace();
+		}
+		btnConfirm.setDisable(true);
+		outputLabel.setText("Voto castato per: " + v.getNomeCandidato());
+		outputLabel.setVisible(true);
 	}
     
     

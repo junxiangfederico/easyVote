@@ -40,14 +40,48 @@ public class sessionselectionController extends Controller{
     private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
     private Parent root;
     
+    /**
+     * Referendum("Referendum"),
+	OrdinaleCandidati("Ordinale con candidati"),
+	OrdinalePartiti("Ordinale con partiti"),
+	CategoricoCandidati("Categorico con candidati"),
+	CategoricoPartiti("Categorico con partiti"),
+	CategoricoPreferenze("Categorico con preferenze");
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void handlebutton(ActionEvent event) throws IOException {
     	
     	SessioneDiVoto s = tabellasessioni.getSelectionModel().getSelectedItem();
-    	
+
 		IdHolder holder = IdHolder.getInstance();
 		holder.setId(s.getNumeroSessione());
-        changeView("views/voteOrdinaryform.fxml",event);
+    	switch (s.getTipoSessione()) {
+    		case Referendum:
+    			break;
+    		case OrdinaleCandidati:
+
+    	        changeView("views/voteOrdinaryform.fxml",event);
+    			break;
+    		case OrdinalePartiti:
+
+    	        changeView("views/voteOrdinaryform.fxml",event);
+    			break;
+    		case CategoricoCandidati:
+    			break;
+    		case CategoricoPartiti:
+    			break;
+    		case CategoricoPreferenze:
+
+    	        changeView("views/votePreferentialform.fxml",event);
+    			break;
+    	}
+    			
+    	
+    	
+    	
+        //changeView("views/voteOrdinaryform.fxml",event);
     }
    
     public void initialize() {

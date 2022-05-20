@@ -34,6 +34,16 @@ public class VotoOrdinale extends Voto {
 	public List<String> getNominativi() {
 		return nominativi;
 	}
+
+	@Override
+	public String getSelection() {
+		StringBuilder output = new StringBuilder("{\"selection\": \"");
+		for (String s : nominativi) {
+			output.append(s + ", ");
+		}
+		output.deleteCharAt(output.lastIndexOf(","));
+		return output.toString();
+	}
 	
 	
 

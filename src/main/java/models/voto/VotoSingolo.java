@@ -23,13 +23,12 @@ public class VotoSingolo extends Voto {
 		return nomeCandidato;
 	}
 
-	
-	/**
-	 * Todo:
-	 * @return
-	 */
-	public String queryGetSelection() {
-		
+
+	//INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (61, 22, '{\"selection\": \"federico\"}');
+	@Override
+	public String getSelection() {
+		return "{\"selection\": \"" + this.nomeCandidato + "\"}";
 	}
 
+	
 }

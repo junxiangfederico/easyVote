@@ -23,4 +23,9 @@ public class VotoBianco extends Voto {
 		return this.tipo.toString();
 	}
 
+	@Override
+	public String getSelection() {
+		return "{\"selection\": \"" + "empty";
+	}
+
 }
