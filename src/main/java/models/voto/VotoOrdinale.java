@@ -39,9 +39,10 @@ public class VotoOrdinale extends Voto {
 	public String getSelection() {
 		StringBuilder output = new StringBuilder("{\"selection\": \"");
 		for (String s : nominativi) {
-			output.append(s + ", ");
+			output.append(s + "; ");
 		}
-		output.deleteCharAt(output.lastIndexOf(","));
+		output.deleteCharAt(output.lastIndexOf(";"));
+		output.append("\"}");
 		return output.toString();
 	}
 	
