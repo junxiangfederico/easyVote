@@ -39,6 +39,7 @@ import models.sessione.Partecipante.TipoPartecipante;
 import models.sessione.SessioneDiVoto;
 import models.sessione.TipoSessione;
 import models.voto.Voto;
+import models.voto.VotoOrdinale;
 import models.voto.VotoSingolo;
 import models.sessione.*;
 
@@ -139,10 +140,54 @@ public class votePreferentialformController extends Controller{
     }
 private void castVote(CandidatoSemplice selectedItem, CandidatoSemplice selectedItem2,
 			CandidatoSemplice selectedItem3, CandidatoSemplice selectedItem4) {
-		// TODO Auto-generated method stub
+		List<String> c = new ArrayList<>();
+		c.add(selectedItem.getidentificativo());
+
+		c.add(selectedItem2.getidentificativo());
+
+		c.add(selectedItem3.getidentificativo());
+
+		c.add(selectedItem4.getidentificativo());
 		
+		/**
+		 * to be replace with singleton
+		 */
+		int idUtente = 123;
+		VotoOrdinale v = new VotoOrdinale(s.getNumeroSessione(), idUtente, c);
+		
+		DAO(v);
 	}
 
+/**
+ * to be moved to DAO
+ * @param v
+ */
+private void DAO(VotoOrdinale v) {
+	String q = "INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (?, ?, ?);";
+	PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
+
+	System.out.println(v.getSessioneDiVoto() + " " + v.getIdVotante() + v.getSelection());
+	try {	
+		p.setInt(1, v.getSessioneDiVoto());
+		p.setInt(2, v.getIdVotante());
+		p.setString(3, v.getSelection());
+		p.execute();
+	} catch (SQLException e) {
+
+        e.printStackTrace();
+	}
+	btnConfirm.setDisable(true);
+	outputLabel.setText("Voto castato");
+	outputLabel.setVisible(true);
+	
+}
+
+/** 
+ * Continue frmo here:
+ * @param selectedItem
+ * @param selectedItem2
+ * @param selectedItem3
+ */
 private void castVote(CandidatoSemplice selectedItem, CandidatoSemplice selectedItem2,
 			CandidatoSemplice selectedItem3) {
 		// TODO Auto-generated method stub
