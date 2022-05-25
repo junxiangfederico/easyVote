@@ -39,10 +39,8 @@ import models.sessione.TipoSessione;
 import models.sessione.*;
 
 public class sessionformPropertiesController extends Controller{
-	
+	//Utenti u;
 	private int sessionId = 0;
-
-	private String type = "";
 	private SessioneDiVoto s;
 	
 	@FXML 
