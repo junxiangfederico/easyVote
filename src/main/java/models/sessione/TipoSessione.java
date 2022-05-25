@@ -3,8 +3,10 @@ package models.sessione;
 public enum TipoSessione {
 	
 	Referendum("Referendum"),
-	OrdinaleCandidati("Ordinale con candidati"),
-	OrdinalePartiti("Ordinale con partiti"),
+	SingoloCandidati("Singolo con candidati"),
+	SingoloPartiti("Singolo con partiti"),
+	OrdinaleCandidatiPreferenze("Ordinale con preferenze su candidati"),
+	OrdinalePartitiPreferenze("Ordinale con preferenze su candidati"),
 	CategoricoCandidati("Categorico con candidati"),
 	CategoricoPartiti("Categorico con partiti"),
 	CategoricoPreferenze("Categorico con preferenze");
@@ -16,10 +18,14 @@ public enum TipoSessione {
     	switch(nome) {
     	case "Referendum":
     		return TipoSessione.Referendum;
-    	case "Ordinale con candidati":
-    		return TipoSessione.OrdinaleCandidati;
-    	case "Ordinale con partiti":
-    		return TipoSessione.OrdinalePartiti;
+    	case "Singolo con candidati":
+    		return TipoSessione.SingoloCandidati;
+    	case "Singolo con partiti":
+			return TipoSessione.SingoloPartiti;
+    	case "Ordinale con preferenze su candidati":
+    		return TipoSessione.OrdinaleCandidatiPreferenze;
+    	case "Ordinale con preferenze su partiti":
+    		return TipoSessione.OrdinalePartitiPreferenze;
     	case "Categorico con candidati":
     		return TipoSessione.CategoricoCandidati;
     	case "Categorico con partiti":

@@ -16,7 +16,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import dao.factory.DAOFactory;
 import dao.sessione.SessioneIDAO;
+import dao.utenti.IDAOUtenti;
 import database.DatabaseManager;
+import easyVoteproject.Utente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,7 +48,7 @@ import models.sessione.*;
 public class votePreferentialformController extends Controller{
 	
 	
-	
+	models.utenti.Utente u;
 	private int sessionId = 0;
 
 	private String type = "";
@@ -82,10 +84,14 @@ public class votePreferentialformController extends Controller{
     @FXML
     private TableView<CandidatoSemplice> tableCandidates = new TableView<>();
 
+    
+    @FXML
+    private Label lblLogged;
 
     @FXML
     private TableColumn<CandidatoSemplice, String> tableColumn = new TableColumn<>("Nomi");
     private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
+    private IDAOUtenti utenteDAO = DAOFactory.getFactory().getUtenteDAOInstance();
 
     /**
      * update della sessione, aggiornamento dei partecipanti: linea 116
@@ -102,6 +108,7 @@ public class votePreferentialformController extends Controller{
     	switch (s.getCandidati().size()) {
     	case 1:
     		if (comboInput1.getSelectionModel().getSelectedItem() == null) {
+    			outputLabel.setVisible(true);
     			outputLabel.setText("Riempi tutte le caselle disponibili");
     			return;
     		}
@@ -110,6 +117,8 @@ public class votePreferentialformController extends Controller{
     	case 2:
     		if (comboInput1.getSelectionModel().getSelectedItem() == null 
     		|| comboInput2.getSelectionModel().getSelectedItem() == null ) {
+
+    			outputLabel.setVisible(true);
     			outputLabel.setText("Riempi tutte le caselle disponibili");
     			return;
     		}
@@ -120,6 +129,8 @@ public class votePreferentialformController extends Controller{
     		if (comboInput1.getSelectionModel().getSelectedItem() == null 
     		|| comboInput2.getSelectionModel().getSelectedItem() == null 
     		|| comboInput3.getSelectionModel().getSelectedItem() == null) {
+
+    			outputLabel.setVisible(true);
     			outputLabel.setText("Riempi tutte le caselle disponibili");
     			return;
     		}
@@ -130,6 +141,8 @@ public class votePreferentialformController extends Controller{
     		|| comboInput2.getSelectionModel().getSelectedItem() == null 
     		|| comboInput3.getSelectionModel().getSelectedItem() == null 
     		|| comboInput4.getSelectionModel().getSelectedItem() == null) {
+
+    			outputLabel.setVisible(true);
     			outputLabel.setText("Riempi tutte le caselle disponibili");
     			return;
     		}
@@ -149,10 +162,7 @@ private void castVote(CandidatoSemplice selectedItem, CandidatoSemplice selected
 
 		c.add(selectedItem4.getidentificativo());
 		
-		/**
-		 * to be replace with singleton
-		 */
-		int idUtente = 123;
+		int idUtente = receiveUtente();
 		VotoOrdinale v = new VotoOrdinale(s.getNumeroSessione(), idUtente, c);
 		
 		DAO(v);
@@ -179,7 +189,6 @@ private void DAO(VotoOrdinale v) {
 	btnConfirm.setDisable(true);
 	outputLabel.setText("Voto castato");
 	outputLabel.setVisible(true);
-	
 }
 
 /** 
@@ -190,62 +199,53 @@ private void DAO(VotoOrdinale v) {
  */
 private void castVote(CandidatoSemplice selectedItem, CandidatoSemplice selectedItem2,
 			CandidatoSemplice selectedItem3) {
-		// TODO Auto-generated method stub
+
+	List<String> c = new ArrayList<>();
+	c.add(selectedItem.getidentificativo());
+
+	c.add(selectedItem2.getidentificativo());
+
+	c.add(selectedItem3.getidentificativo());
+
+	
+	int idUtente = receiveId();
+	System.out.println("212" + idUtente);
+	VotoOrdinale v = new VotoOrdinale(s.getNumeroSessione(), idUtente, c);
+	
+	DAO(v);
 		
 	}
 
 private void castVote(CandidatoSemplice selectedItem, CandidatoSemplice selectedItem2) {
-		// TODO Auto-generated method stub
+
+	List<String> c = new ArrayList<>();
+	c.add(selectedItem.getidentificativo());
+
+	
+	c.add(selectedItem2.getidentificativo());
+
+	
+	int idUtente = receiveId();
+	VotoOrdinale v = new VotoOrdinale(s.getNumeroSessione(), idUtente, c);
+	
+	DAO(v);
 		
 	}
 
 private void castVote(CandidatoSemplice selectedItem) {
-		// TODO Auto-generated method stub
+
+	List<String> c = new ArrayList<>();
+	c.add(selectedItem.getidentificativo());
+	
+	int idUtente = receiveId();
+	VotoOrdinale v = new VotoOrdinale(s.getNumeroSessione(), idUtente, c);
+	
+	DAO(v);
 		
 	}
 
-//
-//	@FXML
-//    void handleConfirm(ActionEvent event) throws IOException {
-//    	CandidatoSemplice c2 = tableCandidates.getSelectionModel().getSelectedItem();
-//    	if (c2 == null) {
-//    		outputLabel.setText("Seleziona un candidato");
-//    		return;
-//    	}
-//    	// to do : replace idVotante with singleton.getIstance();
-//    	int idVotante = 1;
-//		VotoSingolo v = new VotoSingolo(sessionId, idVotante, c2.getIdentificativo());
-//    	castVote(v);
-//    	
-//    }
-//	
-
-//	
-//	//INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (61, 22, '{\"selection\": \"federico\"}');
-//	public void castVote(VotoSingolo v) {
-//		String q = "INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (?, ?, ?);";
-//		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
-//
-//		//System.out.println(v.getSessioneDiVoto() + " " + v.getIdVotante() + v.getSelection());
-//		try {	
-//			p.setInt(1, v.getSessioneDiVoto());
-//			p.setInt(2, v.getIdVotante());
-//			p.setString(3, v.getSelection());
-//			p.execute();
-//		} catch (SQLException e) {
-//
-//            e.printStackTrace();
-//		}
-//		btnConfirm.setDisable(true);
-//		outputLabel.setText("Voto castato per: " + v.getNomeCandidato());
-//		outputLabel.setVisible(true);
-//	}
-//    
     
     public void updateColumns(SessioneDiVoto s){
-    	/*tableColumn.setCellValueFactory(
-				new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
-		*/
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
 		comboInput1.setItems(lista);
 		comboInput2.setItems(lista);
@@ -258,19 +258,6 @@ private void castVote(CandidatoSemplice selectedItem) {
         tableCandidates.setItems(lista);
     }
     
-    /**
-     * 
-    
-    @throws IOException 
-     * @throws JsonMappingException 
-     * @throws JsonParseException 
-     * @FXML
-    private TableView<Candidato> tableCandidates;
-
-
-    @FXML
-    private TableColumn<Candidato, String> tableColumn;
-     */
 
     
 	SessioneDiVoto loadSession(int sessionId) {
@@ -293,15 +280,7 @@ private void castVote(CandidatoSemplice selectedItem) {
 		
 	}
 
-	/*private int getValue(Connection conn) throws SQLException {
-   	 	String Query = "SELECT * FROM session ORDER BY id DESC LIMIT 1;";
-   	 	PreparedStatement preparedStatement;
-		preparedStatement = conn.prepareStatement(Query);
-		ResultSet rs = preparedStatement.executeQuery();
-		rs.next();
-		type = rs.getString(5);
-		return Integer.parseInt(rs.getString(1));
-	}*/
+	
 	@FXML
 	private void receiveData(ActionEvent event) {
 	  
@@ -309,9 +288,10 @@ private void castVote(CandidatoSemplice selectedItem) {
 	}
 	public void initialize() {
 		tableColumn.setCellValueFactory(new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
-		//this.s = loadSession();
 		IdHolder holder = IdHolder.getInstance();
 		sessionId = holder.getid();
+		u = utenteDAO.UtentebyId(receiveUtente());
+		lblLogged.setText("Utente loggato: " + u.getfirstname() + " " + u.getlastname());
 		try {
 			this.s =sessioneDAO.getById(sessionId);
 		

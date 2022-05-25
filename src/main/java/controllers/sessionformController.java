@@ -41,7 +41,7 @@ public class sessionformController extends Controller {
     
     @FXML
     void goBack(ActionEvent event)  throws IOException{
-    	changeView("views/pageform.fxml",event);
+    	changeView("views/login.fxml",event);
     }
 
     @FXML
@@ -72,9 +72,14 @@ public class sessionformController extends Controller {
      */
 	public void initialize() {
 		//choiceBox.setValue("Referendum");
+
+		choiceBox.setValue("Referendum");
+
 		choiceBox.getItems().add("Referendum");
-		choiceBox.getItems().add("Ordinale con candidati");
-		choiceBox.getItems().add("Ordinali con partiti");
+		choiceBox.getItems().add("Singolo con candidati");
+		choiceBox.getItems().add("Singolo con partiti");
+		choiceBox.getItems().add("Ordinale con preferenze su candidati");
+		choiceBox.getItems().add("Ordinale con preferenze su partiti");
 		choiceBox.getItems().add("Categorico con candidati");
 		choiceBox.getItems().add("Categorico con partiti");
 		choiceBox.getItems().add("Categorico con preferenze");
