@@ -31,7 +31,6 @@ public class sessionformController extends Controller {
     
     @FXML
     private TextArea textArea;
-    private Parent root;
     
     private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
     @FXML

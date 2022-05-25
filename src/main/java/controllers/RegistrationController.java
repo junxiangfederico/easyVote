@@ -27,6 +27,7 @@ import dao.factory.DAOFactory;
 import dao.utenti.*;
 import easyVoteproject.Data;
 import models.utenti.*;
+import java.lang.Thread;  
 public class RegistrationController extends Controller {
 	@FXML
     private Button back;
@@ -84,11 +85,15 @@ public class RegistrationController extends Controller {
 		       boolean esito= utenteDAO.registraElettore(utente, fieldUsername.getText(), fieldPassword.getText());
 		       if (esito==true) {
 		    	   lblOutput.setText("Utente " + fieldUsername.getText() + " registrato con successo");	
+		    	   lblOutput.setVisible(true);
+		    	   changeView("views/login.fxml",event);
+		    	  
 		       }else {
 		    	   lblOutput.setText("Errore di registrazione utente,riprovare...");	
 		       }
 			  
-			   lblOutput.setVisible(true);
+			   
+			   
 			   
 		    
     	

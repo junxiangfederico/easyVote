@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import models.sessione.*;
+import models.utenti.UtentiHolder;
 
 public abstract class Controller  {
 
@@ -33,19 +34,23 @@ public abstract class Controller  {
 			e.printStackTrace();
 		}
 	}
-	public void SendId(String view,ActionEvent event,int i) {
-		try {
-			root = FXMLLoader.load(getClass().getClassLoader().getResource(view));
-	    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-	    	IdHolder holder = IdHolder.getInstance();
-	        holder.setId(i);
-	    	scene = new Scene(root);
-	    	stage.setScene(scene);
-	    	stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	protected void SendId(int i) {
+	IdHolder holder = IdHolder.getInstance();
+	holder.setId(i);
 	}
+	protected int receiveId() {
+    	IdHolder holder = IdHolder.getInstance();
+		return holder.getid();
+    }
+	protected void SendUtente(int i) {
+		UtentiHolder holder = UtentiHolder.getInstance();
+		holder.setId(i);
+		}
+	protected int receiveUtente() {
+    	UtentiHolder holder = UtentiHolder.getInstance();
+		return holder.getid();
+    }
+	
 	
 
 }
