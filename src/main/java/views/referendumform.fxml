@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ReferendumController">
+   <children>
+      <Label alignment="CENTER" layoutX="101.0" layoutY="41.0" prefHeight="35.0" prefWidth="281.0" text="Label" textFill="#0361ec">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="fav" alignment="CENTER_LEFT" contentDisplay="RIGHT" layoutX="46.0" layoutY="104.0" mnemonicParsing="false" onAction="#favorevole" prefHeight="120.0" prefWidth="195.0" text="FAVOREVOLE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="cont" layoutX="284.0" layoutY="104.0" mnemonicParsing="false" onAction="#contro" prefHeight="120.0" prefWidth="195.0" text="CONTRO">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </RadioButton>
+      <Button fx:id="subm" layoutX="199.0" layoutY="238.0" mnemonicParsing="false" onAction="#submit" prefHeight="47.0" prefWidth="84.0" text="conferma" />
+   </children>
+</Pane>
