@@ -152,7 +152,6 @@ public class sessionformPropertiesController extends Controller{
     
 	public void initialize() {
 		tableColumn.setCellValueFactory(new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
-		//this.s = loadSession();
 		IdHolder holder = IdHolder.getInstance();
 		sessionId = holder.getid();
 		try {
