@@ -16,7 +16,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import dao.factory.DAOFactory;
 import dao.sessione.SessioneIDAO;
+import dao.utenti.IDAOUtenti;
 import database.DatabaseManager;
+import easyVoteproject.Utente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,7 +45,7 @@ import models.sessione.*;
 
 public class voteOrdinaryformController extends Controller{
 	
-	
+	models.utenti.Utente u;
 	
 	private int sessionId = 0;
 
@@ -63,6 +65,9 @@ public class voteOrdinaryformController extends Controller{
 
     @FXML
     private Label outputLabel;
+    
+    @FXML
+    private Label lblLogged;
 
     
     @FXML
@@ -72,7 +77,9 @@ public class voteOrdinaryformController extends Controller{
     @FXML
     private TableColumn<CandidatoSemplice, String> tableColumn = new TableColumn<>("Nomi");
     private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
-
+    private IDAOUtenti utenteDAO = DAOFactory.getFactory().getUtenteDAOInstance();
+    
+    
     /**
      * update della sessione, aggiornamento dei partecipanti: linea 116
      * @param s
@@ -90,7 +97,7 @@ public class voteOrdinaryformController extends Controller{
     		return;
     	}
     	// to do : replace idVotante with singleton.getIstance();
-    	int idVotante = 1;
+    	int idVotante = receiveUtente();
 		VotoSingolo v = new VotoSingolo(sessionId, idVotante, c2.getIdentificativo());
     	castVote(v);
     	
@@ -187,6 +194,10 @@ public class voteOrdinaryformController extends Controller{
 		//this.s = loadSession();
 		IdHolder holder = IdHolder.getInstance();
 		sessionId = holder.getid();
+		
+		u = utenteDAO.UtentebyId(receiveUtente());
+		lblLogged.setText("Utente loggato: " + u.getfirstname() + " " + u.getlastname());
+		
 		try {
 			this.s =sessioneDAO.getById(sessionId);
 		

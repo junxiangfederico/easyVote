@@ -87,7 +87,7 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <Text layoutX="229.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Creazione nuova sessione di voto" />
-            <ChoiceBox fx:id="choiceBox" layoutX="235.0" layoutY="52.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="choiceBox" layoutX="235.0" layoutY="52.0" prefHeight="28.0" prefWidth="274.0" />
             <Text layoutX="98.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo di sessione:" />
             <Text layoutX="98.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contenuto (opzionale):" />
             <TextArea fx:id="textArea" layoutX="235.0" layoutY="113.0" prefHeight="129.0" prefWidth="310.0" />

@@ -61,8 +61,12 @@ public class SessioneDiVoto {
 
 
 
-
+	/**
+	 * 1 aperto, 0 chiuso
+	 * @return
+	 */
 	public int querygetIsOpen() {
+		System.out.println(isOpen);
 		return isOpen ? 0 : 1;
 	}
 
@@ -102,6 +106,7 @@ public class SessioneDiVoto {
 		}
 		return false;
 	}
+	
 	public static List<Candidato> jsontolist(String string,TipoPartecipante tipo){
 		List<Candidato> lista=new ArrayList<>();
 		if (string==null) {

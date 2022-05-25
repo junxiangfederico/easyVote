@@ -100,11 +100,11 @@ public class sessionformPropertiesController extends Controller{
     	this.s.setIsOpen(true);
     	updateSessione(this.s);
         //FXMLLoader loader= new FXMLLoader(getClass().getClassLoader().getResource("easyVoteproject/resources/voteOrdinaryform.fxml")); 
-    	FXMLLoader loader= new FXMLLoader(getClass().getClassLoader().getResource("views/voteOrdinaryform.fxml")); 
-    	Parent root = loader.load(); 
-        voteOrdinaryformController votoOrdinario =loader.getController();
-        votoOrdinario.loadSession(s.getNumeroSessione());
-        changeView("easyVoteproject/resources/voteOrdinaryform.fxml",event);
+    	//FXMLLoader loader= new FXMLLoader(getClass().getClassLoader().getResource("views/voteOrdinaryform.fxml")); 
+    	//Parent root = loader.load(); 
+        //voteOrdinaryformController votoOrdinario =loader.getController();
+        //votoOrdinario.loadSession(s.getNumeroSessione());
+        changeView("views/login.fxml",event);
     }
 
 	
