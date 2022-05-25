@@ -42,6 +42,8 @@ public class VotoOrdinale extends Voto {
 			output.append(s + "; ");
 		}
 		output.deleteCharAt(output.lastIndexOf(";"));
+
+		output.deleteCharAt(output.lastIndexOf(" "));
 		output.append("\"}");
 		return output.toString();
 	}

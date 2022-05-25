@@ -99,12 +99,13 @@
             </TableView>
             <Button fx:id="btnConfirm" layoutX="514.0" layoutY="184.0" mnemonicParsing="false" onAction="#handleConfirm" prefHeight="26.0" prefWidth="69.0" text="Vota" />
             <Label fx:id="lblTop" layoutX="157.0" layoutY="27.0" text="Label" />
-            <Label fx:id="outputLabel" layoutX="305.0" layoutY="342.0" text="label" visible="false" />
             <ComboBox fx:id="comboInput1" layoutX="282.0" layoutY="133.0" prefWidth="150.0" />
             <ComboBox fx:id="comboInput2" layoutX="282.0" layoutY="173.0" prefWidth="150.0" />
             <ComboBox fx:id="comboInput3" layoutX="282.0" layoutY="210.0" prefWidth="150.0" />
             <ComboBox fx:id="comboInput4" layoutX="282.0" layoutY="249.0" prefWidth="150.0" />
             <Label layoutX="282.0" layoutY="97.0" text="Riordina in base alla preferenza" />
+            <Label fx:id="lblLogged" layoutX="450.0" layoutY="342.0" prefHeight="17.0" prefWidth="169.0" />
+            <Label fx:id="outputLabel" layoutX="267.0" layoutY="334.0" text="vuoto" visible="false" />
       </children>
     </AnchorPane>
   </children>
