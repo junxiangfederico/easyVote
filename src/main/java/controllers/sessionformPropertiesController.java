@@ -152,40 +152,6 @@ public class sessionformPropertiesController extends Controller{
      */
 
     
-	private SessioneDiVoto loadSession() {
-		
-			SessioneDiVoto sessione=null;
-			try {
-				sessione = sessioneDAO.getById(sessionId);
-				return sessione;
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return sessione;
-		
-	}
-
-	/*private int getValue(Connection conn) throws SQLException {
-   	 	String Query = "SELECT * FROM session ORDER BY id DESC LIMIT 1;";
-   	 	PreparedStatement preparedStatement;
-		preparedStatement = conn.prepareStatement(Query);
-		ResultSet rs = preparedStatement.executeQuery();
-		rs.next();
-		type = rs.getString(5);
-		return Integer.parseInt(rs.getString(1));
-	}*/
-	@FXML
-	private void receiveData(ActionEvent event) {
-	  
-	  
-	}
 	public void initialize() {
 		tableColumn.setCellValueFactory(new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
 		//this.s = loadSession();

@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.sessione.IdHolder;
+import models.utenti.UtentiHolder;
 import dao.utenti.*;
 import dao.factory.*;
 import java.security.NoSuchAlgorithmException;
@@ -33,33 +34,31 @@ public class LoginController extends Controller	{
     @FXML
     void handleOK(ActionEvent event)throws NoSuchAlgorithmException, SQLException {
     	lblMessage.setVisible(true);
-    	boolean result=utenteDAO.login(username.getText(), password.getText());
-    	if (result==true) {
+    	int result=utenteDAO.login(username.getText(), password.getText());
+    	if (result!=-1) {
     		   lblMessage.setText("Login riuscito!");
+    		   SendUtente(result);
+    	       changeView("views/operationform.fxml",event);
     	}else {
     		 lblMessage.setText("Login fallito...");
     	}
+    	//System.out.println(result);
+    	
+    	
+    	
     	
     }
     
-    public void getinfo(String id) {
-    	System.out.print(id);
-    }
     
     @FXML
     void handlegoback(ActionEvent event) throws IOException {
     	changeView("views/pageform.fxml",event);
     }
-    @FXML
-    private int receiveData() {
-    	IdHolder holder = IdHolder.getInstance();
-		return holder.getid();
-    }
 	void initialize() {
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
         assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'login.fxml'.";
-        receiveData();
-		System.out.println("hello:  "+receiveData());
+        receiveId();
+		System.out.println("hello:  "+receiveId());
         lblMessage.setVisible(false);
     }
 }

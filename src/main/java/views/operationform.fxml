@@ -38,15 +38,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="262.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.pagecontroller">
+<VBox prefHeight="262.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.operationpagecontroller">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="606.0" prefWidth="1084.0" VBox.vgrow="ALWAYS">
       <children>
-            <Button fx:id="login" layoutX="61.0" layoutY="139.0" mnemonicParsing="false" onAction="#handlelogin" prefHeight="42.0" prefWidth="102.0" text="Login" />
-            <Button fx:id="registration" layoutX="273.0" layoutY="139.0" mnemonicParsing="false" onAction="#handleregistration" prefHeight="42.0" prefWidth="102.0" text="Registration" />
-            <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="61.0" layoutY="37.0" prefHeight="70.0" prefWidth="315.0" text="WELCOME" textAlignment="CENTER" textFill="#121294" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="vote" layoutX="142.0" layoutY="88.0" mnemonicParsing="false" onAction="#handlevote" prefHeight="62.0" prefWidth="154.0" text="Vota" />
+            <Button fx:id="create" layoutX="142.0" layoutY="161.0" mnemonicParsing="false" onAction="#handlecreate" prefHeight="62.0" prefWidth="154.0" text="Crea sessione" visible="false" />
+            <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="60.0" layoutY="14.0" prefHeight="32.0" prefWidth="318.0" text="Seleziona l'operazione" textAlignment="CENTER" textFill="#121294" textOverrun="WORD_ELLIPSIS">
                <font>
-                  <Font size="30.0" />
+                  <Font size="22.0" />
                </font>
             </Label>
       </children>

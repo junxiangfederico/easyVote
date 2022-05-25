@@ -13,14 +13,16 @@ import database.DatabaseManager;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import models.utenti.*;
+import easyVoteproject.Data;
+import models.utenti.*;
 
 
 public class IDAOUtentijdbc implements IDAOUtenti {
 
 	public IDAOUtentijdbc() {}
-	public boolean login(String username, String password) throws NoSuchAlgorithmException, SQLException {		
+	public int login(String username, String password) throws NoSuchAlgorithmException, SQLException {		
 		String hashedPassword = processPassword(password);
-		String q = "SELECT * FROM users WHERE username=? and password=? ;";
+		String q = "SELECT iduser FROM users WHERE username=? and password=? ;";
 		//Utente result = null;
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 			p.setString(1, username);
@@ -31,17 +33,17 @@ public class IDAOUtentijdbc implements IDAOUtenti {
 		
 		return checkOutcome(rs);
 	}
-	public boolean checkOutcome(ResultSet rs) throws SQLException {
+	public int checkOutcome(ResultSet rs) throws SQLException {
     	
     	if (rs.next()){
-		    return true;
+		    return Integer.parseInt(rs.getString(1));
 		 }else {
-			 return false;	
+			 return -1;	
 	    } 
     }
 
-	public boolean registraElettore(Utente t,String username, String pass) throws NoSuchAlgorithmException {
-		boolean result=false;
+	public boolean registraElettore(Utente t,String username, String pass) {
+		boolean result = false;
 		String q = "INSERT INTO `easyVote`.`users` (`name`, `lastname`, "
 		   		+ "`birthdate`, `birthplace`, `codicefiscale`, `username`, `password`,`isadmin`) "
 		   		+ "VALUES (?, ?, ?, ?, ?, ?, ?,0)";
@@ -54,22 +56,21 @@ public class IDAOUtentijdbc implements IDAOUtenti {
 			p.setString(5, t.getcf());
 			p.setString(6, username);
 			p.setString(7, processPassword(pass));
-			result=p.execute();
+			
+			int i = p.executeUpdate();
+			if(i>0) {
+				result=true;
+			}else {
+				result=false;
+			}
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return result;
-		
 	}
-	private String processDate(DatePicker fieldData) {
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd",Locale.US);
-		String formattedValue = (fieldData.getValue()).format(formatter);
-		
-		return formattedValue;
-	}
-
-	
 	
 	/*@
 	  @ requires password != null;
@@ -86,10 +87,49 @@ public class IDAOUtentijdbc implements IDAOUtenti {
 		 }
 		return false;
 	}
+	@Override
+	public Utente UtentebyId(int i) {
+		Utente u=null;
+		String q = "SELECT * FROM users WHERE iduser=? ;";
+		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
+		try {
+			p.setInt(1,i);
+			ResultSet rs = p.executeQuery();
+			if(rs.next()) {
+				u=getUtente(rs);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return u;
+	}
 	
+	private Utente getUtente(ResultSet res) {
+		Utente result = null;
+		String n, c, cf,nn,d;
+		int ia;
 	
-
-	private String processPassword(String Password) throws NoSuchAlgorithmException {
+		
+		try {
+			n = res.getString(2);
+			c = res.getString(3);
+			cf = res.getString(6);
+			nn = res.getString(5);
+			d=res.getString(4);
+			ia=Integer.parseInt(res.getString(9));
+			// vedi il tipo d'utente
+			if (ia==0)
+				result = new Elettore(n,c,new Data(d),nn,cf);
+			else
+				result = new Scrutatore(n,c,new Data(d),nn,cf);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	private String processPassword(String Password) {
 		String hex="";
 		try {
 	        MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -105,6 +145,7 @@ public class IDAOUtentijdbc implements IDAOUtenti {
 		return hex;
 		
 	}
+	
 	@Override
 	public Utente get(String id) {
 		// non usato
@@ -137,4 +178,5 @@ public class IDAOUtentijdbc implements IDAOUtenti {
 		// TODO Auto-generated method stub
 		
 	}
+	
 }
