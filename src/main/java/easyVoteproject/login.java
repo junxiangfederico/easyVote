@@ -12,6 +12,9 @@ public class login extends Application {
     public void start(Stage primaryStage) {
         try {
             Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/login.fxml"));
+            //Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/login.fxml"));
+            //Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/login.fxml"));
+
             Scene myScene = new Scene(addPane);
             primaryStage.setScene(myScene);
             primaryStage.show();

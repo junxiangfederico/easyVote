@@ -67,6 +67,11 @@ public class sessionselectionController extends Controller{
     	switch (s.getTipoSessione()) {
     		case Referendum:
 
+    			changeView("views/referendumform.fxml",event);
+    			break;
+    		case OrdinaleCandidati:
+
+
     	        changeView("views/referendumform.fxml",event);
     			break;
     		case SingoloCandidati:

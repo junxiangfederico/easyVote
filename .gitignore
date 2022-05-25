@@ -4,3 +4,5 @@ src/main/.DS_Store
 src/.DS_Store
 .DS_Store
 *.class
+.classpath
+*.class

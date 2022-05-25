@@ -31,7 +31,7 @@ public class VotoReferendum extends Voto {
 
 	@Override
 	public String getSelection() {
-		return isFavorevole ? "0" : "1";
+		return isFavorevole ? "{\"selection\": \"0\"}" : "{\"selection\": \"1\"}";
 	}
 
 }

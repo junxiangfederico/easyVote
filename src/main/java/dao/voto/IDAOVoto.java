@@ -3,9 +3,9 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import dao.IDAO;
-import models.voto.VotoSingolo;
+import models.voto.*;
 
-public interface IDAOVoto extends IDAO<VotoSingolo> {
+public interface IDAOVoto extends IDAO<Voto> {
 	
-	public boolean castVote(int idSession, int idUser, String contenuto);
+	public boolean castReferendum(VotoReferendum voto);
 }
