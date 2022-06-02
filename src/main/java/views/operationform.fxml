@@ -38,9 +38,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="262.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.operationpagecontroller">
+<VBox prefHeight="413.0" prefWidth="439.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.operationpagecontroller">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="606.0" prefWidth="1084.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="415.0" prefWidth="463.0" VBox.vgrow="ALWAYS">
       <children>
             <Button fx:id="vote" layoutX="142.0" layoutY="88.0" mnemonicParsing="false" onAction="#handlevote" prefHeight="62.0" prefWidth="154.0" text="Vota" />
             <Button fx:id="create" layoutX="142.0" layoutY="161.0" mnemonicParsing="false" onAction="#handlecreate" prefHeight="62.0" prefWidth="154.0" text="Crea sessione" visible="false" />
@@ -49,6 +49,7 @@
                   <Font size="22.0" />
                </font>
             </Label>
+            <Button fx:id="btnResults" layoutX="142.0" layoutY="237.0" mnemonicParsing="false" onAction="#requestResults" prefHeight="62.0" prefWidth="154.0" text="Risultati" />
       </children>
     </AnchorPane>
   </children>

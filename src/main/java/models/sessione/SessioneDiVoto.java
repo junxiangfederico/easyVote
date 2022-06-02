@@ -1,8 +1,16 @@
 package models.sessione;
 
+import java.security.KeyStore.Entry;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Stream;
+
 import models.sessione.Partecipante.TipoPartecipante;
 import models.sessione.Candidato;
 
@@ -132,10 +140,100 @@ public class SessioneDiVoto {
 	public List<Candidato> getCandidati() {
 		return Collections.unmodifiableList(SessioneDiVoto.candidati);
 	}
-	
-	public static void main(String[] args) {
-		
 
-    }
+
+
+	public static List<Candidato> getResultsByQuery(List<String> selections){
+		if (selections.size() == 0) return null;
+		Map<String, Integer> results = new HashMap<>();
+		for (String s : selections) {
+			String[] current = s.split(":");
+			String b = current[1].substring(2, current[1].length()-2);
+			String[] a = b.split(";");
+			for (String aa : a) {
+				aa = aa.strip();
+				
+				if (results.containsKey(aa)) {
+					results.put(aa, results.get(aa)+1);
+				}else {
+					results.put(aa, 1);
+				}
+			}
+			
+			for (String bb : results.keySet()) {
+				System.out.println(bb + " " + results.get(bb)); 
+			}
+			
+		}
+		return null;
+		
+	}
+
+
+
+
+	public static Candidato getOrdinaryResultsByQuery(List<String> selections) {
+		if (selections.size() == 0) return null;
+		Map<String, Integer> results = new TreeMap<>();
+		for (String s : selections) {
+			String[] current = s.split(":");
+			String b = current[1].substring(2, current[1].length()-2);
+			System.out.println(s);
+				if (results.containsKey(b)) {
+					results.put(b, results.get(b)+1);
+				}else {
+					results.put(b, 1);
+				}
+			
+		}
+		int highest = 0;
+		String winner = "";
+		for (String ss : results.keySet()) {
+			if (results.get(ss) > highest) {
+				highest = results.get(ss);
+				winner = ss;
+			}
+		}
 	
+		TipoPartecipante t = TipoPartecipante.Persona;
+		Candidato c = new Candidato(t, winner);
+		return c;
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
