@@ -68,7 +68,6 @@ public class voteOrdinaryformController extends Controller{
     
     @FXML
     private Label lblLogged;
-
     
     @FXML
     private TableView<CandidatoSemplice> tableCandidates = new TableView<>();
@@ -196,7 +195,9 @@ public class voteOrdinaryformController extends Controller{
 		sessionId = holder.getid();
 		
 		u = utenteDAO.UtentebyId(receiveUtente());
-		lblLogged.setText("Utente loggato: " + u.getfirstname() + " " + u.getlastname());
+		lblLogged.setText("Utente loggato: " 
+		+ u.getfirstname() + " "
+				+ u.getlastname());
 		
 		try {
 			this.s =sessioneDAO.getById(sessionId);

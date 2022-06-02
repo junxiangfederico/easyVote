@@ -20,7 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import models.utenti.*;
 
-public class sessionselectionController extends Controller{
+public class sessionselectionbyAdminController extends Controller{
 
 	
 	Utente u;
@@ -57,16 +57,8 @@ public class sessionselectionController extends Controller{
     @FXML
     void handlebutton(ActionEvent event) throws IOException {
     	SessioneDiVoto s = tabellasessioni.getSelectionModel().getSelectedItem();
-    	if(u.isScrutatore()) {    		
-    		SendId(s.getNumeroSessione());
-    		changeView("views/sessionformProperties.fxml",event);
-    	}
-
 		IdHolder holder = IdHolder.getInstance();
 		holder.setId(s.getNumeroSessione());
-		
-		
-
 		
     	switch (s.getTipoSessione()) {
     		case Referendum:
@@ -75,11 +67,11 @@ public class sessionselectionController extends Controller{
     			break;
     		case SingoloCandidati:
     		case SingoloPartiti:
-    	        changeView("views/voteOrdinaryform.fxml",event);
+    	        changeView("views/resultsOrdinaryForm.fxml",event);
     			break;
     		case OrdinaleCandidatiPreferenze:
     		case OrdinalePartitiPreferenze:
-    	        changeView("views/votePreferentialform.fxml",event);
+    	        changeView("views/resultsPreferentialForm.fxml",event);
     			break;
     		case CategoricoCandidati:
     		case CategoricoPartiti:
