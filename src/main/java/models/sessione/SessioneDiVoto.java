@@ -200,6 +200,29 @@ public class SessioneDiVoto {
 		return c;
 	}
 
+
+
+
+	public static String getReferendumResultsByQuery(List<String> selections) {
+		int favorevoli = 0;
+		int contro = 0;
+		int bianche = 0;
+		for (String s : selections) {
+			String[] current = s.split(":");
+			if (current[1].charAt(2) == '0') {
+				contro++;
+			}else if (current[1].charAt(2) == '1') {
+				favorevoli++;
+			}else {
+				bianche++;
+			}
+		}
+		if (favorevoli > contro) {
+			return "Il referendum è approvato, i favorevoli sono maggiori dei contro.";
+		}
+		return "Il referendum non è approvato, contro sono maggiori del favorevoli.";
+	}
+
 }
 
 
