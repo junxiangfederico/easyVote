@@ -88,7 +88,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 		
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		List<String> selections = new ArrayList<>();
-		System.out.println("91" + idSessione);
+		//System.out.println("91" + idSessione);
 		try {	
 			p.setInt(1, idSessione);
 			ResultSet rs = p.executeQuery();
@@ -124,6 +124,28 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 		}
 		if (selections.size() == 0) { return null;}
 		return SessioneDiVoto.getOrdinaryResultsByQuery(selections);
+	}
+	
+	@Override
+	public String getReferendumResults(int idSessione) {
+
+		String q = "SELECT selection FROM voto where idSession = ?";
+
+		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
+		List<String> selections = new ArrayList<>();
+		//System.out.println("91" + idSessione);
+		try {	
+			p.setInt(1, idSessione);
+			ResultSet rs = p.executeQuery();
+			while (rs.next()) {
+				selections.add(rs.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Problemi con la base dati, riprovare! Context: getAll");
+		}
+		if (selections.size() == 0) { return null;}
+		return SessioneDiVoto.getReferendumResultsByQuery(selections);
 	}
 
 

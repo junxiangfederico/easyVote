@@ -63,7 +63,7 @@ public class sessionselectionbyAdminController extends Controller{
     	switch (s.getTipoSessione()) {
     		case Referendum:
 
-    			changeView("views/referendumform.fxml",event);
+    			changeView("views/resultsReferendumForm.fxml",event);
     			break;
     		case SingoloCandidati:
     		case SingoloPartiti:

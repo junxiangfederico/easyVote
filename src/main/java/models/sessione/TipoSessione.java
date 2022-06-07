@@ -32,7 +32,6 @@ public enum TipoSessione {
     		return TipoSessione.CategoricoPartiti;
     	case "Categorico con preferenze":
     		return TipoSessione.CategoricoPreferenze;
-    	
     	default:
     		return null;
     	}
