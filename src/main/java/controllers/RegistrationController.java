@@ -65,33 +65,21 @@ public class RegistrationController extends Controller {
     @FXML
     void handleOk(ActionEvent event) throws NoSuchAlgorithmException, SQLException {
 		       
-		       if (utenteDAO.verifyPresence(fieldUsername.getText())) {
-				   lblOutput.setText("Utente con username " + fieldUsername.getText() + " gia presente, provare con un altro username");	
-				   lblOutput.setVisible(true);
-		    	   return;
+    		   boolean result=controllo();
+		       if (result) {
+		    	   Utente utente=new Elettore(fieldNome.getText(),fieldCognome.getText(),new Data(Data.processDate(fieldData)),fieldNazione.getText(),fieldCF.getText().toUpperCase());
+			       boolean esito= utenteDAO.registraElettore(utente, fieldUsername.getText(), fieldPassword.getText());
+			       if (esito==true) {
+			    	   lblOutput.setText("Utente " + fieldUsername.getText() + " registrato con successo");	
+			    	   lblOutput.setVisible(true);
+			    	   changeView("views/login.fxml",event);
+			    	  
+			       }else {
+			    	   lblOutput.setText("Errore di registrazione utente,riprovare...");	
+			       }
+			       
 		       }
-		       if (fieldCF.getText().length() != 16) {
-		    		 lblOutput.setText("Codice fiscale inserito non valido, lunghezza diversa da 16");	
-		    		 lblOutput.setVisible(true);
-		    		 throw new IllegalArgumentException("Codice fiscale inserito non valido, lunghezza diversa da 16");
-		    	 }
-		       if (fieldNome.getText().length() < 1 || fieldCognome.getText().length() < 1 ||fieldNazione.getText().length() < 1 || fieldUsername.getText().length() < 1 ||
-		      		 fieldPassword.getText().length() < 1) {
-		      		 lblOutput.setText("I dati inseriti non sono validi, riprovare");	
-		      		 lblOutput.setVisible(true);
-		      		 throw new IllegalArgumentException("I dati inseriti non sono validi, riprovare");
-		      	 }
-		       Utente utente=new Elettore(fieldNome.getText(),fieldCognome.getText(),new Data(Data.processDate(fieldData)),fieldNazione.getText(),fieldCF.getText().toUpperCase());
-		       boolean esito= utenteDAO.registraElettore(utente, fieldUsername.getText(), fieldPassword.getText());
-		       if (esito==true) {
-		    	   lblOutput.setText("Utente " + fieldUsername.getText() + " registrato con successo");	
-		    	   lblOutput.setVisible(true);
-		    	   changeView("views/login.fxml",event);
-		    	  
-		       }else {
-		    	   lblOutput.setText("Errore di registrazione utente,riprovare...");	
-		       }
-			  
+		       
 			   
 			   
 			   
@@ -99,7 +87,28 @@ public class RegistrationController extends Controller {
     	
     	
     }
-    	
+    
+    private boolean controllo() throws SQLException {
+    	boolean result=true;
+    	if (utenteDAO.verifyPresence(fieldUsername.getText())) {
+			   lblOutput.setText("Utente con username " + fieldUsername.getText() + " gia presente, provare con un altro username");	
+			   lblOutput.setVisible(true);
+			   result=false;
+	       }
+	       if (fieldCF.getText().length() != 16) {
+	    		 lblOutput.setText("Codice fiscale inserito non valido, lunghezza diversa da 16");	
+	    		 lblOutput.setVisible(true);
+	    		 result=false;
+	    		 
+	    	 }
+	       if (fieldNome.getText().length() < 1 || fieldCognome.getText().length() < 1 ||fieldNazione.getText().length() < 1 || fieldUsername.getText().length() < 1 ||
+	      		 fieldPassword.getText().length() < 1) {
+	      		 lblOutput.setText("I dati inseriti non sono validi, riprovare");	
+	      		 lblOutput.setVisible(true);
+	      		 result=false;
+	      	 }
+	       return result;
+    }
     void initialize() {	
     	
     	assert fieldNome != null : "fx:id=\"fieldNome\" was not injected: check your FXML file 'registrationform.fxml'.";
