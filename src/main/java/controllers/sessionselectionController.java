@@ -70,21 +70,13 @@ public class sessionselectionController extends Controller{
 		
     	switch (s.getTipoSessione()) {
     		case Referendum:
-
     			changeView("views/referendumform.fxml",event);
     			break;
-    		case SingoloCandidati:
-    		case SingoloPartiti:
+    		case Ordinale:
     	        changeView("views/voteOrdinaryform.fxml",event);
     			break;
-    		case OrdinaleCandidatiPreferenze:
-    		case OrdinalePartitiPreferenze:
-    	        changeView("views/votePreferentialform.fxml",event);
-    			break;
-    		case CategoricoCandidati:
-    		case CategoricoPartiti:
-    		case CategoricoPreferenze:
-    			System.out.println("to be implemented");
+    		case Categorico:
+    			changeView("views/voteCategoricform.fxml",event);
     			break;
     	}
     			
@@ -121,11 +113,12 @@ public class sessionselectionController extends Controller{
     			}
     		}
     		
-    		if(u.isScrutatore()) {
+    		/*if(u.isScrutatore()) {
     			lista=FXCollections.observableArrayList(listasessioni);
     		}else {
     			lista=FXCollections.observableArrayList(sessioniaperte);
-    		}
+    		}*/
+    		lista=FXCollections.observableArrayList(sessioniaperte);
 			return lista;
 		
     }

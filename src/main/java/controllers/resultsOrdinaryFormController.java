@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import dao.factory.DAOFactory;
 import dao.sessione.SessioneIDAO;
 import dao.utenti.IDAOUtenti;
+import dao.voto.IDAOVoto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -44,23 +45,23 @@ public class resultsOrdinaryFormController extends Controller{
 
     private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
     private IDAOUtenti utenteDAO = DAOFactory.getFactory().getUtenteDAOInstance();
+    private IDAOVoto VotoDAO = DAOFactory.getFactory().getVotoDAOInstance();
 
     
 
-    public void updateColumns(SessioneDiVoto s){
+    /*public void updateColumns(SessioneDiVoto s){
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
-		Candidato results = sessioneDAO.getOrdinaryResults(this.sessionId);
+		Candidato results = VotoDAO.getCategoricResults(this.sessionId);
 		if (results == null) return;
     		lista.add(new CandidatoSemplice(results.getidentificativo()));
         tableCandidates.setItems(lista);
-    }
+    }*/
     
     
     public void initialize() {
 		tableColumn.setCellValueFactory(new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
 		//this.s = loadSession();
-		IdHolder holder = IdHolder.getInstance();
-		sessionId = holder.getid();
+		sessionId =receiveId();
 		System.out.println(sessionId);		
 		u = utenteDAO.UtentebyId(receiveUtente());
 		lblLogged.setText("Utente loggato: " 
@@ -86,7 +87,7 @@ public class resultsOrdinaryFormController extends Controller{
 			e.printStackTrace();
 		}
     	lblOutput.setText(s.getNumeroSessione() + " di tipo: " + s.getTipoSessione());
-		updateColumns(s);
+		//updateColumns(s);
 	}
     
 }

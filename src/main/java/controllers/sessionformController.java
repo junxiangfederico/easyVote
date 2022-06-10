@@ -47,9 +47,13 @@ public class sessionformController extends Controller {
     @FXML
     void submit(ActionEvent event) throws IOException{
     	int id=Query();
-    	IdHolder holder = IdHolder.getInstance();
-	    holder.setId(id);
-	    changeView("views/sessionformProperties.fxml",event);
+    	SendId(id);
+    	if(choiceBox.getSelectionModel().getSelectedItem()=="Referendum") {
+    		changeView("views/operationform.fxml",event);
+    		
+    	}else{
+    		changeView("views/sessionformProperties.fxml",event);
+    	}
     }
     
     
@@ -76,12 +80,7 @@ public class sessionformController extends Controller {
 		choiceBox.setValue("Referendum");
 
 		choiceBox.getItems().add("Referendum");
-		choiceBox.getItems().add("Singolo con candidati");
-		choiceBox.getItems().add("Singolo con partiti");
-		choiceBox.getItems().add("Ordinale con preferenze su candidati");
-		choiceBox.getItems().add("Ordinale con preferenze su partiti");
-		choiceBox.getItems().add("Categorico con candidati");
-		choiceBox.getItems().add("Categorico con partiti");
-		choiceBox.getItems().add("Categorico con preferenze");
+		choiceBox.getItems().add("Ordinale");
+		choiceBox.getItems().add("Categorico");
 	}
 }

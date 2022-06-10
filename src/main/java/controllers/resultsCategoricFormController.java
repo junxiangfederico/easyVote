@@ -20,7 +20,7 @@ import models.sessione.Candidato;
 import models.sessione.IdHolder;
 import models.sessione.SessioneDiVoto;
 import dao.voto.*;
-public class resultsReferendumFormController extends Controller{
+public class resultsCategoricFormController extends Controller{
 
 	models.utenti.Utente u;
 
@@ -101,7 +101,7 @@ public class resultsReferendumFormController extends Controller{
 	}
 
     private String IDAO(int sessionId) {
-    	return VotoDAO.getReferendumResults(sessionId);
+    	return VotoDAO.getCategoricResults(sessionId);
     }
     
 }
