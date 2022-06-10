@@ -119,7 +119,7 @@ public class IDAOVotojdbc implements IDAOVoto{
 		}
 	}
 	@Override
-	public String getOrdinaryResults(int idSessione) {
+	public List<Candidato> getOrdinaryResults(int idSessione) {
 
 		String q = "SELECT selection FROM voto where idSession = ?";
 
@@ -130,6 +130,7 @@ public class IDAOVotojdbc implements IDAOVoto{
 			p.setInt(1, idSessione);
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
+				//System.out.println(rs.getString(1));
 				selections.add(rs.getString(1));
 			}
 			

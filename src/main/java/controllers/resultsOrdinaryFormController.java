@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -28,7 +29,8 @@ public class resultsOrdinaryFormController extends Controller{
 	private SessioneDiVoto s;
 	
 	private int sessionId = 0;
-
+    @FXML
+    private Label bottomLabel;
 	
     @FXML
     private Label lblOutput;
@@ -49,13 +51,17 @@ public class resultsOrdinaryFormController extends Controller{
 
     
 
-    /*public void updateColumns(SessioneDiVoto s){
+    public void updateColumns(SessioneDiVoto s){
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
-		Candidato results = VotoDAO.getCategoricResults(this.sessionId);
-		if (results == null) return;
-    		lista.add(new CandidatoSemplice(results.getidentificativo()));
+		List<Candidato> results = VotoDAO.getOrdinaryResults(this.sessionId);
+		if (results.equals(null)) return;
+
+		bottomLabel.setText("Il vincitore è: " + results.get(0).identificativo); 
+		for (Candidato c : results) {
+			lista.add(new CandidatoSemplice(c.getidentificativo()));
+		}	
         tableCandidates.setItems(lista);
-    }*/
+    }
     
     
     public void initialize() {
@@ -87,7 +93,7 @@ public class resultsOrdinaryFormController extends Controller{
 			e.printStackTrace();
 		}
     	lblOutput.setText(s.getNumeroSessione() + " di tipo: " + s.getTipoSessione());
-		//updateColumns(s);
+		updateColumns(s);
 	}
     
 }
