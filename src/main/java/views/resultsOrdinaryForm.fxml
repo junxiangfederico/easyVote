@@ -87,12 +87,14 @@
       <children>
             <Label layoutX="57.0" layoutY="54.0" text="Pagina di visualizzazione dei risultati per l'elezione numero: " />
             <Label fx:id="lblOutput" layoutX="387.0" layoutY="54.0" text="Label" />
-            <TableView fx:id="tableCandidates" layoutX="202.0" layoutY="97.0" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tableCandidates" layoutX="202.0" layoutY="113.0" prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="tableColumn" editable="false" prefWidth="199.0" sortable="false" text="Candidati" />
               </columns>
             </TableView>
             <Label fx:id="lblLogged" layoutX="472.0" layoutY="333.0" text="Label" />
+            <Label layoutX="84.0" layoutY="88.0" text="L'elezione si è conclusa con i candidati nel seguente ordine:" />
+            <Label fx:id="bottomLabel" layoutX="202.0" layoutY="333.0" text="Il vincitore" />
       </children>
     </AnchorPane>
   </children>

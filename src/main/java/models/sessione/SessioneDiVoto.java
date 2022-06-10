@@ -3,6 +3,7 @@ package models.sessione;
 import java.security.KeyStore.Entry;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -222,32 +223,67 @@ public class SessioneDiVoto {
 		}
 		return "Il referendum non e' approvato, contro sono maggiori del favorevoli.";
 	}
-	public static String getOrdinaryResultsByQuery(List<String> selections) {
+	
+	
+	/**
+	 * 
+	 * Prima posizione: 4
+	 * seconda posizione 3
+	 * terza posizione 2
+	 * quarta posizione 1
+	 * 
+	 * @param selections
+	 * @return
+	 */
+	public static List<Candidato> getOrdinaryResultsByQuery(List<String> selections) {
 		if (selections.size() == 0) return null;
-		Map<String, Integer> results = new TreeMap<>();
+
+		int i = 4;
+		Map<String, Integer> results = new HashMap<>();
 		for (String s : selections) {
+			System.out.println(i);
+			//System.out.println(s);
 			String[] current = s.split(":");
 			String b = current[1].substring(2, current[1].length()-2);
-			System.out.println(s);
-				if (results.containsKey(b)) {
-					results.put(b, results.get(b)+1);
-				}else {
-					results.put(b, 1);
-				}
+			//System.out.println(b);
 			
+			String[] aaa = b.split(";");
+			for (String names : aaa) {
+				if (results.containsKey(names.trim())) {
+					results.put(names.trim(), (results.get(names.trim())+1) * i);
+				}else {
+					results.put(names.trim(), 1 * i);
+				}
+				i--;
+			}
 		}
 		int highest = 0;
 		String winner = "";
 		for (String ss : results.keySet()) {
+			System.out.println(ss + " " + results.get(ss));
 			if (results.get(ss) > highest) {
 				highest = results.get(ss);
 				winner = ss;
 			}
 		}
-	
+		
+		LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
+		 
+		//Use Comparator.reverseOrder() for reverse ordering
+		results.entrySet()
+		  .stream()
+		  .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
+		  .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
+
 		TipoPartecipante t = TipoPartecipante.Persona;
-		Candidato c = new Candidato(t, winner);
-		return "il vincitore e': "+c.getidentificativo();
+		List<Candidato> output = new ArrayList<>();
+		for (String s : reverseSortedMap.keySet()) {
+			output.add(new Candidato(t, s));
+		}
+		
+		
+	
+		return output;
 }
 }
 
