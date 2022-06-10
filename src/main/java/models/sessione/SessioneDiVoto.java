@@ -75,7 +75,7 @@ public class SessioneDiVoto {
 	 */
 	public int querygetIsOpen() {
 		System.out.println(isOpen);
-		return isOpen ? 0 : 1;
+		return isOpen ? 1 : 0;
 	}
 
 
@@ -172,7 +172,7 @@ public class SessioneDiVoto {
 
 
 
-	public static Candidato getOrdinaryResultsByQuery(List<String> selections) {
+	public static String getCategoricResultsByQuery(List<String> selections) {
 		if (selections.size() == 0) return null;
 		Map<String, Integer> results = new TreeMap<>();
 		for (String s : selections) {
@@ -197,7 +197,7 @@ public class SessioneDiVoto {
 	
 		TipoPartecipante t = TipoPartecipante.Persona;
 		Candidato c = new Candidato(t, winner);
-		return c;
+		return "il vincitore e': "+c.getidentificativo();
 	}
 
 
@@ -218,11 +218,37 @@ public class SessioneDiVoto {
 			}
 		}
 		if (favorevoli > contro) {
-			return "Il referendum è approvato, i favorevoli sono maggiori dei contro.";
+			return "Il referendum e' approvato, i favorevoli sono maggiori dei contro.";
 		}
-		return "Il referendum non è approvato, contro sono maggiori del favorevoli.";
+		return "Il referendum non e' approvato, contro sono maggiori del favorevoli.";
 	}
-
+	public static String getOrdinaryResultsByQuery(List<String> selections) {
+		if (selections.size() == 0) return null;
+		Map<String, Integer> results = new TreeMap<>();
+		for (String s : selections) {
+			String[] current = s.split(":");
+			String b = current[1].substring(2, current[1].length()-2);
+			System.out.println(s);
+				if (results.containsKey(b)) {
+					results.put(b, results.get(b)+1);
+				}else {
+					results.put(b, 1);
+				}
+			
+		}
+		int highest = 0;
+		String winner = "";
+		for (String ss : results.keySet()) {
+			if (results.get(ss) > highest) {
+				highest = results.get(ss);
+				winner = ss;
+			}
+		}
+	
+		TipoPartecipante t = TipoPartecipante.Persona;
+		Candidato c = new Candidato(t, winner);
+		return "il vincitore e': "+c.getidentificativo();
+}
 }
 
 

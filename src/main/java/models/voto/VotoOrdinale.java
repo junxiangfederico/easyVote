@@ -9,7 +9,7 @@ public class VotoOrdinale extends Voto {
 	
 	/**
 	 * 
-	 * Un voto ordinale è un tipo di voto in cui l'elettore ordina in maniera decrescente i candidati preferiti
+	 * Un voto ordinale e' un tipo di voto in cui l'elettore ordina in maniera decrescente i candidati preferiti
 	 * 
 	 * Sia una lista di ballottaggio la seguente: Federico, Angelo, Andrea, Carlo
 	 * 
@@ -45,6 +45,7 @@ public class VotoOrdinale extends Voto {
 
 		output.deleteCharAt(output.lastIndexOf(" "));
 		output.append("\"}");
+		System.out.println(output.toString());
 		return output.toString();
 	}
 	

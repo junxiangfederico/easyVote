@@ -61,8 +61,7 @@ public class resultsPreferentialFormController extends Controller{
     public void initialize() {
 		tableColumn.setCellValueFactory(new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
 		//this.s = loadSession();
-		IdHolder holder = IdHolder.getInstance();
-		sessionId = holder.getid();
+		sessionId = receiveId();
 		System.out.println(sessionId);		
 		u = utenteDAO.UtentebyId(receiveUtente());
 		lblLogged.setText("Utente loggato: " 

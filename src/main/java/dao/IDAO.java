@@ -10,4 +10,5 @@ public interface IDAO<T> {
 	public void update(T t, T u);
 	public void update(T t);
 	public void delete(T t);
+	
 }

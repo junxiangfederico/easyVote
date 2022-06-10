@@ -57,28 +57,25 @@ public class sessionselectionbyAdminController extends Controller{
     @FXML
     void handlebutton(ActionEvent event) throws IOException {
     	SessioneDiVoto s = tabellasessioni.getSelectionModel().getSelectedItem();
-		IdHolder holder = IdHolder.getInstance();
-		holder.setId(s.getNumeroSessione());
-		
-    	switch (s.getTipoSessione()) {
+		SendId(s.getNumeroSessione());
+		if(u.isScrutatore()) {
+			s.setIsOpen(false);
+			sessioneDAO.update(s);
+			changeView("views/operationform.fxml",event);
+		}else {
+			switch (s.getTipoSessione()) {
     		case Referendum:
-
     			changeView("views/resultsReferendumForm.fxml",event);
+    			break;    	        
+    		case Ordinale:
+    			changeView("views/resultsOrdinaryForm.fxml",event);
     			break;
-    		case SingoloCandidati:
-    		case SingoloPartiti:
-    	        changeView("views/resultsOrdinaryForm.fxml",event);
-    			break;
-    		case OrdinaleCandidatiPreferenze:
-    		case OrdinalePartitiPreferenze:
-    	        changeView("views/resultsPreferentialForm.fxml",event);
-    			break;
-    		case CategoricoCandidati:
-    		case CategoricoPartiti:
-    		case CategoricoPreferenze:
-    			System.out.println("to be implemented");
-    			break;
+    		case Categorico:
+    			changeView("views/resultsCategoricForm.fxml",event);
     	}
+		}
+		
+    	
     			
     	
     	

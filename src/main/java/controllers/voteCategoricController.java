@@ -16,6 +16,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import dao.factory.DAOFactory;
 import dao.sessione.SessioneIDAO;
+import dao.utenti.IDAOUtenti;
+import dao.voto.IDAOVoto;
+import database.DatabaseManager;
+import easyVoteproject.Utente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,11 +40,18 @@ import models.sessione.Partecipante;
 import models.sessione.Partecipante.TipoPartecipante;
 import models.sessione.SessioneDiVoto;
 import models.sessione.TipoSessione;
+import models.voto.Voto;
+import models.voto.VotoSingolo;
 import models.sessione.*;
+import models.utenti.*;
 
-public class sessionformPropertiesController extends Controller{
-	//Utenti u;
+public class voteCategoricController extends Controller{
+	
+	private models.utenti.Utente u;
+	
 	private int sessionId = 0;
+
+	//private String type = "";
 	private SessioneDiVoto s;
 	
 	@FXML 
@@ -49,23 +60,16 @@ public class sessionformPropertiesController extends Controller{
 	@FXML 
 	private URL location;
     @FXML
-    private Button btnAdd;
-
-    @FXML
     private Button btnConfirm;
-
-    @FXML
-    private Button btnRemove;
-
-    @FXML
-    private TextField inputName;
 
     @FXML
     private Label lblTop;
 
     @FXML
     private Label outputLabel;
-
+    
+    @FXML
+    private Label lblLogged;
     
     @FXML
     private TableView<CandidatoSemplice> tableCandidates = new TableView<>();
@@ -74,17 +78,9 @@ public class sessionformPropertiesController extends Controller{
     @FXML
     private TableColumn<CandidatoSemplice, String> tableColumn = new TableColumn<>("Nomi");
     private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
-    @FXML
-    void handleAdd(ActionEvent event) {
-    		if (inputName.getText().isBlank() || inputName.getText().isEmpty()) {
-    			System.out.println("returning");
-    			return;
-    		}else {
-        		s.addCandidato(new Candidato(null, inputName.getText()));
-        		updateColumns(s);
-    		}
-    }
-
+    private IDAOUtenti utenteDAO = DAOFactory.getFactory().getUtenteDAOInstance();
+    private IDAOVoto VotoDAO = DAOFactory.getFactory().getVotoDAOInstance();
+    
     /**
      * update della sessione, aggiornamento dei partecipanti: linea 116
      * @param s
@@ -96,27 +92,43 @@ public class sessionformPropertiesController extends Controller{
 
 	@FXML
     void handleConfirm(ActionEvent event) throws IOException {
-
-    	//this.s.setIsOpen(true);
-    	//System.out.print(s.getIsOpen());
-    	updateSessione(this.s);
-        changeView("views/operationform.fxml",event);
-    }
-
-	
-	
-    @FXML
-    void handleRemove(ActionEvent event) {
     	CandidatoSemplice c2 = tableCandidates.getSelectionModel().getSelectedItem();
-    	if (c2 == null) return;
-    	if (s.removeCandidato(c2.getidentificativo())) {
-    		updateSessione(this.s);
-    	}else {
-    		updateColumns(s);
-    		throw new IllegalArgumentException("Utente non rimosso, desync tra UI e backend presente");
+    	if (c2 == null) {
+    		outputLabel.setText("Seleziona un candidato");
+    		return;
     	}
+    	// to do : replace idVotante with singleton.getIstance();
+    	int idVotante = receiveUtente();
+		VotoSingolo v = new VotoSingolo(sessionId, idVotante, c2.getIdentificativo());
+    	VotoDAO.castCategorico(v);
+    	btnConfirm.setDisable(true);
+		outputLabel.setText("Voto castato per: " + v.getNomeCandidato());
+		outputLabel.setVisible(true);
+		changeView("views/operationform.fxml",event);
     	
     }
+
+	/**
+	 * AVANIT DA QUA
+	 * @param v
+	 */
+	//INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (61, 22, '{\"selection\": \"federico\"}');
+	/*public void castVote(VotoSingolo v) {
+		String q = "INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (?, ?, ?);";
+		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
+
+		//System.out.println(v.getSessioneDiVoto() + " " + v.getIdVotante() + v.getSelection());
+		try {	
+			p.setInt(1, v.getSessioneDiVoto());
+			p.setInt(2, v.getIdVotante());
+			p.setString(3, v.getSelection());
+			p.execute();
+		} catch (SQLException e) {
+
+            e.printStackTrace();
+		}
+		
+	}*/
     
     
     public void updateColumns(SessioneDiVoto s){
@@ -146,17 +158,58 @@ public class sessionformPropertiesController extends Controller{
      */
 
     
+	SessioneDiVoto loadSession(int sessionId) {
+		
+			SessioneDiVoto sessione=null;
+			try {
+				sessione = sessioneDAO.getById(sessionId);
+				return sessione;
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return sessione;
+		
+	}
+
+	/*private int getValue(Connection conn) throws SQLException {
+   	 	String Query = "SELECT * FROM session ORDER BY id DESC LIMIT 1;";
+   	 	PreparedStatement preparedStatement;
+		preparedStatement = conn.prepareStatement(Query);
+		ResultSet rs = preparedStatement.executeQuery();
+		rs.next();
+		type = rs.getString(5);
+		return Integer.parseInt(rs.getString(1));
+	}*/
+	@FXML
+	private void receiveData(ActionEvent event) {
+	  
+	  
+	}
 	public void initialize() {
 		tableColumn.setCellValueFactory(new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
+		//this.s = loadSession();
 		IdHolder holder = IdHolder.getInstance();
 		sessionId = holder.getid();
+		
+		u = utenteDAO.UtentebyId(receiveUtente());
+		lblLogged.setText("Utente loggato: " 
+		+ u.getfirstname() + " "
+				+ u.getlastname());
+		
 		try {
 			this.s =sessioneDAO.getById(sessionId);
 		
 			//System.out.println(s.getCandidati().isEmpty());
 			//List<Candidato>listu=s.getCandidati();
 			//System.out.println(listu);
-			System.out.println(s.getTipoSessione());
+			//System.out.println(s.getTipoSessione());
 			
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
@@ -168,12 +221,11 @@ public class sessionformPropertiesController extends Controller{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	lblTop.setText("Sessione numero: " + s.getNumeroSessione() + " di tipo: " + s.getTipoSessione());
+    	lblTop.setText("Sessione numero: " + s.getNumeroSessione() + " 					Tipo: " + s.getTipoSessione());
     	System.out.println(sessionId);
 		
 		updateColumns(s);
 	}
 
 }
-
 
