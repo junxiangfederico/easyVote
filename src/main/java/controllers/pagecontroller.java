@@ -27,8 +27,5 @@ public class pagecontroller extends Controller{
     void handleregistration(ActionEvent event)throws IOException  {
     	changeView("views/registrationform.fxml",event);
     }
-    /*public void initialize() {	
-    	
-    }*/
     
 }

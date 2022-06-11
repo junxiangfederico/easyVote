@@ -19,7 +19,6 @@ import dao.sessione.SessioneIDAO;
 import dao.utenti.IDAOUtenti;
 import dao.voto.IDAOVoto;
 import database.DatabaseManager;
-import easyVoteproject.Utente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,11 +34,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import models.sessione.Candidato;
-import models.sessione.Partecipante;
 import models.sessione.Partecipante.TipoPartecipante;
-import models.sessione.SessioneDiVoto;
-import models.sessione.TipoSessione;
 import models.voto.Voto;
 import models.voto.VotoSingolo;
 import models.sessione.*;
@@ -51,7 +46,6 @@ public class voteCategoricController extends Controller{
 	
 	private int sessionId = 0;
 
-	//private String type = "";
 	private SessioneDiVoto s;
 	
 	@FXML 
@@ -64,12 +58,15 @@ public class voteCategoricController extends Controller{
 
     @FXML
     private Label lblTop;
-
+    @FXML
+    private Label msg;
     @FXML
     private Label outputLabel;
     
     @FXML
     private Label lblLogged;
+    @FXML
+    private Button Btngoback;
     
     @FXML
     private TableView<CandidatoSemplice> tableCandidates = new TableView<>();
@@ -89,6 +86,10 @@ public class voteCategoricController extends Controller{
 		sessioneDAO.update(s);
 		updateColumns(s);
 	}
+    @FXML
+  	void goback(ActionEvent event) {
+  		changeView("views/selezioneform.fxml",event);
+  	}
 
 	@FXML
     void handleConfirm(ActionEvent event) throws IOException {
@@ -97,10 +98,13 @@ public class voteCategoricController extends Controller{
     		outputLabel.setText("Seleziona un candidato");
     		return;
     	}
-    	// to do : replace idVotante with singleton.getIstance();
     	int idVotante = receiveUtente();
 		VotoSingolo v = new VotoSingolo(sessionId, idVotante, c2.getIdentificativo());
-    	VotoDAO.castCategorico(v);
+    	boolean result=VotoDAO.castCategorico(v);
+    	if(!result) {
+    		msg.setText("Hai gia' espresso il tuo voto per questa sessione");
+    		return;
+    	}
     	btnConfirm.setDisable(true);
 		outputLabel.setText("Voto castato per: " + v.getNomeCandidato());
 		outputLabel.setVisible(true);
@@ -108,33 +112,11 @@ public class voteCategoricController extends Controller{
     	
     }
 
-	/**
-	 * AVANIT DA QUA
-	 * @param v
-	 */
-	//INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (61, 22, '{\"selection\": \"federico\"}');
-	/*public void castVote(VotoSingolo v) {
-		String q = "INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (?, ?, ?);";
-		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 
-		//System.out.println(v.getSessioneDiVoto() + " " + v.getIdVotante() + v.getSelection());
-		try {	
-			p.setInt(1, v.getSessioneDiVoto());
-			p.setInt(2, v.getIdVotante());
-			p.setString(3, v.getSelection());
-			p.execute();
-		} catch (SQLException e) {
-
-            e.printStackTrace();
-		}
-		
-	}*/
     
     
     public void updateColumns(SessioneDiVoto s){
-    	/*tableColumn.setCellValueFactory(
-				new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
-		*/
+    	
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
     	for (Candidato c: s.getCandidati()) {
     		lista.add(new CandidatoSemplice(c.getidentificativo()));
@@ -178,15 +160,7 @@ public class voteCategoricController extends Controller{
 		
 	}
 
-	/*private int getValue(Connection conn) throws SQLException {
-   	 	String Query = "SELECT * FROM session ORDER BY id DESC LIMIT 1;";
-   	 	PreparedStatement preparedStatement;
-		preparedStatement = conn.prepareStatement(Query);
-		ResultSet rs = preparedStatement.executeQuery();
-		rs.next();
-		type = rs.getString(5);
-		return Integer.parseInt(rs.getString(1));
-	}*/
+	
 	@FXML
 	private void receiveData(ActionEvent event) {
 	  
@@ -194,9 +168,7 @@ public class voteCategoricController extends Controller{
 	}
 	public void initialize() {
 		tableColumn.setCellValueFactory(new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
-		//this.s = loadSession();
-		IdHolder holder = IdHolder.getInstance();
-		sessionId = holder.getid();
+		sessionId = receiveId();
 		
 		u = utenteDAO.UtentebyId(receiveUtente());
 		lblLogged.setText("Utente loggato: " 
@@ -205,11 +177,7 @@ public class voteCategoricController extends Controller{
 		
 		try {
 			this.s =sessioneDAO.getById(sessionId);
-		
-			//System.out.println(s.getCandidati().isEmpty());
-			//List<Candidato>listu=s.getCandidati();
-			//System.out.println(listu);
-			//System.out.println(s.getTipoSessione());
+
 			
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block

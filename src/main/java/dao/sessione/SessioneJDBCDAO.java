@@ -21,23 +21,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 	
 
 	
-	/*public List<SessioneDiVoto> getAll(Elettore e) {
-		int id = DAOFactory.getFactory().getUtenteDAOInstance().getId(e);
-		String q = "select * from Sessione as S where status = 's' and not exists (select * from Votato as V where V.id_sessione = S.id and V.id_utente = ?)";
-		
-		List<SessioneDiVoto> result = new ArrayList<SessioneDiVoto>();
-		PreparedStatement p = DBManager.getInstance().preparaStatement(q);
-		try {	
-			p.setInt(1, id);
-			ResultSet res = p.executeQuery();
-			while (res.next())
-				result.add(getSessioneFromResult(res));
-		} catch (SQLException sqe) {
-			throw new DatabaseException("Problemi con la base dati, riprovare! Context: getAll");
-		}
-			
-		return result;
-	}*/
+
 	
 	@Override
 	public SessioneDiVoto getById(int id) {
@@ -68,7 +52,6 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 			contenuto=res.getString(2);
 			isopen=Integer.parseInt(res.getString(4));
 			tipovoto=TipoSessione.fromString(res.getString(5));	
-			//System.out.println(tipovoto);
 			boolean io = (isopen==1);
 			List<Candidato> candidati=SessioneDiVoto.jsontolist(res.getString(3),null);
 			result = new SessioneDiVoto(id,tipovoto,io, contenuto, candidati);
@@ -88,7 +71,6 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 		
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		List<String> selections = new ArrayList<>();
-		//System.out.println("91" + idSessione);
 		try {	
 			p.setInt(1, idSessione);
 			ResultSet rs = p.executeQuery();
@@ -104,29 +86,6 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 	}
 	
 
-	/*
-	@Override
-	public Candidato getOrdinaryResults(int idSessione) {
-
-		String q = "SELECT selection FROM voto where idSession = ?";
-
-		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
-		List<String> selections = new ArrayList<>();
-		//System.out.println("91" + idSessione);
-		try {	
-			p.setInt(1, idSessione);
-			ResultSet rs = p.executeQuery();
-			while (rs.next()) {
-				selections.add(rs.getString(1));
-			}
-			
-		} catch (SQLException e) {
-			System.out.println("Problemi con la base dati, riprovare! Context: getAll");
-		}
-		if (selections.size() == 0) { return null;}
-		return SessioneDiVoto.getCategoricResultsByQuery(selections);
-	}
-	*/
 	
 
 
@@ -198,9 +157,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 			return value;
 		} catch (SQLException e) {
 			System.out.println("Problemi con la base dati, riprovare! Context: aggiungi");
-			/*System.out.println("SQLExeption: "+ex.getMessage());
-			System.out.println("SQLState: "+ex.getSQLState());
-			System.out.println("VendorError: "+ ex.getErrorCode());*/
+			
 		}
 		return 0;
 	}

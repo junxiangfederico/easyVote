@@ -23,10 +23,14 @@ public class ReferendumController extends Controller{
 	SessioneDiVoto sdv;
     @FXML
     private RadioButton cont;
-
+    @FXML
+    private Button Btngoback;
+	
     @FXML
     private RadioButton fav;
 
+    @FXML
+    private Label msg;
     @FXML
     private Button subm;
     
@@ -40,7 +44,10 @@ public class ReferendumController extends Controller{
     	fav.setSelected(false);
     	selection=true;
     }
-
+	@FXML
+	void goback(ActionEvent event) {
+		changeView("views/selezioneform.fxml",event);
+	}
     @FXML
     void favorevole(ActionEvent event) {
     	cont.setSelected(false);
@@ -52,7 +59,12 @@ public class ReferendumController extends Controller{
     	int idutente=receiveUtente();
     	int idsessione=receiveId();
     	VotoReferendum vr=new VotoReferendum(idsessione,idutente,selection);
-    	VotoDAO.castReferendum(vr);
+    	boolean result=VotoDAO.castReferendum(vr);
+    	if(!result) {
+    		msg.setText("Hai gia' espresso il tuo voto per questa sessione");
+    		return;
+    	}
+    	changeView("views/operationform.fxml",event);
     	
     }
     public void initialize() {

@@ -1,7 +1,5 @@
 package models.utenti;
 
-import easyVoteproject.Data;
-
 public class Scrutatore extends Utente{
 
 	public Scrutatore (String firstname, String lastname, Data datanascita,String nazioneNascita,String codiceFiscale) {

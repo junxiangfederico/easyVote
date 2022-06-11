@@ -11,7 +11,9 @@ import dao.sessione.SessioneIDAO;
 import dao.utenti.IDAOUtenti;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,41 +36,28 @@ public class resultsCategoricFormController extends Controller{
 
     @FXML
     private Label lblLogged;
-
     
     @FXML
+    private Button Btngoback;
+    
+
+    
+    @FXML	
     private Label lblOutputReferendum;
     
-    //@FXML
-    //private TableView<CandidatoSemplice> tableCandidates = new TableView<>();
-
-
-    //@FXML
-    //private TableColumn<CandidatoSemplice, String> tableColumn = new TableColumn<>("Nomi");
 
     private SessioneIDAO sessioneDAO = DAOFactory.getFactory().getSessioneDAOInstance();
     private IDAOUtenti utenteDAO = DAOFactory.getFactory().getUtenteDAOInstance();
     private IDAOVoto VotoDAO = DAOFactory.getFactory().getVotoDAOInstance();
 
-//    
-//
-//    public void updateColumns(SessioneDiVoto s){
-//		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
-//		Candidato results = sessioneDAO.getOrdinaryResults(this.sessionId);
-//		if (results == null) return;
-//    		lista.add(new CandidatoSemplice(results.getidentificativo()));
-//        tableCandidates.setItems(lista);
-//    }
-//    
-//    
     
     
-    
+    @FXML
+	void goback(ActionEvent event) {
+		changeView("views/selezioneformbyadmin.fxml",event);
+	}
     public void initialize() {
-		//tableColumn.setCellValueFactory(new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
-		//this.s = loadSession();
-		//IdHolder holder = IdHolder.getInstance();
-		//sessionId = holder.getid();
+
     	sessionId=receiveId();
 		System.out.println(sessionId);		
 		u = utenteDAO.UtentebyId(receiveUtente());
@@ -78,11 +67,7 @@ public class resultsCategoricFormController extends Controller{
 		
 		try {
 			this.s =sessioneDAO.getById(sessionId);
-		
-			//System.out.println(s.getCandidati().isEmpty());
-			//List<Candidato>listu=s.getCandidati();
-			//System.out.println(listu);
-			//System.out.println(s.getTipoSessione());
+
 			
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
@@ -96,13 +81,9 @@ public class resultsCategoricFormController extends Controller{
 		}
     	lblOutput.setText(s.getNumeroSessione() + " di tipo: " + s.getTipoSessione());
     	
-    	lblOutputReferendum.setText(IDAO(sessionId));
-		//updateColumns(s);
-	}
+    	lblOutputReferendum.setText(VotoDAO.getCategoricResults(sessionId));
 
-    private String IDAO(int sessionId) {
-    	return VotoDAO.getCategoricResults(sessionId);
-    }
+	}
     
 }
 

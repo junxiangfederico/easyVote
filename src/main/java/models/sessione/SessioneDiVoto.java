@@ -238,21 +238,18 @@ public class SessioneDiVoto {
 	public static List<Candidato> getOrdinaryResultsByQuery(List<String> selections) {
 		if (selections.size() == 0) return null;
 
-		int i = 4;
 		Map<String, Integer> results = new HashMap<>();
 		for (String s : selections) {
-			System.out.println(i);
-			//System.out.println(s);
+			int i = 4;
 			String[] current = s.split(":");
 			String b = current[1].substring(2, current[1].length()-2);
-			//System.out.println(b);
-			
 			String[] aaa = b.split(";");
 			for (String names : aaa) {
+				System.out.println(i);
 				if (results.containsKey(names.trim())) {
-					results.put(names.trim(), (results.get(names.trim())+1) * i);
+					results.put(names.trim(), (results.get(names.trim())) + i);
 				}else {
-					results.put(names.trim(), 1 * i);
+					results.put(names.trim(),  i);
 				}
 				i--;
 			}
@@ -269,7 +266,6 @@ public class SessioneDiVoto {
 		
 		LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
 		 
-		//Use Comparator.reverseOrder() for reverse ordering
 		results.entrySet()
 		  .stream()
 		  .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 

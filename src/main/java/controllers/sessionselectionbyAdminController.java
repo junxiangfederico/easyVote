@@ -44,6 +44,11 @@ public class sessionselectionbyAdminController extends Controller{
     @FXML
     private Label utentelbl;
     
+    @FXML
+	void goback(ActionEvent event) {
+		changeView("views/operationform.fxml",event);
+	}
+    
     /**
      * Referendum("Referendum"),
 	OrdinaleCandidati("Ordinale con candidati"),
@@ -73,19 +78,12 @@ public class sessionselectionbyAdminController extends Controller{
     		case Categorico:
     			changeView("views/resultsCategoricForm.fxml",event);
     	}
-		}
-		
-    	
-    			
-    	
-    	
-    	
-        //changeView("views/voteOrdinaryform.fxml",event);
+		}		  			    	
+
     }
    
     public void initialize() {
     	u=utenteDAO.UtentebyId(receiveUtente());
-    	//utentelbl.setVisible(true);
     	utentelbl.setText("Utente loggato: "+u.getfirstname()+" "+u.getlastname() );
     	sessioni.setCellValueFactory(new PropertyValueFactory<SessioneDiVoto,Integer>("numeroSessione"));
     	tipo.setCellValueFactory(new PropertyValueFactory<SessioneDiVoto,TipoSessione>("tipoSessione"));
@@ -97,6 +95,8 @@ public class sessionselectionbyAdminController extends Controller{
     ObservableList<SessioneDiVoto> getSessioneDiVoto(){
     		List<SessioneDiVoto> listasessioni=new ArrayList<>();
     		List<SessioneDiVoto> sessioniaperte=new ArrayList<>();
+    		List<SessioneDiVoto> sessionichiuse=new ArrayList<>();
+
     		ObservableList<SessioneDiVoto> lista;
     		try {
 				listasessioni=sessioneDAO.getAll();
@@ -109,13 +109,20 @@ public class sessionselectionbyAdminController extends Controller{
     				sessioniaperte.add(sdv);
     			}
     		}
+    		for(SessioneDiVoto sdv:listasessioni) {
+    			if(!(sdv.getIsOpen())) {
+    				sessionichiuse.add(sdv);
+    			}
+    		}
+
     		
     		if(u.isScrutatore()) {
-    			lista=FXCollections.observableArrayList(listasessioni);
-    		}else {
     			lista=FXCollections.observableArrayList(sessioniaperte);
+    		}else {
+    			lista=FXCollections.observableArrayList(sessionichiuse);
     		}
 			return lista;
+
 		
     }
 

@@ -25,7 +25,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import dao.factory.DAOFactory;
 import dao.utenti.*;
-import easyVoteproject.Data;
 import models.utenti.*;
 import java.lang.Thread;  
 public class RegistrationController extends Controller {

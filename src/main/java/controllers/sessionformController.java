@@ -75,7 +75,6 @@ public class sessionformController extends Controller {
      * 
      */
 	public void initialize() {
-		//choiceBox.setValue("Referendum");
 
 		choiceBox.setValue("Referendum");
 

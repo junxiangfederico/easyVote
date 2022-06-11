@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ReferendumController">
    <children>
       <RadioButton fx:id="fav" alignment="CENTER_LEFT" contentDisplay="RIGHT" layoutX="46.0" layoutY="104.0" mnemonicParsing="false" onAction="#favorevole" prefHeight="120.0" prefWidth="195.0" text="FAVOREVOLE">
@@ -25,5 +24,7 @@
             <Font size="17.0" />
          </font>
       </Label>
+      <Button fx:id="Btngoback" layoutX="46.0" layoutY="249.0" mnemonicParsing="false" onAction="#goback" text="Go back" />
+      <Label fx:id="msg" alignment="CENTER" layoutX="61.0" layoutY="297.0" prefHeight="17.0" prefWidth="360.0" />
    </children>
 </Pane>

@@ -1,7 +1,5 @@
 package models.utenti;
 
-import easyVoteproject.Data;
-import easyVoteproject.Gender;
 
 public class Elettore extends Utente{
 

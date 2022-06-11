@@ -106,6 +106,8 @@
             <Label layoutX="282.0" layoutY="97.0" text="Riordina in base alla preferenza" />
             <Label fx:id="lblLogged" layoutX="450.0" layoutY="342.0" prefHeight="17.0" prefWidth="169.0" />
             <Label fx:id="outputLabel" layoutX="267.0" layoutY="334.0" text="vuoto" visible="false" />
+            <Button fx:id="Btngoback" layoutX="523.0" layoutY="309.0" mnemonicParsing="false" onAction="#goback" text="Go back" />
+            <Label fx:id="msg" layoutX="59.0" layoutY="313.0" prefHeight="18.0" prefWidth="363.0" />
       </children>
     </AnchorPane>
   </children>

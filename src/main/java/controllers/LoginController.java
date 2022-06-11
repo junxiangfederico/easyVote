@@ -41,12 +41,7 @@ public class LoginController extends Controller	{
     	       changeView("views/operationform.fxml",event);
     	}else {
     		 lblMessage.setText("Login fallito...");
-    	}
-    	//System.out.println(result);
-    	
-    	
-    	
-    	
+    	} 	    	
     }
     
     
@@ -57,8 +52,6 @@ public class LoginController extends Controller	{
 	void initialize() {
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'login.fxml'.";
         assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'login.fxml'.";
-        receiveId();
-		System.out.println("hello:  "+receiveId());
         lblMessage.setVisible(false);
     }
 }

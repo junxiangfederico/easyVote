@@ -26,6 +26,8 @@ public class sessionselectionController extends Controller{
 	Utente u;
     @FXML
     private Button button;
+    @FXML
+    private Button Btngoback;
 
     @FXML
     private TableColumn<SessioneDiVoto, String> contenuto;
@@ -43,6 +45,9 @@ public class sessionselectionController extends Controller{
 
     @FXML
     private Label utentelbl;
+
+
+    
     
     /**
      * Referendum("Referendum"),
@@ -83,12 +88,13 @@ public class sessionselectionController extends Controller{
     	
     	
     	
-        //changeView("views/voteOrdinaryform.fxml",event);
     }
-   
+    @FXML
+  	void goback(ActionEvent event) {
+  		changeView("views/operationform.fxml",event);
+  	}
     public void initialize() {
     	u=utenteDAO.UtentebyId(receiveUtente());
-    	//utentelbl.setVisible(true);
     	utentelbl.setText("Utente loggato: "+u.getfirstname()+" "+u.getlastname() );
     	sessioni.setCellValueFactory(new PropertyValueFactory<SessioneDiVoto,Integer>("numeroSessione"));
     	tipo.setCellValueFactory(new PropertyValueFactory<SessioneDiVoto,TipoSessione>("tipoSessione"));
@@ -112,12 +118,7 @@ public class sessionselectionController extends Controller{
     				sessioniaperte.add(sdv);
     			}
     		}
-    		
-    		/*if(u.isScrutatore()) {
-    			lista=FXCollections.observableArrayList(listasessioni);
-    		}else {
-    			lista=FXCollections.observableArrayList(sessioniaperte);
-    		}*/
+    	
     		lista=FXCollections.observableArrayList(sessioniaperte);
 			return lista;
 		
