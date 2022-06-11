@@ -123,7 +123,7 @@ public class IDAOVotojdbc implements IDAOVoto{
 		return result;
 	}
 	@Override
-	public List<Candidato> getOrdinaryResults(int idSessione) {
+	public List<CandidatoSemplice> getOrdinaryResults(int idSessione) {
 
 		String q = "SELECT selection FROM voto where idSession = ?";
 

@@ -17,6 +17,6 @@ public interface SessioneIDAO extends IDAO<SessioneDiVoto> {
 	public void stop(SessioneDiVoto s);
 	public List<SessioneDiVoto> getAll(Elettore e);
 	public int aggiungi(String text,String type);
-	public List<Candidato> getResults(int idSessione);
+	public List<CandidatoSemplice> getResults(int idSessione);
 
 }

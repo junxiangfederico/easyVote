@@ -20,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import models.sessione.Candidato;
 import models.sessione.CandidatoSemplice;
 import models.sessione.IdHolder;
 import models.sessione.SessioneDiVoto;
@@ -60,11 +59,11 @@ public class resultsOrdinaryFormController extends Controller{
 	}
     public void updateColumns(SessioneDiVoto s){
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
-		List<Candidato> results = VotoDAO.getOrdinaryResults(this.sessionId);
+		List<CandidatoSemplice> results = VotoDAO.getOrdinaryResults(this.sessionId);
 		if (results.equals(null)) return;
 
 		bottomLabel.setText("Il vincitore e'¨: " + results.get(0).identificativo); 
-		for (Candidato c : results) {
+		for (CandidatoSemplice c : results) {
 			lista.add(new CandidatoSemplice(c.getidentificativo()));
 		}	
         tableCandidates.setItems(lista);

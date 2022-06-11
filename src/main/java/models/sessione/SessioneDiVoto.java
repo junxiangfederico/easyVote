@@ -13,7 +13,7 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import models.sessione.Partecipante.TipoPartecipante;
-import models.sessione.Candidato;
+//import models.sessione.Candidato;
 
 public class SessioneDiVoto {
 
@@ -21,7 +21,7 @@ public class SessioneDiVoto {
 	private final TipoSessione tipoSessione;
 	private Boolean isOpen;
 	private final String contenuto;
-	private static List<Candidato> candidati;
+	private static List<CandidatoSemplice> candidati;
 	/**
 	 * Classe che va a rappresentare una sessione di voto.
 	 * Una sessione di voto è caratterizzata dal numero univoco della sessione,
@@ -31,7 +31,7 @@ public class SessioneDiVoto {
 	 * @param tipoSessione		il tipo della sessione di voto
 	 * @param contenuto			il testo della sessione di voto
 	 */
-	public SessioneDiVoto(int numeroSessione, TipoSessione tipoSessione, boolean isOpen, String contenuto, List<Candidato> candidati) {
+	public SessioneDiVoto(int numeroSessione, TipoSessione tipoSessione, boolean isOpen, String contenuto, List<CandidatoSemplice> candidati) {
 		this.numeroSessione = numeroSessione;
 		this.tipoSessione = tipoSessione;
 		this.contenuto = contenuto;
@@ -62,7 +62,7 @@ public class SessioneDiVoto {
 		return contenuto;
 	}
 
-	public static void addCandidato(Candidato candidato) {
+	public static void addCandidato(CandidatoSemplice candidato) {
 			candidati.add(candidato);
 	}
 
@@ -107,7 +107,7 @@ public class SessioneDiVoto {
 	}
 
 	public Boolean removeCandidato(String s){
-		for (Candidato c : candidati) {
+		for (CandidatoSemplice c : candidati) {
 			if (c.getidentificativo().equals(s)) {
 				candidati.remove(c);
 				return true;
@@ -116,8 +116,8 @@ public class SessioneDiVoto {
 		return false;
 	}
 	
-	public static List<Candidato> jsontolist(String string,TipoPartecipante tipo){
-		List<Candidato> lista=new ArrayList<>();
+	public static List<CandidatoSemplice> jsontolist(String string,TipoPartecipante tipo){
+		List<CandidatoSemplice> lista=new ArrayList<>();
 		if (string==null) {
 			return lista;
 		}
@@ -130,7 +130,7 @@ public class SessioneDiVoto {
 				for(String part:parts) {
 					String [] parts2 = part.split(":");
 					part=parts2[1];
-					Candidato candidato=new Candidato(tipo,part);
+					CandidatoSemplice candidato=new CandidatoSemplice(part);
 					lista.add(candidato);
 				}
 		}
@@ -138,13 +138,13 @@ public class SessioneDiVoto {
 	}
 	
 	
-	public List<Candidato> getCandidati() {
+	public List<CandidatoSemplice> getCandidati() {
 		return Collections.unmodifiableList(SessioneDiVoto.candidati);
 	}
 
 
 
-	public static List<Candidato> getResultsByQuery(List<String> selections){
+	public static List<CandidatoSemplice> getResultsByQuery(List<String> selections){
 		if (selections.size() == 0) return null;
 		Map<String, Integer> results = new HashMap<>();
 		for (String s : selections) {
@@ -197,7 +197,7 @@ public class SessioneDiVoto {
 		}
 	
 		TipoPartecipante t = TipoPartecipante.Persona;
-		Candidato c = new Candidato(t, winner);
+		CandidatoSemplice c = new CandidatoSemplice(winner);
 		return "il vincitore e': "+c.getidentificativo();
 	}
 
@@ -235,7 +235,7 @@ public class SessioneDiVoto {
 	 * @param selections
 	 * @return
 	 */
-	public static List<Candidato> getOrdinaryResultsByQuery(List<String> selections) {
+	public static List<CandidatoSemplice> getOrdinaryResultsByQuery(List<String> selections) {
 		if (selections.size() == 0) return null;
 
 		Map<String, Integer> results = new HashMap<>();
@@ -272,9 +272,9 @@ public class SessioneDiVoto {
 		  .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
 
 		TipoPartecipante t = TipoPartecipante.Persona;
-		List<Candidato> output = new ArrayList<>();
+		List<CandidatoSemplice> output = new ArrayList<>();
 		for (String s : reverseSortedMap.keySet()) {
-			output.add(new Candidato(t, s));
+			output.add(new CandidatoSemplice(s));
 		}
 		
 		

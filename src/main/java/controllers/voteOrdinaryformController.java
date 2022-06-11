@@ -279,7 +279,7 @@ private boolean castVote(CandidatoSemplice selectedItem) {
 		comboInput2.setItems(lista);
 		comboInput3.setItems(lista);
 		comboInput4.setItems(lista);
-    	for (Candidato c: s.getCandidati()) {
+    	for (CandidatoSemplice c: s.getCandidati()) {
     		lista.add(new CandidatoSemplice(c.getidentificativo()));
     	}
 
