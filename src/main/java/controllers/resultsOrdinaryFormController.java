@@ -13,12 +13,15 @@ import dao.utenti.IDAOUtenti;
 import dao.voto.IDAOVoto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.sessione.Candidato;
+import models.sessione.CandidatoSemplice;
 import models.sessione.IdHolder;
 import models.sessione.SessioneDiVoto;
 
@@ -31,7 +34,8 @@ public class resultsOrdinaryFormController extends Controller{
 	private int sessionId = 0;
     @FXML
     private Label bottomLabel;
-	
+    @FXML
+    private Button Btngoback;
     @FXML
     private Label lblOutput;
 
@@ -50,13 +54,16 @@ public class resultsOrdinaryFormController extends Controller{
     private IDAOVoto VotoDAO = DAOFactory.getFactory().getVotoDAOInstance();
 
     
-
+    @FXML
+	void goback(ActionEvent event) {
+		changeView("views/selezioneformbyadmin.fxml",event);
+	}
     public void updateColumns(SessioneDiVoto s){
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
 		List<Candidato> results = VotoDAO.getOrdinaryResults(this.sessionId);
 		if (results.equals(null)) return;
 
-		bottomLabel.setText("Il vincitore Ã¨: " + results.get(0).identificativo); 
+		bottomLabel.setText("Il vincitore e'¨: " + results.get(0).identificativo); 
 		for (Candidato c : results) {
 			lista.add(new CandidatoSemplice(c.getidentificativo()));
 		}	
@@ -76,11 +83,7 @@ public class resultsOrdinaryFormController extends Controller{
 		
 		try {
 			this.s =sessioneDAO.getById(sessionId);
-		
-			//System.out.println(s.getCandidati().isEmpty());
-			//List<Candidato>listu=s.getCandidati();
-			//System.out.println(listu);
-			//System.out.println(s.getTipoSessione());
+
 			
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block

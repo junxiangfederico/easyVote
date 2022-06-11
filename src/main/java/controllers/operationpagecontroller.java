@@ -14,7 +14,9 @@ public class operationpagecontroller extends Controller{
 
     @FXML
     private Button vote;
-    
+    @FXML
+    private Button Btngoback;
+	
 
     @FXML
     private Button btnResults;
@@ -28,7 +30,10 @@ public class operationpagecontroller extends Controller{
     	changeView("views/selezioneformbyAdmin.fxml",event);
     }
     
-    
+    @FXML
+    void gobacck(ActionEvent event) {
+		changeView("views/login.fxml",event);
+    }
     @FXML
     void handlecreate(ActionEvent event) {
     	changeView("views/sessionform.fxml",event);

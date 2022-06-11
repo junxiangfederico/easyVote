@@ -30,16 +30,13 @@ public class IDAOVotojdbc implements IDAOVoto{
 			System.out.println(voto.getSelection());
 			p.setString(3, voto.getSelection());
 			
-			int i = p.executeUpdate();
-			if(i>0) {
-				result=true;
-			}else {
-				result=false;
-			}
+			int count = p.executeUpdate();
+			result = (count > 0);
 			System.out.println(result);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 		return result;
 	}
@@ -50,7 +47,6 @@ public class IDAOVotojdbc implements IDAOVoto{
 
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		List<String> selections = new ArrayList<>();
-		//System.out.println("91" + idSessione);
 		try {	
 			p.setInt(1, idSessione);
 			ResultSet rs = p.executeQuery();
@@ -65,20 +61,23 @@ public class IDAOVotojdbc implements IDAOVoto{
 		return SessioneDiVoto.getReferendumResultsByQuery(selections);
 	}
 	@Override
-	public void castCategorico(VotoSingolo v) {
+	public boolean castCategorico(VotoSingolo v) {
 		String q = "INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (?, ?, ?);";
+		Boolean result=null;
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
-
-		//System.out.println(v.getSessioneDiVoto() + " " + v.getIdVotante() + v.getSelection());
+		
 		try {	
 			p.setInt(1, v.getSessioneDiVoto());
 			p.setInt(2, v.getIdVotante());
 			p.setString(3, v.getSelection());
-			p.execute();
+			int count = p.executeUpdate();
+			result = (count > 0);
 		} catch (SQLException e) {
-
+			
             e.printStackTrace();
+            return false;
 		}
+		return result;
 	}
 	@Override
 	public String getCategoricResults(int idSessione) {
@@ -103,20 +102,25 @@ public class IDAOVotojdbc implements IDAOVoto{
 	}
 	
 	@Override
-	public void castOrdinale(VotoOrdinale v) {
+	public boolean castOrdinale(VotoOrdinale v) {
 		String q = "INSERT INTO `easyVote`.`voto` (`idSession`, `idUser`, `selection`) VALUES (?, ?, ?);";
+		Boolean result=null;
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
-
+		
 		System.out.println(v.getSessioneDiVoto() + " " + v.getIdVotante() + v.getSelection());
+		
 		try {	
 			p.setInt(1, v.getSessioneDiVoto());
 			p.setInt(2, v.getIdVotante());
 			p.setString(3, v.getSelection());
-			p.execute();
+			int count = p.executeUpdate();
+			result = (count > 0);
+			System.out.println(result);
 		} catch (SQLException e) {
-
 	        e.printStackTrace();
+	        return false;
 		}
+		return result;
 	}
 	@Override
 	public List<Candidato> getOrdinaryResults(int idSessione) {
@@ -125,12 +129,12 @@ public class IDAOVotojdbc implements IDAOVoto{
 
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
 		List<String> selections = new ArrayList<>();
-		//System.out.println("91" + idSessione);
+
 		try {	
 			p.setInt(1, idSessione);
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
-				//System.out.println(rs.getString(1));
+				
 				selections.add(rs.getString(1));
 			}
 			

@@ -10,11 +10,7 @@ public class main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-        	//Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/login.fxml"));
-            //Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/sessionformProperties.fxml"));
-            //Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/sessionform.fxml"));
-            //Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/selezioneform.fxml"));
-        	Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/referendumform.fxml"));
+        	Pane addPane = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("views/pageform.fxml"));
             
             Scene myScene = new Scene(addPane);
             primaryStage.setScene(myScene);

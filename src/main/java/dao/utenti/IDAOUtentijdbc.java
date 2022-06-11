@@ -13,7 +13,6 @@ import database.DatabaseManager;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import models.utenti.*;
-import easyVoteproject.Data;
 import models.utenti.*;
 
 

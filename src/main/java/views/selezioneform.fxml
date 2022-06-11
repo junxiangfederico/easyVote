@@ -17,5 +17,6 @@
       </TableView>
       <Button fx:id="button" layoutX="249.0" layoutY="322.0" mnemonicParsing="false" onAction="#handlebutton" prefHeight="41.0" prefWidth="76.0" text="Seleziona" />
       <Label fx:id="utentelbl" layoutX="353.0" layoutY="307.0" prefHeight="70.0" prefWidth="212.0" text="Label" />
+      <Button fx:id="Btngoback" layoutX="55.0" layoutY="330.0" mnemonicParsing="false" onAction="#goback" text="Go back" />
    </children>
 </Pane>

@@ -50,6 +50,7 @@
                </font>
             </Label>
             <Button fx:id="btnResults" layoutX="142.0" layoutY="237.0" mnemonicParsing="false" onAction="#requestResults" prefHeight="62.0" prefWidth="154.0" text="Risultati" />
+            <Button fx:id="Btngoback" layoutX="45.0" layoutY="324.0" mnemonicParsing="false" onAction="#gobacck" text="Go back" />
       </children>
     </AnchorPane>
   </children>

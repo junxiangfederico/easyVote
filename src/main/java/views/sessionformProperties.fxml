@@ -105,6 +105,7 @@
             <Text layoutX="502.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conferma" />
             <Label fx:id="lblTop" layoutX="240.0" layoutY="28.0" text="Label" />
             <Label fx:id="outputLabel" layoutX="305.0" layoutY="342.0" text="label" visible="false" />
+            <Button fx:id="Btngoback" layoutX="58.0" layoutY="302.0" mnemonicParsing="false" onAction="#goback" text="Go back" />
       </children>
     </AnchorPane>
   </children>

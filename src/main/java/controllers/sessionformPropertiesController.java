@@ -31,11 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import models.sessione.Candidato;
-import models.sessione.Partecipante;
 import models.sessione.Partecipante.TipoPartecipante;
-import models.sessione.SessioneDiVoto;
-import models.sessione.TipoSessione;
 import models.sessione.*;
 
 public class sessionformPropertiesController extends Controller{
@@ -50,6 +46,8 @@ public class sessionformPropertiesController extends Controller{
 	private URL location;
     @FXML
     private Button btnAdd;
+    @FXML
+    private Button Btngoback;
 
     @FXML
     private Button btnConfirm;
@@ -93,12 +91,14 @@ public class sessionformPropertiesController extends Controller{
 		sessioneDAO.update(s);
 		updateColumns(s);
 	}
-
+    @FXML
+	void goback(ActionEvent event) {
+		changeView("views/selezioneform.fxml",event);
+	}
 	@FXML
     void handleConfirm(ActionEvent event) throws IOException {
 
-    	//this.s.setIsOpen(true);
-    	//System.out.print(s.getIsOpen());
+
     	updateSessione(this.s);
         changeView("views/operationform.fxml",event);
     }
@@ -120,9 +120,6 @@ public class sessionformPropertiesController extends Controller{
     
     
     public void updateColumns(SessioneDiVoto s){
-    	/*tableColumn.setCellValueFactory(
-				new PropertyValueFactory<CandidatoSemplice, String>("identificativo")); 
-		*/
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
     	for (Candidato c: s.getCandidati()) {
     		lista.add(new CandidatoSemplice(c.getidentificativo()));
@@ -153,9 +150,6 @@ public class sessionformPropertiesController extends Controller{
 		try {
 			this.s =sessioneDAO.getById(sessionId);
 		
-			//System.out.println(s.getCandidati().isEmpty());
-			//List<Candidato>listu=s.getCandidati();
-			//System.out.println(listu);
 			System.out.println(s.getTipoSessione());
 			
 		} catch (JsonParseException e) {
