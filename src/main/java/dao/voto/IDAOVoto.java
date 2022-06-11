@@ -15,5 +15,5 @@ public interface IDAOVoto extends IDAO<Voto> {
 	public boolean castOrdinale(VotoOrdinale voto);
 	public String getReferendumResults(int idSessione);
 	public String getCategoricResults(int idSessione);
-	public List<Candidato> getOrdinaryResults(int idSessione);
+	public List<CandidatoSemplice> getOrdinaryResults(int idSessione);
 }

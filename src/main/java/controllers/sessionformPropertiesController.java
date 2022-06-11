@@ -78,7 +78,7 @@ public class sessionformPropertiesController extends Controller{
     			System.out.println("returning");
     			return;
     		}else {
-        		s.addCandidato(new Candidato(null, inputName.getText()));
+        		s.addCandidato(new CandidatoSemplice( inputName.getText()));
         		updateColumns(s);
     		}
     }
@@ -121,7 +121,7 @@ public class sessionformPropertiesController extends Controller{
     
     public void updateColumns(SessioneDiVoto s){
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
-    	for (Candidato c: s.getCandidati()) {
+    	for (CandidatoSemplice c: s.getCandidati()) {
     		lista.add(new CandidatoSemplice(c.getidentificativo()));
     	}
 

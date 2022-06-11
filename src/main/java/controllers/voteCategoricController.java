@@ -118,7 +118,7 @@ public class voteCategoricController extends Controller{
     public void updateColumns(SessioneDiVoto s){
     	
 		ObservableList<CandidatoSemplice> lista = FXCollections.observableArrayList();
-    	for (Candidato c: s.getCandidati()) {
+    	for (CandidatoSemplice c: s.getCandidati()) {
     		lista.add(new CandidatoSemplice(c.getidentificativo()));
     	}
 

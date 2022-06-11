@@ -18,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import models.sessione.Candidato;
 import models.sessione.IdHolder;
 import models.sessione.SessioneDiVoto;
 import dao.voto.*;

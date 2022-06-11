@@ -53,7 +53,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 			isopen=Integer.parseInt(res.getString(4));
 			tipovoto=TipoSessione.fromString(res.getString(5));	
 			boolean io = (isopen==1);
-			List<Candidato> candidati=SessioneDiVoto.jsontolist(res.getString(3),null);
+			List<CandidatoSemplice> candidati=SessioneDiVoto.jsontolist(res.getString(3),null);
 			result = new SessioneDiVoto(id,tipovoto,io, contenuto, candidati);
 			
 		} catch (SQLException e) {
@@ -66,7 +66,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 	
 
 	@Override
-	public List<Candidato> getResults(int idSessione) {
+	public List<CandidatoSemplice> getResults(int idSessione) {
 		String q = "SELECT selection FROM voto where idSession = ?";
 		
 		PreparedStatement p = DatabaseManager.getInstance().preparaStatement(q);
