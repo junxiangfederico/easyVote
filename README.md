@@ -12,3 +12,4 @@ easyVote is an electronic voting system, for governmental and non governmental e
 - A .pdf easyVote presentation document
 - A SQL database dump at the moment of testing
 - A folder containing .mdj StarUML diagram source files
+- A latex source file of the presentation
