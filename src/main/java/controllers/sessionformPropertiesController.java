@@ -31,7 +31,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import models.sessione.Partecipante.TipoPartecipante;
 import models.sessione.*;
 
 public class sessionformPropertiesController extends Controller{

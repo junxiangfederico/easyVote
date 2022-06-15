@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 import database.DatabaseManager;
 import models.sessione.*;
-import models.sessione.Partecipante.TipoPartecipante;
 import models.utenti.Elettore;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -53,7 +52,7 @@ public class SessioneJDBCDAO implements SessioneIDAO {
 			isopen=Integer.parseInt(res.getString(4));
 			tipovoto=TipoSessione.fromString(res.getString(5));	
 			boolean io = (isopen==1);
-			List<CandidatoSemplice> candidati=SessioneDiVoto.jsontolist(res.getString(3),null);
+			List<CandidatoSemplice> candidati=SessioneDiVoto.jsontolist(res.getString(3));
 			result = new SessioneDiVoto(id,tipovoto,io, contenuto, candidati);
 			
 		} catch (SQLException e) {

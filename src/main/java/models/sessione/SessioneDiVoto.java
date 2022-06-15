@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
-
-import models.sessione.Partecipante.TipoPartecipante;
 //import models.sessione.Candidato;
 
 public class SessioneDiVoto {
@@ -116,7 +114,7 @@ public class SessioneDiVoto {
 		return false;
 	}
 	
-	public static List<CandidatoSemplice> jsontolist(String string,TipoPartecipante tipo){
+	public static List<CandidatoSemplice> jsontolist(String string){
 		List<CandidatoSemplice> lista=new ArrayList<>();
 		if (string==null) {
 			return lista;
@@ -196,7 +194,6 @@ public class SessioneDiVoto {
 			}
 		}
 	
-		TipoPartecipante t = TipoPartecipante.Persona;
 		CandidatoSemplice c = new CandidatoSemplice(winner);
 		return "il vincitore e': "+c.getidentificativo();
 	}
@@ -271,7 +268,6 @@ public class SessioneDiVoto {
 		  .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
 		  .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
 
-		TipoPartecipante t = TipoPartecipante.Persona;
 		List<CandidatoSemplice> output = new ArrayList<>();
 		for (String s : reverseSortedMap.keySet()) {
 			output.add(new CandidatoSemplice(s));

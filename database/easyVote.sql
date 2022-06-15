@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: easyVote
--- Generation Time: 2022-06-13 11:22:45.3290
+-- Generation Time: 2022-06-15 10:51:02.7300
 -- -------------------------------------------------------------
 
 
@@ -26,7 +26,7 @@ CREATE TABLE `session` (
   `isOpen` tinyint(1) NOT NULL DEFAULT '1',
   `type` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -53,7 +53,11 @@ CREATE TABLE `voto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `session` (`id`, `text`, `candidati`, `isOpen`, `type`) VALUES
-(78, '', '{\"candidato1\": \"fede\", \"candidato2\": \"angelo\", \"candidato3\": \"alessia\", \"candidato4\": \"amelia\", \"candidato5\": \"christian\"}', 1, 'Ordinale');
+(78, '', '{\"candidato1\": \"fede\", \"candidato2\": \"angelo\", \"candidato3\": \"alessia\", \"candidato4\": \"amelia\", \"candidato5\": \"christian\"}', 1, 'Ordinale'),
+(79, 'National Elections', '{\"candidato1\": \"Fede\", \"candidato2\": \"Angelo\", \"candidato3\": \"Sofia\"}', 1, 'Categorico'),
+(80, 'Elezione nazionale', '{\"candidato1\": \"Carlo\", \"candidato2\": \"Alberto\", \"candidato3\": \"Marco\"}', 1, 'Ordinale'),
+(81, 'Elezioni europee', '{\"candidato1\": \"Angelo\", \"candidato2\": \"Micheal\"}', 1, 'Ordinale'),
+(82, 'Giuridice', NULL, 1, 'Referendum');
 
 INSERT INTO `users` (`iduser`, `name`, `lastname`, `birthdate`, `birthplace`, `codicefiscale`, `username`, `password`, `isadmin`) VALUES
 (19, 'federico', 'zhou', '2022-03-17', 'itayl', 'zhsjandmsjxkzldm', 'blabla', 'blabla', 0),
